@@ -76,6 +76,9 @@ node_modules
 .nvm
 package-lock.json
 
+# Expo
+.expo
+
 # OS X
 .DS_Store
 
