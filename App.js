@@ -1,31 +1,27 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import MapView from 'react-native-maps';
+import { NavigationContainer, StackActions } from "@react-navigation/native";
+import { createNativeStackNavigator, NativeStackScreenProps } from '@react-navigation/native-stack';
+import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 
-export default function App() {
+import { StyleSheet, Text } from 'react-native';
+
+import LoginScreen from './screens/Login.js';
+import MapScreen from './screens/Map.js';
+
+const Stack = createNativeStackNavigator();
+
+const App = () => {
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={{fontWeight: 'bold'}}>Drip By Drop</Text>
-      </View>
-      <View style={styles.map}>
-        <MapView
-          initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
-          showsUserLocation={true}
-          style={{width: '100%', height: '50%'}}
-        > 
-        </MapView>
-      </View>
-      <Text>drip is the best app ever</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Map" component={MapScreen} />
+          {/* Add other screens and navigation options here */}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -44,11 +40,8 @@ const styles = StyleSheet.create({
     position: 'relative', 
     top: 1,
   },
-  map: {
-    width: '100%',
-    height: '80%',
-    position: 'relative', 
-    paddingTop: "0%",
-    top: '0%',
-  },
+
 });
+
+export default App;
+
