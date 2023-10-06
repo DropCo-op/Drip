@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "Drip",
-    "slug": "Drip",
+    "name": "AppNumeroUno",
+    "slug": "AppNumeroUno",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover", 
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": [
