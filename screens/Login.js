@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import React, { useState } from 'react';
 
 const LoginScreen = ({ navigation }) => {
@@ -13,21 +13,36 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
+      {/* title */}
+      <View style={styles.titleBox}>
+        <Image
+          style={styles.title}
+          source={require("../assets/title.png")}
+        />
+      </View>
+      {/* email */}
+      <View style={styles.inputLabelContainer}>
+        <Text style={styles.inputLabel}>Email</Text>
+      </View>
       <TextInput
         style={styles.input}
-        placeholder="Email"
         onChangeText={(text) => setEmail(text)}
         value={email}
       />
+      {/* password */}
+      <View style={styles.inputLabelContainer}>
+        <Text style={styles.inputLabel}>Password</Text>
+      </View>
       <TextInput
         style={styles.input}
-        placeholder="Password"
         onChangeText={(text) => setPassword(text)}
         value={password}
         secureTextEntry={true}
       />
-      <Button title="Login" onPress={handleLogin} />
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+        <Text style={styles.buttonText}>Login</Text>
+      </TouchableOpacity>
+      <View style={styles.bottomSpace} />
     </View>
   );
 };
@@ -35,21 +50,51 @@ const LoginScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "column",
+    justifyContent: "top",
+    alignItems: "center",
+    backgroundColor: "#00C2FF"
+  },
+  titleBox: {
+    flex: 8,
+    width: "70%",
   },
   title: {
+    flex: 1,
+    width: null,
+    height: null,
+    resizeMode: 'contain'
+  },
+  inputLabelContainer: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "left"
+  },
+  inputLabel: {
+    flex: 1,
+    marginLeft: "10%",
+    color: "#FFFFFF",
     fontSize: 24,
-    marginBottom: 20,
   },
   input: {
-    width: 300,
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 20,
-    padding: 10,
+    flex: 1,
+    width: "80%",
+    borderColor: "#FFFFFF",
+    borderWidth: 2,
+    borderRadius: 5,
+    marginBottom: "5%",
   },
+  button: {
+    flex: 2,
+    marginTop: "20%"
+  },
+  buttonText: {
+    color: "#FFFFFF",
+    fontSize: 24 
+  },
+  bottomSpace: {
+    flex: 5
+  }
 });
 
 export default LoginScreen;
