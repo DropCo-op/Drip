@@ -12,11 +12,13 @@ const LoginScreen = ({ navigation }) => {
   };
 
   const handleCreateAccount = () => {
-    navigation.navigate('Login');
+    // navigation.navigate('Login');
+    console.log("Create account");
   };
 
   const handleForgotPassword = () => {
-    navigation.navigate('Login');
+    // navigation.navigate('Login');
+    console.log("Forgot Password");
   };
 
   return (
