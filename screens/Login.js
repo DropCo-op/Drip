@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#00C2FF"
   },
   titleBox: {
-    flex: 8,
+    flex: 10,
     width: "70%",
   },
   title: {
