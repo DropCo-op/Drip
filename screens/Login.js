@@ -11,6 +11,16 @@ const LoginScreen = ({ navigation }) => {
     navigation.navigate('Map');
   };
 
+  const handleCreateAccount = () => {
+    // navigation.navigate('Login');
+    console.log("Create account");
+  };
+
+  const handleForgotPassword = () => {
+    // navigation.navigate('Login');
+    console.log("Forgot Password");
+  };
+
   return (
     <View style={styles.container}>
       {/* title */}
@@ -20,6 +30,7 @@ const LoginScreen = ({ navigation }) => {
           source={require("../assets/title.png")}
         />
       </View>
+
       {/* email */}
       <View style={styles.inputLabelContainer}>
         <Text style={styles.inputLabel}>Email</Text>
@@ -29,6 +40,7 @@ const LoginScreen = ({ navigation }) => {
         onChangeText={(text) => setEmail(text)}
         value={email}
       />
+
       {/* password */}
       <View style={styles.inputLabelContainer}>
         <Text style={styles.inputLabel}>Password</Text>
@@ -39,6 +51,18 @@ const LoginScreen = ({ navigation }) => {
         value={password}
         secureTextEntry={true}
       />
+
+      {/* create account, forgot password */}
+      <View style = {styles.linkBox}>
+        <TouchableOpacity style={styles.link} onPress={handleCreateAccount}>
+          <Text style={[styles.link, {textAlign: "left"}]}>Create account</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.link} onPress={handleForgotPassword}>
+          <Text style={[styles.link, {textAlign: "right"}]}>Forgot password?</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* login */}
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
@@ -83,6 +107,20 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 5,
     marginBottom: "5%",
+    color: "#FFFFFF",
+    fontSize: 16
+  },
+  linkBox: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "left",
+    width: "80%"
+  },
+  link: {
+    flex: 1,
+    fontSize: 16,
+    color: "#FFFFFF",
+    textDecorationLine: 'underline'
   },
   button: {
     flex: 2,
