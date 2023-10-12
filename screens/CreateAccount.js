@@ -9,10 +9,14 @@ const CreateAccountScreen = ({ navigation }) => {
 
 
   const handleCreateAccount = () => {
-    // Add your authentication logic here
-    // You can use Firebase, Axios, or any other method to authenticate the user
     navigation.navigate('Map');
   };
+
+
+  const handleBack = () => {
+    navigation.navigate('Login');
+  };
+
 
   return (
     <View style={styles.container}>
@@ -67,6 +71,13 @@ const CreateAccountScreen = ({ navigation }) => {
 
       />
 
+      {/* back to login */}
+      <View style = {styles.linkBox}>
+        <TouchableOpacity style={styles.link} onPress={handleBack}>
+          <Text style={[styles.link, {textAlign: "left"}]}>Back to Login</Text>
+        </TouchableOpacity>
+      </View>
+
       {/* create account */}
       <TouchableOpacity style={styles.button} onPress={handleCreateAccount}>
         <Text style={styles.buttonText}>Create Account</Text>
@@ -116,6 +127,20 @@ const styles = StyleSheet.create({
     marginBottom: "5%",
     color: "#FFFFFF",
     fontSize: 16
+  },
+  linkBox: {
+    position: 'absolute',
+    top: 30,
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "left",
+    width: "80%"
+  },
+  link: {
+    flex: 1,
+    fontSize: 16,
+    color: "#FFFFFF",
+    textDecorationLine: 'underline'
   },
   button: {
     flex: 2,
