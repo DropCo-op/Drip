@@ -34,6 +34,11 @@ const MapScreen = ({ navigation }) => {
     // Request location permission once the map mounts
     navigation.navigate('Login');
   }
+
+  const handleRatingsNavigation = () => {
+    navigation.navigate('Ratings');
+  }
+
   return (
     <View style={styles.container}>
       <View >
@@ -54,7 +59,7 @@ const MapScreen = ({ navigation }) => {
                 longitude: currentLocation.longitude + 0.01,
               }}
               title="Your Location"
-              onPress={handleBackNavigation}
+              onPress={handleRatingsNavigation}
             />
           )}
         </MapView>
