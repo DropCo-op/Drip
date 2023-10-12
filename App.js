@@ -6,6 +6,7 @@ import { StyleSheet, Text } from 'react-native';
 
 import LoginScreen from './screens/Login.js';
 import MapScreen from './screens/Map.js';
+import CreateAccountScreen from './screens/CreateAccount.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +17,7 @@ const App = () => {
         <Stack.Navigator initialRouteName="Login" screenOptions={{headerShown: false}}>
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Map" component={MapScreen} />
+	  <Stack.Screen name="CreateAccount" component={CreateAccountScreen} />
           {/* Add other screens and navigation options here */}
         </Stack.Navigator>
       </NavigationContainer>
