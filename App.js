@@ -18,6 +18,10 @@ const App = () => {
         <Stack.Navigator initialRouteName="Login" screenOptions={{headerShown: false}}>
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Map" component={MapScreen} />
+<<<<<<< HEAD
+=======
+	  <Stack.Screen name="CreateAccount" component={CreateAccountScreen} />
+>>>>>>> ba9b7f6 (Fix formatting issues in App.js )
           <Stack.Screen name="Ratings" component={SubmitRatingsScreen}/>
 	        <Stack.Screen name="CreateAccount" component={CreateAccountScreen} />
           {/* Add other screens and navigation options here */}
