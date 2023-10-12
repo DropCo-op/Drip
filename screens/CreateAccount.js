@@ -74,7 +74,7 @@ const CreateAccountScreen = ({ navigation }) => {
       {/* back to login */}
       <View style = {styles.linkBox}>
         <TouchableOpacity style={styles.link} onPress={handleBack}>
-          <Text style={[styles.link, {textAlign: "left"}]}>Back to Login</Text>
+          <Text style={[styles.link, {textAlign: "left"}]}>&lt; Back to Login</Text>
         </TouchableOpacity>
       </View>
 
@@ -140,7 +140,6 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     color: "#FFFFFF",
-    textDecorationLine: 'underline'
   },
   button: {
     flex: 2,
