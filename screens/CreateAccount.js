@@ -1,26 +1,22 @@
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import React, { useState } from 'react';
 
-const LoginScreen = ({ navigation }) => {
+const CreateAccountScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleLogin = () => {
-    // Add your authentication logic here
-    // You can use Firebase, Axios, or any other method to authenticate the user
+
+  const handleCreateAccount = () => {
     navigation.navigate('Map');
   };
 
-  const handleCreateAccount = () => {
-    // navigation.navigate('Login');
-    console.log("Create account");
-    navigation.navigate('CreateAccount');
+
+  const handleBack = () => {
+    navigation.navigate('Login');
   };
 
-  const handleForgotPassword = () => {
-    // navigation.navigate('Login');
-    console.log("Forgot Password");
-  };
 
   return (
     <View style={styles.container}>
@@ -41,6 +37,16 @@ const LoginScreen = ({ navigation }) => {
         onChangeText={(text) => setEmail(text)}
         value={email}
       />
+     
+      {/* username */}
+      <View style={styles.inputLabelContainer}>
+        <Text style={styles.inputLabel}>Username</Text>
+      </View>
+      <TextInput
+        style={styles.input}
+        onChangeText={(text) => setUsername(text)}
+        value={username}
+      />
 
       {/* password */}
       <View style={styles.inputLabelContainer}>
@@ -48,29 +54,40 @@ const LoginScreen = ({ navigation }) => {
       </View>
       <TextInput
         style={styles.input}
+
         onChangeText={(text) => setPassword(text)}
         value={password}
-        secureTextEntry={true}
       />
 
-      {/* create account, forgot password */}
+      {/* confirm password */}
+      <View style={styles.inputLabelContainer}>
+        <Text style={styles.inputLabel}>Confirm Password*</Text>
+      </View>
+      <TextInput
+        style={styles.input}
+
+        onChangeText={(text) => setConfirmPassword(text)}
+        value={confirmPassword}
+
+      />
+
+      {/* back to login */}
       <View style = {styles.linkBox}>
-        <TouchableOpacity style={styles.link} onPress={handleCreateAccount}>
-          <Text style={[styles.link, {textAlign: "left"}]}>Create account</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.link} onPress={handleForgotPassword}>
-          <Text style={[styles.link, {textAlign: "right"}]}>Forgot password?</Text>
+        <TouchableOpacity style={styles.link} onPress={handleBack}>
+          <Text style={[styles.link, {textAlign: "left"}]}>&lt; Back to Login</Text>
         </TouchableOpacity>
       </View>
 
-      {/* login */}
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Login</Text>
+      {/* create account */}
+      <TouchableOpacity style={styles.button} onPress={handleCreateAccount}>
+        <Text style={styles.buttonText}>Create Account</Text>
       </TouchableOpacity>
       <View style={styles.bottomSpace} />
     </View>
   );
 };
+
+
 
 const styles = StyleSheet.create({
   container: {
@@ -93,7 +110,7 @@ const styles = StyleSheet.create({
   inputLabelContainer: {
     flex: 1,
     flexDirection: "row",
-    alignItems: "left"
+    alignItems: "left",
   },
   inputLabel: {
     flex: 1,
@@ -112,6 +129,8 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
   linkBox: {
+    position: 'absolute',
+    top: 30,
     flex: 1,
     flexDirection: "row",
     alignItems: "left",
@@ -121,20 +140,21 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     color: "#FFFFFF",
-    textDecorationLine: 'underline'
   },
   button: {
     flex: 2,
-    marginTop: "20%"
+    marginTop: "10%"
   },
   buttonText: {
     color: "#FFFFFF",
     fontSize: 24 
   },
   bottomSpace: {
-    flex: 5
+    flex: 2
   }
 });
 
-export default LoginScreen;
+
+export default CreateAccountScreen;
+
 
