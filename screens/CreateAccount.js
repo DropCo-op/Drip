@@ -33,9 +33,7 @@ const CreateAccountScreen = ({ navigation }) => {
         onChangeText={(text) => setEmail(text)}
         value={email}
       />
-
      
-
       {/* username */}
       <View style={styles.inputLabelContainer}>
         <Text style={styles.inputLabel}>Username</Text>
@@ -45,7 +43,6 @@ const CreateAccountScreen = ({ navigation }) => {
         onChangeText={(text) => setUsername(text)}
         value={username}
       />
-
 
       {/* password */}
       <View style={styles.inputLabelContainer}>
@@ -58,10 +55,9 @@ const CreateAccountScreen = ({ navigation }) => {
         value={password}
       />
 
-
       {/* confirm password */}
       <View style={styles.inputLabelContainer}>
-        <Text style={styles.inputLabel}>Confirm Password</Text>
+        <Text style={styles.inputLabel}>Confirm Password*</Text>
       </View>
       <TextInput
         style={styles.input}
@@ -70,7 +66,6 @@ const CreateAccountScreen = ({ navigation }) => {
         value={confirmPassword}
 
       />
-
 
       {/* create account */}
       <TouchableOpacity style={styles.button} onPress={handleCreateAccount}>
