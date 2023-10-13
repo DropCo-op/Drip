@@ -14,11 +14,9 @@ export default class BackBtn extends React.Component {
 
   render() {
     return (
-      <View>
+      <View style={{ alignSelf: "flex-start" }}>
         <TouchableOpacity onPress={this.handler}>
-          <Text style={this.style}>
-            &lt; Back
-          </Text>
+          <Text style={this.style}>&lt; Back</Text>
         </TouchableOpacity>
       </View>
     );
@@ -27,5 +25,5 @@ export default class BackBtn extends React.Component {
 
 BackBtn.propTypes = {
   handler: PropTypes.func.isRequired,
-  style: PropTypes.func.isRequired
+  style: PropTypes.object.isRequired,
 };

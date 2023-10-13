@@ -14,9 +14,7 @@ const SubmitRatingsScreen = ({ navigation }) => {
     navigation.navigate("Map");
   };
 
-  const handleRate = () => {
-    
-  }
+  const handleRate = () => {};
 
   return (
     <View style={styles.container}>
@@ -30,7 +28,7 @@ const SubmitRatingsScreen = ({ navigation }) => {
       <RatingMetric
         name="Temperature"
         start="Hot"
-        end="cold"
+        end="Cold"
         handler={handleRate}
       />
       <RatingMetric
@@ -94,12 +92,10 @@ const styles = StyleSheet.create({
     paddingTop: "10%",
     paddingLeft: "5%",
     fontSize: 18,
-    color: 'white',
-    alignContent: 'flex-start',
-    justifyContent: 'flex-start',
-    alignSelf: 'flex-start',
-    padding: 1
-  }
+    color: "white",
+    alignSelf: "flex-start",
+    padding: 1,
+  },
 });
 
 export default SubmitRatingsScreen;
