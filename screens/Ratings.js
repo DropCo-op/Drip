@@ -2,11 +2,10 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import React, { useState } from "react";
 import BackBtn from "../utils/BackBtn";
 import RatingMetric from "../utils/RatingMetric";
+import RatingClicks from "../utils/RatingClicks";
 
 const SubmitRatingsScreen = ({ navigation }) => {
-  const [temperature, setEmail] = useState("");
-  const [prsesure, setPassword] = useState("");
-  const [busyness, setBusyness] = useState("");
+  state = { rating: 0 };
 
   const handleLogin = () => {
     // Add your authentication logic here
@@ -14,7 +13,35 @@ const SubmitRatingsScreen = ({ navigation }) => {
     navigation.navigate("Map");
   };
 
-  const handleRate = () => {};
+  const handleRate = (selectedRating) => {
+    this.setRatings({ selectedRating });
+  };
+
+  // renderRates(rateName, left, right) {
+  //   const { rating } = this.state;
+  //   const drops = [];
+
+  //   for (let i = 1; i <= 5; i++) {
+  //     drops.push(
+  //       <TouchableOpacity
+  //         key={i}
+  //         style={[
+  //           styles.droplets,
+  //           i <= rating ? styles.selectedDroplets : null,
+  //         ]}
+  //         onPress={() => this.handleRateClick(i)}
+  //       >
+  //         <RatingMetric
+  //           name={rateName}
+  //           start={left}
+  //           end={right}
+  //           handler={handleRate}
+  //         />
+  //       </TouchableOpacity>
+  //     );
+
+  //     return drops;
+  // }
 
   return (
     <View style={styles.container}>
@@ -31,18 +58,22 @@ const SubmitRatingsScreen = ({ navigation }) => {
         end="Cold"
         handler={handleRate}
       />
+
+      {/* pressure */}
       <RatingMetric
         name="Pressure"
         start="Weak"
         end="Strong"
         handler={handleRate}
       />
+      {/* busyness */}
       <RatingMetric
         name="Busyness"
         start="Crowded"
         end="Empty"
         handler={handleRate}
       />
+      {/* taste */}
       <RatingMetric
         name="Taste"
         start="Gross"
@@ -50,6 +81,7 @@ const SubmitRatingsScreen = ({ navigation }) => {
         handler={handleRate}
       />
 
+      {/* submit btn */}
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Submit</Text>
       </TouchableOpacity>
@@ -67,14 +99,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#00C2FF",
   },
   titleBox: {
-    flex: 3,
+    flex: 5,
     width: "70%",
-    paddingTop: "20%",
+    paddingTop: "15%",
     alignItems: "center",
   },
   title: {
     flex: 1,
-    fontSize: 28,
+    fontSize: 48,
     color: "white",
   },
   button: {

@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
 import PropTypes from "prop-types";
+import RatingClicks from "../utils/RatingClicks";
 
 export default class RatingMetric extends React.Component {
   name;
@@ -23,51 +24,13 @@ export default class RatingMetric extends React.Component {
           <Text style={styles.rate_title}>{this.name}</Text>
         </View>
 
-        <View style={styles.rate_row}>
-          <TouchableOpacity style={styles.rate_option} onPress={this.handler}>
-            <Image
-              id="temp1"
-              style={styles.rate_image}
-              source={require("../assets/droplet.png")}
-            />
-          </TouchableOpacity>
+        <RatingClicks handleRate={this.handler} />
 
-          <TouchableOpacity style={styles.rate_option} onPress={this.handler}>
-            <Image
-              id="temp2"
-              style={styles.rate_image}
-              source={require("../assets/droplet.png")}
-            />
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.rate_option} onPress={this.handler}>
-            <Image
-              id="temp3"
-              style={styles.rate_image}
-              source={require("../assets/droplet.png")}
-            />
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.rate_option} onPress={this.handler}>
-            <Image
-              id="temp4"
-              style={styles.rate_image}
-              source={require("../assets/droplet.png")}
-            />
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.rate_option} onPress={this.handler}>
-            <Image
-              id="temp5"
-              style={styles.rate_image}
-              source={require("../assets/droplet.png")}
-            />
-          </TouchableOpacity>
-        </View>
         <View style={{ flexDirection: "row", flex: 1 }}>
           <View style={styles.rate_scale_left}>
             <Text style={styles.rate_scale_text}>{this.start}</Text>
           </View>
+
           <View style={styles.rate_scale_right}>
             <Text style={styles.rate_scale_text}>{this.end}</Text>
           </View>
@@ -78,31 +41,11 @@ export default class RatingMetric extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "top",
-    alignItems: "center",
-    backgroundColor: "#00C2FF",
-  },
-  titleBox: {
-    flex: 1,
-    width: "70%",
-    paddingTop: "0%",
-    alignItems: "center",
-  },
-  title: {
-    flex: 1,
-    width: null,
-    height: null,
-    resizeMode: "contain",
-    fontSize: 28,
-    color: "white",
-  },
   rate_container: {
     flexDirection: "column",
-    width: "75%",
-    flex: 5,
+    width: "80%",
+    flex: 9,
+    marginBottom: "5%",
   },
   rate_title_container: {
     flex: 1,
@@ -136,24 +79,24 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     resizeMode: "contain",
-    borderColor: 'white',
+    borderColor: "white",
     borderWidth: 2,
     columnGap: 5,
   },
   rate_scale_left: {
     flex: 1,
-    justifyContent: "flex-start",
     alignItems: "flex-start",
+    marginLeft: "10%",
   },
   rate_scale_right: {
     flex: 1,
-    justifyContent: "flex-end",
     alignItems: "flex-end",
+    marginRight: "10%",
   },
   rate_scale_text: {
     color: "white",
     fontSize: 20,
-  }
+  },
 });
 
 RatingMetric.propTypes = {
