@@ -14,22 +14,11 @@ const SubmitRatingsScreen = ({ navigation }) => {
     navigation.navigate("Map");
   };
 
-  this.state = {
-    index: 0,
-    imgList: ["../assets/droplet.png", "..assets/icon.png"],
-  };
+  const handleRate = () => {};
 
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          padding: 1,
-          justifyContent: "flex-end",
-          alignContent: "flex-end",
-        }}
-      >
-        <BackBtn handler={handleLogin} color="white" />
-      </View>
+      <BackBtn handler={handleLogin} style={styles.backButton} />
       {/* title */}
       <View style={styles.titleBox}>
         <Text style={styles.title}>Submit Ratings</Text>
@@ -39,26 +28,26 @@ const SubmitRatingsScreen = ({ navigation }) => {
       <RatingMetric
         name="Temperature"
         start="Hot"
-        end="cold"
-        handler={handleLogin}
+        end="Cold"
+        handler={handleRate}
       />
       <RatingMetric
         name="Pressure"
         start="Weak"
         end="Strong"
-        handler={handleLogin}
+        handler={handleRate}
       />
       <RatingMetric
         name="Busyness"
         start="Crowded"
         end="Empty"
-        handler={handleLogin}
+        handler={handleRate}
       />
       <RatingMetric
         name="Taste"
         start="Gross"
         end="Quality"
-        handler={handleLogin}
+        handler={handleRate}
       />
 
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
@@ -98,6 +87,14 @@ const styles = StyleSheet.create({
   },
   bottomSpace: {
     flex: 5,
+  },
+  backButton: {
+    paddingTop: "10%",
+    paddingLeft: "5%",
+    fontSize: 18,
+    color: "white",
+    alignSelf: "flex-start",
+    padding: 1,
   },
 });
 

@@ -4,36 +4,26 @@ import PropTypes from "prop-types";
 
 export default class BackBtn extends React.Component {
   handler;
-  color;
+  style;
 
   constructor(props) {
     super(props);
     this.handler = props.handler;
-    this.color = props.color;
+    this.style = props.style;
   }
 
   render() {
     return (
-      <View>
+      <View style={{ alignSelf: "flex-start" }}>
         <TouchableOpacity onPress={this.handler}>
-          <Text style={[{ color: this.color }, styles.backButton]}>
-            &lt; Back
-          </Text>
+          <Text style={this.style}>&lt; Back</Text>
         </TouchableOpacity>
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  backButton: {
-    paddingTop: "10%",
-    paddingLeft: "5%",
-    fontSize: 18,
-  }
-});
-
 BackBtn.propTypes = {
   handler: PropTypes.func.isRequired,
-  color: PropTypes.string.isRequired,
+  style: PropTypes.object.isRequired,
 };
