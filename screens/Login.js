@@ -14,6 +14,7 @@ const LoginScreen = ({ navigation }) => {
   const handleCreateAccount = () => {
     // navigation.navigate('Login');
     console.log("Create account");
+    navigation.navigate('CreateAccount');
   };
 
   const handleForgotPassword = () => {
