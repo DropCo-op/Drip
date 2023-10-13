@@ -18,8 +18,8 @@ const App = () => {
         <Stack.Navigator initialRouteName="Login" screenOptions={{headerShown: false}}>
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Map" component={MapScreen} />
-	  <Stack.Screen name="CreateAccount" component={CreateAccountScreen} />
           <Stack.Screen name="Ratings" component={SubmitRatingsScreen}/>
+	        <Stack.Screen name="CreateAccount" component={CreateAccountScreen} />
           {/* Add other screens and navigation options here */}
         </Stack.Navigator>
       </NavigationContainer>
