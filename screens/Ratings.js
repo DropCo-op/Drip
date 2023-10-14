@@ -17,32 +17,6 @@ const SubmitRatingsScreen = ({ navigation }) => {
     this.setRatings({ selectedRating });
   };
 
-  // renderRates(rateName, left, right) {
-  //   const { rating } = this.state;
-  //   const drops = [];
-
-  //   for (let i = 1; i <= 5; i++) {
-  //     drops.push(
-  //       <TouchableOpacity
-  //         key={i}
-  //         style={[
-  //           styles.droplets,
-  //           i <= rating ? styles.selectedDroplets : null,
-  //         ]}
-  //         onPress={() => this.handleRateClick(i)}
-  //       >
-  //         <RatingMetric
-  //           name={rateName}
-  //           start={left}
-  //           end={right}
-  //           handler={handleRate}
-  //         />
-  //       </TouchableOpacity>
-  //     );
-
-  //     return drops;
-  // }
-
   return (
     <View style={styles.container}>
       <BackBtn handler={handleLogin} style={styles.backButton} />

@@ -43,7 +43,6 @@ export default class RatingMetric extends React.Component {
 const styles = StyleSheet.create({
   rate_container: {
     flexDirection: "column",
-    width: "80%",
     flex: 9,
     marginBottom: "5%",
   },
@@ -86,12 +85,10 @@ const styles = StyleSheet.create({
   rate_scale_left: {
     flex: 1,
     alignItems: "flex-start",
-    marginLeft: "10%",
   },
   rate_scale_right: {
     flex: 1,
     alignItems: "flex-end",
-    marginRight: "10%",
   },
   rate_scale_text: {
     color: "white",

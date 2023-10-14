@@ -17,15 +17,18 @@ export default class RatingClicks extends React.Component {
       drops.push(
         <TouchableOpacity
           key={i}
-          style={[
-            styles.droplets,
-            i <= rating ? styles.selectedDroplets : null,
-          ]}
+          style={styles.droplets}
           onPress={() => this.handleRateClick(i)}
         >
           <Image
             style={styles.rate_image}
-            source={require("../assets/droplet.png")}
+            // source={require("../assets/unselected.png")}
+            key={i}
+            source={
+              i <= rating
+                ? require("../assets/selected.png")
+                : require("../assets/unselected.png")
+            }
           />
         </TouchableOpacity>
       );
@@ -35,11 +38,7 @@ export default class RatingClicks extends React.Component {
   }
 
   render() {
-    return (
-      <View style={styles.container}>
-        {this.renderRates()}
-      </View>
-    );
+    return <View style={styles.container}>{this.renderRates()}</View>;
   }
 }
 
@@ -47,10 +46,10 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    width: '90%',
-    height: '7%',
+    width: "90%",
+    height: "7%",
     flex: 1,
-    borderColor: 'white',
+    borderColor: "white",
     borderWidth: 2,
   },
   droplets: {
@@ -58,11 +57,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: null,
     height: null,
-    resizeMode: 'contain',
-  },
-  selectedDroplets: {
-    borderColor: "yellow",
-    borderWidth: 3,
+    resizeMode: "contain",
   },
   ratingText: {
     marginLeft: 10,
