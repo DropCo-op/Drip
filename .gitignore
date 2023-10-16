@@ -1,3 +1,6 @@
+# auth
+aws-credentials.json
+
 # Xcode
 !**/*.xcodeproj
 !**/*.pbxproj
