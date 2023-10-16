@@ -1,17 +1,14 @@
 export function getFountains(location){
-    dummyData = [
-        {
-            latitude: location.coords.latitude + 0.06,
-            longitude: location.coords.longitude + 0.03,
-        },
-        {
-            latitude: location.coords.latitude + 0.03,
-            longitude: location.coords.longitude + 0.02,
-        },
-        {
-            latitude: location.coords.latitude + 0.02,
-            longitude: location.coords.longitude + 0.01,
-        },
+    dummyData = [{
+        key: 'name',
+        latitude: 41.900932, 
+        longitude: 12.483313
+      },
+      {
+        key: "name2",
+        latitude: 41.909,
+        longitude: 12.48
+      }
     ]
     return dummyData;
 }
