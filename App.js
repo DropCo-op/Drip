@@ -1,14 +1,26 @@
+// react native
 import { NavigationContainer, StackActions } from "@react-navigation/native";
 import { createNativeStackNavigator, NativeStackScreenProps } from '@react-navigation/native-stack';
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
-
 import { StyleSheet, Text } from 'react-native';
 
+// local
 import LoginScreen from './screens/Login.js';
 import MapScreen from './screens/Map.js';
 import CreateAccountScreen from './screens/CreateAccount.js';
 import SubmitRatingsScreen from "./screens/Ratings.js";
 import MoreInfoScreen from "./screens/MoreInfo.js";
+
+// backend
+import AWS from 'aws-sdk';
+import awsCredentials from './aws-credentials.json';
+import { uploadJsonObjectToS3 } from './S3Storage'; // Adjust the import path as needed
+AWS.config.update({
+  region: 'eu-west-3',
+  accessKeyId: awsCredentials.accessKeyId,
+  secretAccessKey: awsCredentials.secretAccessKey
+});
+const s3 = new AWS.S3();
 
 const Stack = createNativeStackNavigator();
 
