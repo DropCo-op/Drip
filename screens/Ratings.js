@@ -23,7 +23,7 @@ const SubmitRatingsScreen = ({ navigation }) => {
 
   const handleInfo = () => {
     // TEMPORARY: set to "info" screen when available
-    navigation.navigate("CreateAccount");
+    navigation.navigate("MoreInfo");
   };
 
   const handleRate = (selectedRating) => {
