@@ -43,8 +43,9 @@ export default class RatingMetric extends React.Component {
 const styles = StyleSheet.create({
   rate_container: {
     flexDirection: "column",
-    flex: 9,
+    flex: 1,
     marginBottom: "5%",
+    borderColor: 'yellow',
   },
   rate_title_container: {
     flex: 1,

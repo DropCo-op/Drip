@@ -7,10 +7,23 @@ import RatingClicks from "../utils/RatingClicks";
 const SubmitRatingsScreen = ({ navigation }) => {
   state = { rating: 0 };
 
-  const handleLogin = () => {
-    // Add your authentication logic here
-    // You can use Firebase, Axios, or any other method to authenticate the user
+  const handleBack = () => {
     navigation.navigate("Map");
+  };
+
+  const handleSubmit = () => {
+    // TODO: gray out the "submit" button, stays on the fountain page
+    // TEMPORARY: goes to Login for now, but will need to change
+    navigation.navigate("Login");
+  };
+
+  const handleNav = () => {
+    navigation.navigate("Map");
+  };
+
+  const handleInfo = () => {
+    // TEMPORARY: set to "info" screen when available
+    navigation.navigate("CreateAccount");
   };
 
   const handleRate = (selectedRating) => {
@@ -19,10 +32,46 @@ const SubmitRatingsScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <BackBtn handler={handleLogin} style={styles.backButton} />
+      <BackBtn handler={handleBack} style={styles.backButton} />
       {/* title */}
       <View style={styles.titleBox}>
-        <Text style={styles.title}>Submit Ratings</Text>
+        <Text style={styles.title}>Fountain (name)</Text>
+      </View>
+
+      <View
+        style={{ flex: 2, borderColor: "black", borderWidth: 2, width: "75%" }}
+      >
+        {/* TODO: add image */}
+        <Image
+          style={{
+            height: 100,
+            width: 100,
+            resizeMode: "contain",
+            alignSelf: "center",
+          }}
+          source={require("../assets/logo.png")}
+        />
+        <Text style={{ color: "white", alignSelf: "center" }}>
+          [Temporary Image]
+        </Text>
+      </View>
+
+      {/* container for three buttons */}
+      <View style={styles.buttonContainer}>
+        {/* submit button */}
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+          <Text style={styles.buttonText}>Submit</Text>
+        </TouchableOpacity>
+
+        {/* navigate button */}
+        <TouchableOpacity style={styles.button} onPress={handleNav}>
+          <Text style={styles.buttonText}>Navigate</Text>
+        </TouchableOpacity>
+
+        {/* info button */}
+        <TouchableOpacity style={styles.button} onPress={handleInfo}>
+          <Text style={styles.buttonText}>Info</Text>
+        </TouchableOpacity>
       </View>
 
       {/* temperature */}
@@ -55,10 +104,6 @@ const SubmitRatingsScreen = ({ navigation }) => {
         handler={handleRate}
       />
 
-      {/* submit btn */}
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Submit</Text>
-      </TouchableOpacity>
       <View style={styles.bottomSpace} />
     </View>
   );
@@ -73,9 +118,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#00C2FF",
   },
   titleBox: {
-    flex: 5,
+    flex: 1,
     width: "70%",
-    paddingTop: "15%",
+    paddingTop: "10%",
     alignItems: "center",
   },
   title: {
@@ -83,16 +128,27 @@ const styles = StyleSheet.create({
     fontSize: 48,
     color: "white",
   },
+  buttonContainer: {
+    flex: 1,
+    flexDirection: "row",
+    width: "90%",
+    columnGap: 5,
+    marginBottom: 10,
+    marginTop: 20,
+  },
   button: {
-    flex: 2,
-    marginTop: "20%",
+    flex: 1,
+    justifyContent: "center",
+    borderColor: "white",
+    borderWidth: 1,
   },
   buttonText: {
     color: "#FFFFFF",
     fontSize: 24,
+    alignSelf: "center",
   },
   bottomSpace: {
-    flex: 5,
+    flex: 1,
   },
   backButton: {
     paddingTop: "10%",
