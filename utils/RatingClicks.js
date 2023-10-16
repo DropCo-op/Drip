@@ -28,7 +28,6 @@ export default class RatingClicks extends React.Component {
         >
           <Image
             style={styles.rate_image}
-            // source={require("../assets/unselected.png")}
             key={i}
             source={
               i <= rating
@@ -45,10 +44,12 @@ export default class RatingClicks extends React.Component {
 
   render() {
     return (
-      <View style={{flexDirection: 'column', flex: 2, width: '100%',}}>
+      <View style={{ flexDirection: "column", flex: 2, width: "100%" }}>
         <View style={styles.rate_title_container}>
           <Text style={styles.rate_title}>{this.name}</Text>
-          <Text style={[styles.rate_title, {textAlign: 'right'}]}>Rating: {this.state.rating}/5</Text>
+          <Text style={[styles.rate_title, { textAlign: "right" }]}>
+            Rating: {this.state.rating}/5
+          </Text>
         </View>
         <View style={styles.container}>{this.renderRates()}</View>
       </View>
@@ -73,9 +74,6 @@ const styles = StyleSheet.create({
     height: null,
     resizeMode: "contain",
   },
-  ratingText: {
-    marginLeft: 10,
-  },
   rate_image: {
     flex: 1,
     height: null,
@@ -84,7 +82,7 @@ const styles = StyleSheet.create({
   },
   rate_title_container: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   rate_title: {
     flex: 1,
@@ -92,7 +90,6 @@ const styles = StyleSheet.create({
     color: "white",
   },
 });
-
 
 RatingClicks.propTypes = {
   name: PropTypes.string.isRequired,

@@ -20,14 +20,11 @@ export default class RatingMetric extends React.Component {
   render() {
     return (
       <View style={styles.rate_container}>
-        {/* <View style={styles.rate_title_container}>
-          <Text style={styles.rate_title}>{this.name}</Text>
-          <Text style={[styles.rate_title, {textAlign: 'right'}]}>Rating: 0/5</Text>
-        </View> */}
+        {/* title and 5-droplet rating system */}
+        <RatingClicks handleRate={this.handler} name={this.name} />
 
-        <RatingClicks handleRate={this.handler} name={this.name}/>
-
-        <View style={{ flexDirection: "row", flex: 1,}}>
+        {/* scale description (ex: hot-cold) */}
+        <View style={{ flexDirection: "row", flex: 1 }}>
           <View style={styles.rate_scale_left}>
             <Text style={styles.rate_scale_text}>{this.start}</Text>
           </View>
@@ -46,45 +43,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     flex: 1,
     marginBottom: "1.5%",
-    // borderColor: 'yellow',
-    // borderWidth: 1,
-  },
-  rate_title_container: {
-    flex: 1,
-    flexDirection: 'row',
-  },
-  rate_title: {
-    flex: 1,
-    fontSize: 20,
-    color: "white",
-  },
-  rate_label: {
-    fontSize: 28,
-    color: "white",
-  },
-  rate_option: {
-    padding: 5,
-    flex: 1,
-    width: null,
-    height: null,
-    resizeMode: "contain",
-  },
-  rate_image: {
-    flex: 1,
-    height: null,
-    width: null,
-    resizeMode: "contain",
-  },
-  rate_row: {
-    flex: 2,
-    padding: 0,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    resizeMode: "contain",
-    borderColor: "white",
-    borderWidth: 2,
-    columnGap: 5,
   },
   rate_scale_left: {
     flex: 1,

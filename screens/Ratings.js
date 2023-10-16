@@ -32,20 +32,19 @@ const SubmitRatingsScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <BackBtn handler={handleBack} style={styles.backButton} />
+      <BackBtn handler={handleBack} style={styles.back_button} />
+      
       {/* title */}
-      <View style={styles.titleBox}>
+      <View style={styles.title_box}>
         <Text style={styles.title}>Fountain (name)</Text>
       </View>
 
-      <View
-        style={{ flex: 1, borderColor: "black", borderWidth: 2, width: "75%" }}
-      >
+      <View style={styles.fountain_image}>
         {/* TODO: add image */}
         <Image
           style={{
-            height: '80%',
-            width: '80%',
+            height: "80%",
+            width: "80%",
             resizeMode: "contain",
             alignSelf: "center",
           }}
@@ -57,20 +56,20 @@ const SubmitRatingsScreen = ({ navigation }) => {
       </View>
 
       {/* container for three buttons */}
-      <View style={styles.buttonContainer}>
+      <View style={styles.button_container}>
         {/* submit button */}
         <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-          <Text style={styles.buttonText}>Submit</Text>
+          <Text style={styles.button_text}>Submit</Text>
         </TouchableOpacity>
 
         {/* navigate button */}
         <TouchableOpacity style={styles.button} onPress={handleNav}>
-          <Text style={styles.buttonText}>Navigate</Text>
+          <Text style={styles.button_text}>Navigate</Text>
         </TouchableOpacity>
 
         {/* info button */}
         <TouchableOpacity style={styles.button} onPress={handleInfo}>
-          <Text style={styles.buttonText}>Info</Text>
+          <Text style={styles.button_text}>More Info</Text>
         </TouchableOpacity>
       </View>
 
@@ -104,7 +103,7 @@ const SubmitRatingsScreen = ({ navigation }) => {
         handler={handleRate}
       />
 
-      <View style={styles.bottomSpace} />
+      <View style={styles.bottom_space} />
     </View>
   );
 };
@@ -117,9 +116,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#00C2FF",
   },
-  titleBox: {
-    flex: 1,
+  title_box: {
+    flex: 0.5,
     width: "70%",
+    height: "70%",
     paddingTop: "5%",
     alignItems: "center",
   },
@@ -127,8 +127,15 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 36,
     color: "white",
+    height: "70%",
   },
-  buttonContainer: {
+  fountain_image: {
+    flex: 1,
+    borderColor: "black",
+    borderWidth: 2,
+    width: "75%",
+  },
+  button_container: {
     flex: 1,
     flexDirection: "row",
     width: "90%",
@@ -142,15 +149,15 @@ const styles = StyleSheet.create({
     borderColor: "white",
     borderWidth: 1,
   },
-  buttonText: {
+  button_text: {
     color: "#FFFFFF",
     fontSize: 24,
     alignSelf: "center",
   },
-  bottomSpace: {
-    marginTop: '10%',
+  bottom_space: {
+    marginTop: "10%",
   },
-  backButton: {
+  back_button: {
     paddingTop: "10%",
     paddingLeft: "5%",
     fontSize: 18,
