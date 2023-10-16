@@ -4,6 +4,12 @@ import PropTypes from "prop-types";
 
 export default class RatingClicks extends React.Component {
   state = { rating: 0 };
+  name;
+
+  constructor(props) {
+    super(props);
+    this.name = props.name;
+  }
 
   handleRateClick = (rating) => {
     this.setState({ rating });
@@ -38,7 +44,15 @@ export default class RatingClicks extends React.Component {
   }
 
   render() {
-    return <View style={styles.container}>{this.renderRates()}</View>;
+    return (
+      <View style={{flexDirection: 'column', flex: 2, width: '100%',}}>
+        <View style={styles.rate_title_container}>
+          <Text style={styles.rate_title}>{this.name}</Text>
+          <Text style={[styles.rate_title, {textAlign: 'right'}]}>Rating: {this.state.rating}/5</Text>
+        </View>
+        <View style={styles.container}>{this.renderRates()}</View>
+      </View>
+    );
   }
 }
 
@@ -68,4 +82,18 @@ const styles = StyleSheet.create({
     width: null,
     resizeMode: "contain",
   },
+  rate_title_container: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  rate_title: {
+    flex: 1,
+    fontSize: 20,
+    color: "white",
+  },
 });
+
+
+RatingClicks.propTypes = {
+  name: PropTypes.string.isRequired,
+};

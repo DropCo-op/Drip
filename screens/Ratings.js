@@ -39,13 +39,13 @@ const SubmitRatingsScreen = ({ navigation }) => {
       </View>
 
       <View
-        style={{ flex: 2, borderColor: "black", borderWidth: 2, width: "75%" }}
+        style={{ flex: 1, borderColor: "black", borderWidth: 2, width: "75%" }}
       >
         {/* TODO: add image */}
         <Image
           style={{
-            height: 100,
-            width: 100,
+            height: '80%',
+            width: '80%',
             resizeMode: "contain",
             alignSelf: "center",
           }}
@@ -120,12 +120,12 @@ const styles = StyleSheet.create({
   titleBox: {
     flex: 1,
     width: "70%",
-    paddingTop: "10%",
+    paddingTop: "5%",
     alignItems: "center",
   },
   title: {
     flex: 1,
-    fontSize: 48,
+    fontSize: 36,
     color: "white",
   },
   buttonContainer: {
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "90%",
     columnGap: 5,
-    marginBottom: 10,
+    marginBottom: 20,
     marginTop: 20,
   },
   button: {
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   bottomSpace: {
-    flex: 1,
+    marginTop: '10%',
   },
   backButton: {
     paddingTop: "10%",

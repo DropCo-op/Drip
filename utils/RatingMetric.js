@@ -20,13 +20,14 @@ export default class RatingMetric extends React.Component {
   render() {
     return (
       <View style={styles.rate_container}>
-        <View style={styles.rate_title_container}>
+        {/* <View style={styles.rate_title_container}>
           <Text style={styles.rate_title}>{this.name}</Text>
-        </View>
+          <Text style={[styles.rate_title, {textAlign: 'right'}]}>Rating: 0/5</Text>
+        </View> */}
 
-        <RatingClicks handleRate={this.handler} />
+        <RatingClicks handleRate={this.handler} name={this.name}/>
 
-        <View style={{ flexDirection: "row", flex: 1 }}>
+        <View style={{ flexDirection: "row", flex: 1,}}>
           <View style={styles.rate_scale_left}>
             <Text style={styles.rate_scale_text}>{this.start}</Text>
           </View>
@@ -44,11 +45,13 @@ const styles = StyleSheet.create({
   rate_container: {
     flexDirection: "column",
     flex: 1,
-    marginBottom: "5%",
-    borderColor: 'yellow',
+    marginBottom: "1.5%",
+    // borderColor: 'yellow',
+    // borderWidth: 1,
   },
   rate_title_container: {
     flex: 1,
+    flexDirection: 'row',
   },
   rate_title: {
     flex: 1,
