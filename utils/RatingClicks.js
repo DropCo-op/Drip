@@ -54,7 +54,7 @@ export default class RatingClicks extends React.Component {
         <View style={styles.container}>{this.renderRates()}</View>
       </View>
     );
-  }
+  } 
 }
 
 const styles = StyleSheet.create({
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     height: "7%",
     flex: 1,
     borderColor: "white",
-    borderWidth: 2,
+    borderWidth: 1,
   },
   droplets: {
     padding: 5,
