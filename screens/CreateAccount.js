@@ -6,10 +6,17 @@ const CreateAccountScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
 
   const handleCreateAccount = () => {
-    navigation.navigate('Map');
+
+    if (password == confirmPassword){
+	navigation.navigate('Map');
+    } else {
+	console.log('Passwords do not match');
+	setErrorMessage("Passwords do not match; Please try again.");
+    }
   };
 
 
@@ -83,7 +90,17 @@ const CreateAccountScreen = ({ navigation }) => {
         <Text style={styles.buttonText}>Create Account</Text>
       </TouchableOpacity>
       <View style={styles.bottomSpace} />
-    </View>
+   
+
+      {/* Error message display */}
+      {errorMessage && (
+         <Text style={{ color: '#FFFFFF', textAlign: 'center' }}>{errorMessage}</Text>
+      )}
+      <View style={styles.errorSpace} />
+
+  </View>
+
+      
   );
 };
 
@@ -150,7 +167,10 @@ const styles = StyleSheet.create({
     fontSize: 24 
   },
   bottomSpace: {
-    flex: 2
+    marginBottom: '5%'
+  },
+  errorSpace: {
+    marginBottom: '5%'
   }
 });
 
