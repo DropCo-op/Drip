@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   },
   linkBox: {
     position: 'absolute',
-    top: 50,
+    top: '5%',
     flex: 1,
     flexDirection: "row",
     alignItems: "left",
