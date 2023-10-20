@@ -20,7 +20,7 @@ AWS.config.update({
   accessKeyId: awsCredentials.accessKeyId,
   secretAccessKey: awsCredentials.secretAccessKey
 });
-const s3 = new AWS.S3();
+export const s3 = new AWS.S3();
 
 const Stack = createNativeStackNavigator();
 
