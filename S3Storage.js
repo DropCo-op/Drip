@@ -1,6 +1,6 @@
-export async function uploadJsonObjectToS3(s3, key, object) {
+export async function uploadObjectToS3(s3, bucketName, key, object) {
   const params = {
-    Bucket: 'drip-fountains-eu',
+    Bucket: bucketName,
     Key: key, // The key (filename) under which the JSON object will be stored
     Body: JSON.stringify(object),
     ContentType: 'application/json', // Specify the content type as JSON
@@ -13,5 +13,9 @@ export async function uploadJsonObjectToS3(s3, key, object) {
       console.log('Object uploaded:', data.Location);
     }
   });
+}
+
+export async function retrieveObjectFromS3(s3, bucketName, key) {
+  // TODO: make this work
 }
 

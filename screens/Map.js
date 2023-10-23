@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from "expo-location";
@@ -10,6 +10,7 @@ const MapScreen = ({ navigation }) => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [initialLocation, setInitialLocation] = useState(null);
   const [coordinatesList, setMarkers] = useState(null);
+  const mapRef = useRef(null);
 
   useEffect(() => {
     const getLocation = async () => {
@@ -19,15 +20,21 @@ const MapScreen = ({ navigation }) => {
         return;
       }
 
-      let location = await Location.getCurrentPositionAsync({});
+      let location = await Location.getLastKnownPositionAsync();
       setCurrentLocation(location.coords);
 
+      const romeCoords = {
+        longitude: 12.4964,  
+        latitude: 41.9028
+      }
+
       setInitialLocation({
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-        latitudeDelta: 0.12,
-        longitudeDelta: 0.06,
+        latitude: romeCoords.latitude,
+        longitude: romeCoords.longitude,
+        latitudeDelta:  0.09,
+        longitudeDelta: 0.09,
       });
+      window.console.log("location has been set");
     };
     getLocation();
   }, []);
@@ -47,13 +54,42 @@ const MapScreen = ({ navigation }) => {
     }
   });
 
+  const navigateToTarget = () => {
+    try {
+      window.console.log("triggered");
+      const currentLocation = {
+        latitude: 99.9, 
+        longitude: 99.9
+      }
+      const targetCoordinate = {
+        latitude: 99.99,
+        longitude: 99.99
+      }
+      // Calculate the region to focus on both the user and target coordinate.
+      const region = {
+        latitude: (currentLocation.latitude + targetCoordinate.latitude) / 2,
+        longitude: (currentLocation.longitude + targetCoordinate.longitude) / 2,
+        latitudeDelta: Math.abs(currentLocation.latitude - targetCoordinate.latitude) * 1.5,
+        longitudeDelta: Math.abs(currentLocation.longitude - targetCoordinate.longitude) * 1.5,
+      };
+      window.console.log(currentLocation);
+
+      // Set the calculated region to the MapView, which will animate to that region.
+      mapRef.current.animateToRegion(region, 1000); // Adjust the duration as needed.
+    } catch (error) {
+      window.console.error('Error navigating to target:', error);
+    }
+  };
+
   const handleBackNavigation = () => {
     // Request location permission once the map mounts
     navigation.navigate('Login');
   }
 
-  const handleRatingsNavigation = () => {
-    navigation.navigate('Ratings');
+  const handleRatingsNavigation = (marker) => {
+    navigation.navigate('Ratings', marker);
+    window.console.log(marker);
+    window.console.log("this is the marker \n\n\n\n ");
   }
 
   return (
@@ -65,8 +101,10 @@ const MapScreen = ({ navigation }) => {
       </View>
       <View style={styles.map}>
         <MapView
+          ref={mapRef}
           region={initialLocation}
           showsUserLocation={true}
+          followsUserLocation={true}
           style={{width: '100%', height: '100%'}}
         >
           {coordinatesList && (
@@ -79,7 +117,7 @@ const MapScreen = ({ navigation }) => {
                   longitude: marker.longitude,
                 }}
                 title={marker.name}
-                onPress={handleRatingsNavigation}
+                onPress={() =>{window.console.log(marker); handleRatingsNavigation(marker)}}
                 />
               )
             })
