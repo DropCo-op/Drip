@@ -4,9 +4,9 @@ import {s3} from '../App';
 import { uploadObjectToS3 } from '../S3Storage.js';
 
 function User(myUsername, myEmail, myPassword) {
-  this.myUsername = myUsername;
-  this.myEmail = myEmail;
-  this.myPassword = myPassword;
+  this.myUsername = String(myUsername);
+  this.myEmail = String(myEmail);
+  this.myPassword = String(myPassword);
 }
 
 const CreateAccountScreen = ({ navigation }) => {
@@ -20,7 +20,7 @@ const CreateAccountScreen = ({ navigation }) => {
   const handleCreateAccount = () => {
 
     if (password == confirmPassword){
-	const userHash = username + '.json';
+	const userHash = username + ".json";
 	const newUser = new User(username, email, password);
 
 	uploadObjectToS3(s3, 'drip-users-eu', userHash, newUser);
