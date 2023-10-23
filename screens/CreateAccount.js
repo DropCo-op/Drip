@@ -3,25 +3,25 @@ import React, { useState } from 'react';
 import {s3} from '../App';
 import { uploadObjectToS3 } from '../S3Storage.js';
 
-function User(myUsername, myEmail, myPassword) {
-  this.myUsername = String(myUsername);
-  this.myEmail = String(myEmail);
-  this.myPassword = String(myPassword);
+function User(username, email, password) {
+  this.username = String(username);
+  this.email = String(email);
+  this.password = String(password);
 }
 
 const CreateAccountScreen = ({ navigation }) => {
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [myEmail, setMyEmail] = useState('');
+  const [myUsername, setMyUsername] = useState('');
+  const [myPassword, setMyPassword] = useState('');
+  const [myConfirmPassword, setMyConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
 
   const handleCreateAccount = () => {
 
-    if (password == confirmPassword){
-	const userHash = username + ".json";
-	const newUser = new User(username, email, password);
+    if (myPassword == myConfirmPassword){
+	const userHash = myUsername + ".json";
+	const newUser = new User(myUsername, myEmail, myPassword);
 
 	uploadObjectToS3(s3, 'drip-users-eu', userHash, newUser);
 	navigation.navigate('Map');
@@ -53,8 +53,8 @@ const CreateAccountScreen = ({ navigation }) => {
       </View>
       <TextInput
         style={styles.input}
-        onChangeText={(text) => setEmail(text)}
-        value={email}
+        onChangeText={(text) => setMyEmail(text)}
+        value={myEmail}
       />
      
       {/* username */}
@@ -63,8 +63,8 @@ const CreateAccountScreen = ({ navigation }) => {
       </View>
       <TextInput
         style={styles.input}
-        onChangeText={(text) => setUsername(text)}
-        value={username}
+        onChangeText={(text) => setMyUsername(text)}
+        value={myUsername}
       />
 
       {/* password */}
@@ -74,8 +74,8 @@ const CreateAccountScreen = ({ navigation }) => {
       <TextInput
         style={styles.input}
 
-        onChangeText={(text) => setPassword(text)}
-        value={password}
+        onChangeText={(text) => setMyPassword(text)}
+        value={myPassword}
       />
 
       {/* confirm password */}
@@ -85,8 +85,8 @@ const CreateAccountScreen = ({ navigation }) => {
       <TextInput
         style={styles.input}
 
-        onChangeText={(text) => setConfirmPassword(text)}
-        value={confirmPassword}
+        onChangeText={(text) => setMyConfirmPassword(text)}
+        value={myConfirmPassword}
 
       />
 
