@@ -1,14 +1,22 @@
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import React, { useState } from 'react';
+import {s3} from '../App';
 
 const LoginScreen = ({ navigation }) => {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
-    // Add your authentication logic here
-    // You can use Firebase, Axios, or any other method to authenticate the user
-    navigation.navigate('Map');
+    console.log("logging in...");
+    s3.getObject({Bucket: 'drip-users-eu', Key: username.concat('.json')}, (err, data) => {
+      if (err) {
+        console.log('Error retrieving JSON file from S3', err);
+      } else {
+        console.log("user found!");
+        console.log(JSON.parse(data.Body.toString()));
+        navigation.navigate('Map');
+      }
+    });
   };
 
   const handleCreateAccount = () => {
@@ -32,14 +40,14 @@ const LoginScreen = ({ navigation }) => {
         />
       </View>
 
-      {/* email */}
+      {/* username */}
       <View style={styles.inputLabelContainer}>
-        <Text style={styles.inputLabel}>Email</Text>
+        <Text style={styles.inputLabel}>Username</Text>
       </View>
       <TextInput
         style={styles.input}
-        onChangeText={(text) => setEmail(text)}
-        value={email}
+        onChangeText={(text) => setUsername(text)}
+        value={username}
       />
 
       {/* password */}
