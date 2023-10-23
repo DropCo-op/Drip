@@ -1,5 +1,13 @@
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import React, { useState } from 'react';
+import {s3} from '../App';
+import { uploadObjectToS3 } from '../S3Storage.js';
+
+function User(myUsername, myEmail, myPassword) {
+  this.myUsername = myUsername;
+  this.myEmail = myEmail;
+  this.myPassword = myPassword;
+}
 
 const CreateAccountScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -12,6 +20,10 @@ const CreateAccountScreen = ({ navigation }) => {
   const handleCreateAccount = () => {
 
     if (password == confirmPassword){
+	const userHash = username + '.json';
+	const newUser = new User(username, email, password);
+
+	uploadObjectToS3(s3, 'drip-users-eu', userHash, newUser);
 	navigation.navigate('Map');
     } else {
 	console.log('Passwords do not match');
