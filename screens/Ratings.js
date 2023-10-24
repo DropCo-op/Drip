@@ -3,9 +3,28 @@ import React, { useState } from "react";
 import BackBtn from "../utils/BackBtn";
 import RatingMetric from "../utils/RatingMetric";
 import RatingClicks from "../utils/RatingClicks";
+import { S3Storage } from "../S3Storage";
 
-const SubmitRatingsScreen = ({ navigation }) => {
+const SubmitRatingsScreen = ({ navigation, routes }) => {
+  console.log("in ratings...");
+  console.log(routes);
   state = { rating: 0 };
+
+  const [name, setName] = useState("");
+  const [temperature, setTemperature] = useState(0);
+  const [pressure, setPressure] = useState(0);
+  const [taste, setTaste] = useState(0);
+  const [busyness, setBusyness] = useState(0);
+
+  useEffect(() => {
+    console.log("hi \n\n\n");
+    console.log(routes.params);
+    // setName(routes.params[name]);
+    // setTemperature(routes.temperature);
+    // setPressure(routes.pressure);
+    // setTaste(routes.taste);
+    // setBusyness(routes.busyness);
+  }, []); // The empty dependency array [] means it runs only once on mount
 
   const handleBack = () => {
     navigation.navigate("Map");
@@ -14,7 +33,7 @@ const SubmitRatingsScreen = ({ navigation }) => {
   const handleSubmit = () => {
     // TODO: gray out the "submit" button, stays on the fountain page
     // TEMPORARY: goes to Login for now, but will need to change
-    navigation.navigate("Login");
+    // S3Storage(s3, "testFountain.json", routes);
   };
 
   const handleNav = () => {
@@ -23,7 +42,7 @@ const SubmitRatingsScreen = ({ navigation }) => {
 
   const handleInfo = () => {
     // TEMPORARY: set to "info" screen when available
-    navigation.navigate("MoreInfo");
+    navigation.navigate("MoreInfo", routes);
   };
 
   const handleRate = (selectedRating) => {
@@ -33,10 +52,11 @@ const SubmitRatingsScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <BackBtn handler={handleBack} style={styles.back_button} />
-      
+
       {/* title */}
       <View style={styles.title_box}>
         <Text style={styles.title}>Fountain (name)</Text>
+        {/* <Text style={styles.title}>Fountain: {routes.name}</Text> */}
       </View>
 
       <View style={styles.fountain_image}>
@@ -78,6 +98,7 @@ const SubmitRatingsScreen = ({ navigation }) => {
         name="Temperature"
         start="Hot"
         end="Cold"
+        rating={routes.temperature}
         handler={handleRate}
       />
 
@@ -86,6 +107,7 @@ const SubmitRatingsScreen = ({ navigation }) => {
         name="Pressure"
         start="Weak"
         end="Strong"
+        rating={routes.pressure}
         handler={handleRate}
       />
       {/* busyness */}
@@ -93,6 +115,7 @@ const SubmitRatingsScreen = ({ navigation }) => {
         name="Busyness"
         start="Crowded"
         end="Empty"
+        rating={routes.busyness}
         handler={handleRate}
       />
       {/* taste */}
@@ -100,6 +123,7 @@ const SubmitRatingsScreen = ({ navigation }) => {
         name="Taste"
         start="Gross"
         end="Quality"
+        rating={routes.taste}
         handler={handleRate}
       />
 

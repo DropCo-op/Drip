@@ -3,13 +3,16 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import PropTypes from "prop-types";
 
 export default class RatingClicks extends React.Component {
-  state = { rating: 0 };
   name;
+  rating;
 
   constructor(props) {
     super(props);
     this.name = props.name;
+    this.rating = props.rating;
   }
+
+  state = { rating: this.rating };
 
   handleRateClick = (rating) => {
     this.setState({ rating });
@@ -93,4 +96,5 @@ const styles = StyleSheet.create({
 
 RatingClicks.propTypes = {
   name: PropTypes.string.isRequired,
+  rating: PropTypes.number.isRequired,
 };

@@ -1,11 +1,30 @@
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BackBtn from "../utils/BackBtn";
 
-const MoreInfo = ({ navigation }) => {
+const MoreInfo = ({ navigation, fountain }) => {
   const handleBack = () => {
     navigation.navigate("Ratings");
   };
+
+  const fount = {
+    spoutCount: 2,
+    adjustableValve: true,
+    notes: "Not available",
+    history: "Not available",
+  };
+
+  const [spoutCount, setSpoutCount] = useState(0);
+  const [adjustValve, setAdjustValve] = useState(false);
+  const [notes, setNotes] = useState("");
+  const [history, setHistory] = useState("");
+
+  useEffect(() => {
+    setSpoutCount(fountain.spoutCount);
+    setAdjustValve(fountain.adjustableValve);
+    setNotes(fountain.notes);
+    setHistory(fountain.history);
+  }, []); // The empty dependency array [] means it runs only once on mount
 
   return (
     <View style={styles.container}>
@@ -36,21 +55,21 @@ const MoreInfo = ({ navigation }) => {
         <Text
           style={{ color: "white", textAlign: "left", flex: 1, fontSize: 24 }}
         >
-          Spout Count: 1
+          Spout Count: {spoutCount}
         </Text>
         <Text style={{ color: "white", textAlign: "right", flex: 1 }}>
-          Adjustable Valve? No
+          Adjustable Valve? {adjustValve}
         </Text>
       </View>
 
       <View style={styles.text_section}>
         <Text style={{ flex: 1, fontSize: 24, color: "white" }}>Notes</Text>
-        <Text style={styles.text_info}>Not available</Text>
+        <Text style={styles.text_info}>{notes}</Text>
       </View>
 
       <View style={styles.text_section}>
         <Text style={{ flex: 1, fontSize: 24, color: "white" }}>History</Text>
-        <Text style={styles.text_info}>Not available</Text>
+        <Text style={styles.text_info}>{history}</Text>
       </View>
     </View>
   );

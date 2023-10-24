@@ -7,6 +7,7 @@ export default class RatingMetric extends React.Component {
   name;
   start;
   end;
+  rating;
   handler;
 
   constructor(props) {
@@ -14,6 +15,7 @@ export default class RatingMetric extends React.Component {
     this.name = props.name;
     this.start = props.start;
     this.end = props.end;
+    this.rating = rating;
     this.handler = props.handler;
   }
 
@@ -21,7 +23,7 @@ export default class RatingMetric extends React.Component {
     return (
       <View style={styles.rate_container}>
         {/* title and 5-droplet rating system */}
-        <RatingClicks handleRate={this.handler} name={this.name} />
+        <RatingClicks handleRate={this.handler} name={this.name} rating={this.ratign}/>
 
         {/* scale description (ex: hot-cold) */}
         <View style={{ flexDirection: "row", flex: 1 }}>
@@ -62,5 +64,6 @@ RatingMetric.propTypes = {
   name: PropTypes.string.isRequired,
   start: PropTypes.string.isRequired,
   end: PropTypes.string.isRequired,
+  rating: PropTypes.number.isRequired,
   handler: PropTypes.func.isRequired,
 };
