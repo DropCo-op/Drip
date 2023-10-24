@@ -2,9 +2,9 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import React, { useState, useEffect } from "react";
 import BackBtn from "../utils/BackBtn";
 
-const MoreInfo = ({ navigation, fountain }) => {
+const MoreInfo = ({ navigation, route }) => {
   const handleBack = () => {
-    navigation.navigate("Ratings");
+    navigation.navigate("Ratings", route.params);
   };
 
   const fount = {
@@ -15,15 +15,17 @@ const MoreInfo = ({ navigation, fountain }) => {
   };
 
   const [spoutCount, setSpoutCount] = useState(0);
-  const [adjustValve, setAdjustValve] = useState(false);
+  const [adjustableValve, setAdjustableValve] = useState(false);
   const [notes, setNotes] = useState("");
   const [history, setHistory] = useState("");
+  const [name, setName] = useState("");
 
   useEffect(() => {
-    setSpoutCount(fountain.spoutCount);
-    setAdjustValve(fountain.adjustableValve);
-    setNotes(fountain.notes);
-    setHistory(fountain.history);
+    setSpoutCount(route.params["spoutCount"]);
+    setAdjustableValve(route.params["adjustableValve"]);
+    setNotes(route.params["notes"]);
+    setHistory(route.params["history"]);
+    setName(route.params["name"]);
   }, []); // The empty dependency array [] means it runs only once on mount
 
   return (
@@ -32,23 +34,23 @@ const MoreInfo = ({ navigation, fountain }) => {
 
       {/* title */}
       <View style={styles.title_box}>
-        <Text style={styles.title}>Fountain (name)</Text>
+        <Text style={styles.title}>{name}</Text>
       </View>
 
       <View style={styles.fountain_image}>
         {/* TODO: add image */}
         <Image
           style={{
-            height: "80%",
-            width: "80%",
-            resizeMode: "contain",
+            height: "100%",
+            width: "100%",
+            resizeMode: "fill",
             alignSelf: "center",
           }}
-          source={require("../assets/logo.png")}
+          source={require("../assets/nasoni.jpeg")}
         />
-        <Text style={{ color: "white", alignSelf: "center" }}>
+        {/* <Text style={{ color: "white", alignSelf: "center" }}>
           [Temporary Image]
-        </Text>
+        </Text> */}
       </View>
 
       <View style={{ flex: 0.5, flexDirection: "row", marginTop: "5%" }}>
@@ -57,18 +59,18 @@ const MoreInfo = ({ navigation, fountain }) => {
         >
           Spout Count: {spoutCount}
         </Text>
-        <Text style={{ color: "white", textAlign: "right", flex: 1 }}>
-          Adjustable Valve? {adjustValve}
+        <Text style={{ color: "white", textAlign: "right", flex: 1, fontSize: 24 }}>
+          Adjustable? {adjustableValve? "Yes" : "No"}
         </Text>
       </View>
 
       <View style={styles.text_section}>
-        <Text style={{ flex: 1, fontSize: 24, color: "white" }}>Notes</Text>
+        <Text style={{ flex: 0.5, fontSize: 24, color: "white" }}>Notes</Text>
         <Text style={styles.text_info}>{notes}</Text>
       </View>
 
       <View style={styles.text_section}>
-        <Text style={{ flex: 1, fontSize: 24, color: "white" }}>History</Text>
+        <Text style={{ flex: 0.5, fontSize: 24, color: "white" }}>History</Text>
         <Text style={styles.text_info}>{history}</Text>
       </View>
     </View>
@@ -108,6 +110,8 @@ const styles = StyleSheet.create({
     flex: 3,
     flexDirection: "column",
     width: "100%",
+    paddingTop: 0,
+    marginTop: 0,
   },
   text_info: {
     flexWrap: "wrap",
@@ -115,6 +119,9 @@ const styles = StyleSheet.create({
     color: "white",
     borderColor: "white",
     borderWidth: 2,
+    fontSize: 24,
+    marginBottom: 20, 
+    padding: "2.5%",
   },
   back_button: {
     paddingTop: "10%",

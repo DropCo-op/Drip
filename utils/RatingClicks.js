@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import PropTypes from "prop-types";
 
-export default class RatingClicks extends React.Component {
+export default class RatingClicks extends Component {
   name;
   rating;
 
@@ -10,9 +10,8 @@ export default class RatingClicks extends React.Component {
     super(props);
     this.name = props.name;
     this.rating = props.rating;
+    this.state = { rating: props.rating };
   }
-
-  state = { rating: this.rating };
 
   handleRateClick = (rating) => {
     this.setState({ rating });
@@ -21,7 +20,7 @@ export default class RatingClicks extends React.Component {
   renderRates() {
     const { rating } = this.state;
     const drops = [];
-
+    console.log(this.state);
     for (let i = 1; i <= 5; i++) {
       drops.push(
         <TouchableOpacity
@@ -57,7 +56,7 @@ export default class RatingClicks extends React.Component {
         <View style={styles.container}>{this.renderRates()}</View>
       </View>
     );
-  } 
+  }
 }
 
 const styles = StyleSheet.create({

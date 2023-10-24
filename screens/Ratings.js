@@ -1,13 +1,13 @@
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BackBtn from "../utils/BackBtn";
 import RatingMetric from "../utils/RatingMetric";
 import RatingClicks from "../utils/RatingClicks";
 import { S3Storage } from "../S3Storage";
 
-const SubmitRatingsScreen = ({ navigation, routes }) => {
+const SubmitRatingsScreen = ({ navigation, route }) => {
   console.log("in ratings...");
-  console.log(routes);
+  console.log(route);
   state = { rating: 0 };
 
   const [name, setName] = useState("");
@@ -18,12 +18,12 @@ const SubmitRatingsScreen = ({ navigation, routes }) => {
 
   useEffect(() => {
     console.log("hi \n\n\n");
-    console.log(routes.params);
-    // setName(routes.params[name]);
-    // setTemperature(routes.temperature);
-    // setPressure(routes.pressure);
-    // setTaste(routes.taste);
-    // setBusyness(routes.busyness);
+    console.log(route.params);
+    setName(route.params["name"]);
+    setTemperature(route.params["temperature"]);
+    setPressure(route.params["pressure"]);
+    setTaste(route.params["taste"]);
+    setBusyness(route.params["busyness"]);
   }, []); // The empty dependency array [] means it runs only once on mount
 
   const handleBack = () => {
@@ -33,7 +33,13 @@ const SubmitRatingsScreen = ({ navigation, routes }) => {
   const handleSubmit = () => {
     // TODO: gray out the "submit" button, stays on the fountain page
     // TEMPORARY: goes to Login for now, but will need to change
-    // S3Storage(s3, "testFountain.json", routes);
+    // S3Storage(s3, "testFountain.json", route);
+    const ratings = { ...route.params };
+    console.log(ratings);
+    ratings["temperature"] = temperature;
+    ratings["pressure"] = pressure;
+    ratings["taste"] = taste;
+    ratings["busyness"] = busyness;
   };
 
   const handleNav = () => {
@@ -42,12 +48,14 @@ const SubmitRatingsScreen = ({ navigation, routes }) => {
 
   const handleInfo = () => {
     // TEMPORARY: set to "info" screen when available
-    navigation.navigate("MoreInfo", routes);
+    navigation.navigate("MoreInfo", route.params);
   };
 
   const handleRate = (selectedRating) => {
     this.setRatings({ selectedRating });
   };
+
+  console.log(route.params["temperature"]);
 
   return (
     <View style={styles.container}>
@@ -55,24 +63,24 @@ const SubmitRatingsScreen = ({ navigation, routes }) => {
 
       {/* title */}
       <View style={styles.title_box}>
-        <Text style={styles.title}>Fountain (name)</Text>
-        {/* <Text style={styles.title}>Fountain: {routes.name}</Text> */}
+        {/* <Text style={styles.title}>Fountain (name)</Text> */}
+        <Text style={styles.title}>{route.params["name"]}</Text>
       </View>
 
       <View style={styles.fountain_image}>
         {/* TODO: add image */}
         <Image
           style={{
-            height: "80%",
-            width: "80%",
-            resizeMode: "contain",
+            height: "100%",
+            width: "100%",
+            resizeMode: "fill",
             alignSelf: "center",
           }}
-          source={require("../assets/logo.png")}
+          source={require("../assets/nasoni.jpeg")}
         />
-        <Text style={{ color: "white", alignSelf: "center" }}>
+        {/* <Text style={{ color: "white", alignSelf: "center" }}>
           [Temporary Image]
-        </Text>
+        </Text> */}
       </View>
 
       {/* container for three buttons */}
@@ -98,7 +106,7 @@ const SubmitRatingsScreen = ({ navigation, routes }) => {
         name="Temperature"
         start="Hot"
         end="Cold"
-        rating={routes.temperature}
+        rating={route.params["temperature"]}
         handler={handleRate}
       />
 
@@ -107,7 +115,7 @@ const SubmitRatingsScreen = ({ navigation, routes }) => {
         name="Pressure"
         start="Weak"
         end="Strong"
-        rating={routes.pressure}
+        rating={route.params["pressure"]}
         handler={handleRate}
       />
       {/* busyness */}
@@ -115,7 +123,7 @@ const SubmitRatingsScreen = ({ navigation, routes }) => {
         name="Busyness"
         start="Crowded"
         end="Empty"
-        rating={routes.busyness}
+        rating={route.params["busyness"]}
         handler={handleRate}
       />
       {/* taste */}
@@ -123,7 +131,7 @@ const SubmitRatingsScreen = ({ navigation, routes }) => {
         name="Taste"
         start="Gross"
         end="Quality"
-        rating={routes.taste}
+        rating={route.params["taste"]}
         handler={handleRate}
       />
 
