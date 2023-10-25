@@ -1,4 +1,4 @@
-import {s3} from '../App';
+import { s3 } from "../S3Storage";
 
 export async function getFountains(){
     dummyData = await retrieveFountainsFromS3(s3);
