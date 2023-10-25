@@ -1,7 +1,8 @@
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import React, { useState } from 'react';
-import {s3} from '../App';
+import {s3} from '../S3Storage.js';
 import { uploadObjectToS3 } from '../S3Storage.js';
+
 
 function User(username, email, password) {
   this.username = String(username);
@@ -21,9 +22,10 @@ const CreateAccountScreen = ({ navigation }) => {
 
     if (myPassword == myConfirmPassword){
 	const userHash = myUsername + ".json";
-	const newUser = new User(myUsername, myEmail, myPassword);
+	const passwordHash = myPassword; // FIX
+	const newUser = new User(myUsername, myEmail, passwordHash);
 
-	uploadObjectToS3(s3, 'drip-users-eu', userHash, newUser);
+	uploadObjectToS3('drip-users-eu', userHash, newUser);
 	navigation.navigate('Map');
     } else {
 	console.log('Passwords do not match');
