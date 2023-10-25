@@ -1,6 +1,7 @@
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import React, { useState, useEffect } from "react";
 import BackBtn from "../utils/BackBtn";
+import { s3, uploadObjectToS3 } from "../S3Storage";
 
 const MoreInfo = ({ navigation, route }) => {
   const handleBack = () => {
@@ -43,14 +44,11 @@ const MoreInfo = ({ navigation, route }) => {
           style={{
             height: "100%",
             width: "100%",
-            resizeMode: "fill",
+            resizeMode: "cover",
             alignSelf: "center",
           }}
           source={require("../assets/nasoni.jpeg")}
         />
-        {/* <Text style={{ color: "white", alignSelf: "center" }}>
-          [Temporary Image]
-        </Text> */}
       </View>
 
       <View style={{ flex: 0.5, flexDirection: "row", marginTop: "5%" }}>
@@ -59,18 +57,20 @@ const MoreInfo = ({ navigation, route }) => {
         >
           Spout Count: {spoutCount}
         </Text>
-        <Text style={{ color: "white", textAlign: "right", flex: 1, fontSize: 24 }}>
-          Adjustable? {adjustableValve? "Yes" : "No"}
+        <Text
+          style={{ color: "white", textAlign: "right", flex: 1, fontSize: 24 }}
+        >
+          Adjustable? {adjustableValve ? "Yes" : "No"}
         </Text>
       </View>
 
       <View style={styles.text_section}>
-        <Text style={{ flex: 0.5, fontSize: 24, color: "white" }}>Notes</Text>
+        <Text style={{ flex: 1, fontSize: 24, color: "white" }}>Notes</Text>
         <Text style={styles.text_info}>{notes}</Text>
       </View>
 
       <View style={styles.text_section}>
-        <Text style={{ flex: 0.5, fontSize: 24, color: "white" }}>History</Text>
+        <Text style={{ flex: 1, fontSize: 24, color: "white" }}>History</Text>
         <Text style={styles.text_info}>{history}</Text>
       </View>
     </View>
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     borderColor: "white",
     borderWidth: 2,
     fontSize: 24,
-    marginBottom: 20, 
+    marginBottom: 20,
     padding: "2.5%",
   },
   back_button: {
