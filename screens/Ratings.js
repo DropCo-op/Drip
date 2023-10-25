@@ -34,8 +34,6 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
 
   const handleSubmit = () => {
     // TODO: gray out the "submit" button, stays on the fountain page
-    // TEMPORARY: goes to Login for now, but will need to change
-    // S3Storage(s3, "testFountain.json", route);
     const ratings = { ...route.params };
     ratings["temperature"] = temperature;
     ratings["pressure"] = pressure;
@@ -52,7 +50,6 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
   };
 
   const handleInfo = () => {
-    // TEMPORARY: set to "info" screen when available
     navigation.navigate("MoreInfo", route.params);
   };
 
@@ -93,7 +90,6 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
 
       {/* title */}
       <View style={styles.title_box}>
-        {/* <Text style={styles.title}>Fountain (name)</Text> */}
         <Text style={styles.title}>{route.params["name"]}</Text>
       </View>
 
@@ -108,9 +104,6 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
           }}
           source={require("../assets/nasoni.jpeg")}
         />
-        {/* <Text style={{ color: "white", alignSelf: "center" }}>
-          [Temporary Image]
-        </Text> */}
       </View>
 
       {/* container for three buttons */}

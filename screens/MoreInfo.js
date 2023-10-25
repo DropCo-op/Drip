@@ -48,9 +48,6 @@ const MoreInfo = ({ navigation, route }) => {
           }}
           source={require("../assets/nasoni.jpeg")}
         />
-        {/* <Text style={{ color: "white", alignSelf: "center" }}>
-          [Temporary Image]
-        </Text> */}
       </View>
 
       <View style={{ flex: 0.5, flexDirection: "row", marginTop: "5%" }}>
