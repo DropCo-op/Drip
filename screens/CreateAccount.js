@@ -5,6 +5,33 @@ import { uploadObjectToS3 } from '../S3Storage.js';
 import sha256 from 'js-sha256';
 
 
+
+// check if email is valid
+function emailCheck(emailInput){
+	const validEnds = ['com', 'net', 'org', 'edu'];
+	const emailSplit = emailInput.split('@');
+
+	// check for only one '@'
+	if (emailSplit.length !== 2) {
+   		return false; 
+  	}
+
+	const [eBeg, eEnd] = emailSplit;
+	const eEnds = eEnd.split('.');
+	const realEnd =  eEnds[eEnds.length - 1].toLowerCase();
+
+	if (
+		eBeg.match(/^[A-Z0-9._%+-]+$/i) && // check start
+    		validEnds.includes(realEnd) // check valid ends
+	){
+    		return true;
+  	}
+
+  	return false;
+}	
+
+
+// create new user
 function User(username, email, password) {
   this.username = String(username);
   this.email = String(email);
@@ -21,7 +48,55 @@ const CreateAccountScreen = ({ navigation }) => {
 
   const handleCreateAccount = () => {
 
-    if (myPassword == myConfirmPassword){
+	var proceed = true;
+
+	// check that all spaces have something entered
+	if (myEmail.length == 0){
+		proceed = false;
+		console.log('Email not entered');
+		setErrorMessage("Please enter an email.");
+	}
+
+	if (myUsername.length == 0){
+		proceed = false;
+		console.log('Username not entered');
+		setErrorMessage("Please enter a username.");
+	}
+
+	if (myPassword.length == 0){
+		proceed = false;
+		console.log('Password not entered');
+		setErrorMessage("Please enter a password");
+	}
+
+	if (myConfirmPassword.length == 0){
+		proceed = false;
+		console.log('Confirm Password not entered');
+		setErrorMessage("Please confirm your password.");
+	}
+
+	// check if email is valid
+	if (emailCheck(myEmail) == false){
+		proceed = false;
+		console.log('Invalid email');
+		setErrorMessage("Invalid email. Please try again.");
+	}
+
+	// check if username is between 6 and 32 chars
+	
+
+	// check if any other users have that username
+	
+
+	// check if passwords match
+	if (myPassword != myConfirmPassword){
+		proceed = false;
+		console.log('Passwords do not match');
+		setErrorMessage("Passwords do not match; Please try again.");
+	}
+
+
+    if (proceed == true){
 	const userHash = myUsername + ".json";	
 	const passHash = sha256(myPassword);
 	const newUser = new User(myUsername, myEmail, passHash);
@@ -29,11 +104,9 @@ const CreateAccountScreen = ({ navigation }) => {
 	uploadObjectToS3('drip-users-eu', userHash, newUser);
 	navigation.navigate('Map');
     } else {
-	console.log('Passwords do not match');
-	setErrorMessage("Passwords do not match; Please try again.");
+	console.log('Error creating account');
     }
   };
-
 
   const handleBack = () => {
     navigation.navigate('Login');
@@ -56,6 +129,10 @@ const CreateAccountScreen = ({ navigation }) => {
       </View>
       <TextInput
         style={styles.input}
+	autoCapitalize="none"
+        autoComplete="off"
+        autoCorrect={false}
+
         onChangeText={(text) => setMyEmail(text)}
         value={myEmail}
       />
@@ -66,6 +143,10 @@ const CreateAccountScreen = ({ navigation }) => {
       </View>
       <TextInput
         style={styles.input}
+	autoCapitalize="none"
+        autoComplete="off"
+        autoCorrect={false}
+
         onChangeText={(text) => setMyUsername(text)}
         value={myUsername}
       />
@@ -76,6 +157,10 @@ const CreateAccountScreen = ({ navigation }) => {
       </View>
       <TextInput
         style={styles.input}
+	secureTextEntry={true}
+	autoCapitalize="none"
+        autoComplete="off"
+        autoCorrect={false}
 
         onChangeText={(text) => setMyPassword(text)}
         value={myPassword}
@@ -87,6 +172,10 @@ const CreateAccountScreen = ({ navigation }) => {
       </View>
       <TextInput
         style={styles.input}
+	secureTextEntry={true}
+	autoCapitalize="none"
+        autoComplete="off"
+        autoCorrect={false}
 
         onChangeText={(text) => setMyConfirmPassword(text)}
         value={myConfirmPassword}
