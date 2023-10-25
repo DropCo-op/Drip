@@ -24,10 +24,6 @@ const CreateAccountScreen = ({ navigation }) => {
     if (myPassword == myConfirmPassword){
 	const userHash = myUsername + ".json";	
 	const passHash = sha256(myPassword);
-
-	console.log('password');
-	console.log(passHash);	
-
 	const newUser = new User(myUsername, myEmail, passHash);
 
 	uploadObjectToS3('drip-users-eu', userHash, newUser);
