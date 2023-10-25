@@ -11,17 +11,6 @@ import CreateAccountScreen from './screens/CreateAccount.js';
 import SubmitRatingsScreen from "./screens/Ratings.js";
 import MoreInfoScreen from "./screens/MoreInfo.js";
 
-// backend
-import AWS from 'aws-sdk';
-import awsCredentials from './aws-credentials.json';
-import { uploadJsonObjectToS3 } from './S3Storage'; // Adjust the import path as needed
-AWS.config.update({
-  region: 'eu-west-3',
-  accessKeyId: awsCredentials.accessKeyId,
-  secretAccessKey: awsCredentials.secretAccessKey
-});
-export const s3 = new AWS.S3();
-
 const Stack = createNativeStackNavigator();
 
 const App = () => {

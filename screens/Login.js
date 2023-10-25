@@ -1,37 +1,48 @@
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { SafeAreaView, View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import React, { useState } from 'react';
-import {s3} from '../App';
+import { s3 } from "../S3Storage";
 
 const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
-    console.log("logging in...");
+    // check username
     s3.getObject({Bucket: 'drip-users-eu', Key: username.concat('.json')}, (err, data) => {
       if (err) {
-        console.log('Error retrieving JSON file from S3', err);
-      } else {
-        console.log("user found!");
-        console.log(JSON.parse(data.Body.toString()));
-        navigation.navigate('Map');
+        if (err.code == 'NoSuchKey') {
+          console.log('key does not exist');
+        }
+        else {
+          console.log('Error connecting to s3 bucket');
+        }
+      }
+      else {
+        // check password match
+        user = JSON.parse(data.Body.toString());
+        if (password == user.password) {
+          navigation.navigate('Map');
+        }
+        else {
+          console.log('Password incorrect');
+        }
       }
     });
   };
 
   const handleCreateAccount = () => {
     // navigation.navigate('Login');
-    console.log("Create account");
+    // console.log("Create account");
     navigation.navigate('CreateAccount');
   };
 
   const handleForgotPassword = () => {
     // navigation.navigate('Login');
-    console.log("Forgot Password");
+    // console.log("Forgot Password");
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {/* title */}
       <View style={styles.titleBox}>
         <Image
@@ -48,6 +59,9 @@ const LoginScreen = ({ navigation }) => {
         style={styles.input}
         onChangeText={(text) => setUsername(text)}
         value={username}
+        autoCapitalize="none"
+        autoComplete="off"
+        autoCorrect={false}
       />
 
       {/* password */}
@@ -59,6 +73,9 @@ const LoginScreen = ({ navigation }) => {
         onChangeText={(text) => setPassword(text)}
         value={password}
         secureTextEntry={true}
+        autoCapitalize="none"
+        autoComplete="off"
+        autoCorrect={false}
       />
 
       {/* create account, forgot password */}
@@ -76,7 +93,7 @@ const LoginScreen = ({ navigation }) => {
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
       <View style={styles.bottomSpace} />
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -101,7 +118,8 @@ const styles = StyleSheet.create({
   inputLabelContainer: {
     flex: 1,
     flexDirection: "row",
-    alignItems: "left"
+    alignItems: "left",
+    marginBottom: "1%",
   },
   inputLabel: {
     flex: 1,
@@ -117,7 +135,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginBottom: "5%",
     color: "#FFFFFF",
-    fontSize: 16
+    fontSize: 16,
   },
   linkBox: {
     flex: 1,
