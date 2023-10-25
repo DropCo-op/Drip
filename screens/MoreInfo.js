@@ -46,6 +46,7 @@ const MoreInfo = ({ navigation, route }) => {
             width: "100%",
             resizeMode: "cover",
             alignSelf: "center",
+            borderRadius: 15,
           }}
           source={require("../assets/nasoni.jpeg")}
         />
@@ -105,6 +106,7 @@ const styles = StyleSheet.create({
     borderColor: "black",
     borderWidth: 2,
     width: "75%",
+    borderRadius: 15,
   },
   text_section: {
     flex: 3,
@@ -119,6 +121,7 @@ const styles = StyleSheet.create({
     color: "white",
     borderColor: "white",
     borderWidth: 2,
+    borderRadius: 15,
     fontSize: 24,
     marginBottom: 20,
     padding: "2.5%",

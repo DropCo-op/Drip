@@ -99,6 +99,7 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
             width: "100%",
             resizeMode: "cover",
             alignSelf: "center",
+            borderRadius: 15,
           }}
           source={require("../assets/nasoni.jpeg")}
         />
@@ -186,13 +187,14 @@ const styles = StyleSheet.create({
     flex: 1,
     borderColor: "black",
     borderWidth: 2,
+    borderRadius: 15,
     width: "75%",
   },
   button_container: {
     flex: 1,
     flexDirection: "row",
     width: "90%",
-    columnGap: 5,
+    columnGap: 15,
     marginBottom: 20,
     marginTop: 20,
   },
@@ -201,6 +203,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderColor: "white",
     borderWidth: 1,
+    borderRadius: 15,
   },
   button_text: {
     color: "#FFFFFF",
