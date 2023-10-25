@@ -5,16 +5,20 @@ import PropTypes from "prop-types";
 export default class RatingClicks extends Component {
   name;
   rating;
+  parentHandler;
 
   constructor(props) {
     super(props);
     this.name = props.name;
     this.rating = props.rating;
     this.state = { rating: props.rating };
+    this.parentHandler = props.parentHandler;
   }
 
   handleRateClick = (rating) => {
     this.setState({ rating });
+    console.log("RatingClicks: " + rating);
+    this.parentHandler(rating);
   };
 
   renderRates() {
@@ -96,4 +100,5 @@ const styles = StyleSheet.create({
 RatingClicks.propTypes = {
   name: PropTypes.string.isRequired,
   rating: PropTypes.number.isRequired,
+  parentHandler: PropTypes.func.isRequired,
 };

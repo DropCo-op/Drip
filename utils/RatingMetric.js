@@ -24,7 +24,7 @@ export default class RatingMetric extends React.Component {
       <View style={styles.rate_container}>
         {/* title and 5-droplet rating system */}
         <RatingClicks
-          handleRate={this.handler}
+          parentHandler={this.handler}
           name={this.name}
           rating={this.rating}
         />

@@ -3,12 +3,14 @@ import React, { useState, useEffect } from "react";
 import BackBtn from "../utils/BackBtn";
 import RatingMetric from "../utils/RatingMetric";
 import RatingClicks from "../utils/RatingClicks";
-import { S3Storage } from "../S3Storage";
+import { uploadObjectToS3 } from "../S3Storage";
+import { s3 } from "../App";
 
 const SubmitRatingsScreen = ({ navigation, route }) => {
   console.log("in ratings...");
   console.log(route);
-  state = { rating: 0 };
+  // state = { rating: 0 };
+  const [state, setState] = useState(0);
 
   const [name, setName] = useState("");
   const [temperature, setTemperature] = useState(0);
@@ -35,11 +37,14 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
     // TEMPORARY: goes to Login for now, but will need to change
     // S3Storage(s3, "testFountain.json", route);
     const ratings = { ...route.params };
-    console.log(ratings);
     ratings["temperature"] = temperature;
     ratings["pressure"] = pressure;
     ratings["taste"] = taste;
     ratings["busyness"] = busyness;
+
+    const key = ratings["name"] + ".json";
+
+    uploadObjectToS3(s3, "drip-fountains-eu", key, ratings);
   };
 
   const handleNav = () => {
@@ -52,10 +57,35 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
   };
 
   const handleRate = (selectedRating) => {
-    this.setRatings({ selectedRating });
+    setState(selectedRating);
+    console.log(state);
   };
 
-  console.log(route.params["temperature"]);
+  const handleTemperature = (selectedRating) => {
+    console.log("Before Temperature: " + temperature);
+    console.log(temperature);
+    setTemperature(selectedRating);
+    console.log("After Temperature: " + temperature);
+  };
+
+  const handlePressure = (selectedRating) => {
+    console.log("Before Pressure: " + pressure);
+    setPressure(selectedRating);
+    console.log("After Pressure: " + pressure);
+  };
+
+  const handleTaste = (selectedRating) => {
+    console.log("Before Taste: " + taste);
+    setTaste(selectedRating);
+    console.log("After Taste: " + selectedRating);
+  };
+
+  const handleBusyness = (selectedRating) => {
+    console.log(selectedRating);
+    console.log("Before Busyness: " + busyness);
+    setBusyness(selectedRating);
+    console.log("After Busyness: " + selectedRating);
+  };
 
   return (
     <View style={styles.container}>
@@ -73,7 +103,7 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
           style={{
             height: "100%",
             width: "100%",
-            resizeMode: "fill",
+            resizeMode: "cover",
             alignSelf: "center",
           }}
           source={require("../assets/nasoni.jpeg")}
@@ -107,7 +137,7 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
         start="Hot"
         end="Cold"
         rating={route.params["temperature"]}
-        handler={handleRate}
+        handler={handleTemperature}
       />
 
       {/* pressure */}
@@ -116,7 +146,7 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
         start="Weak"
         end="Strong"
         rating={route.params["pressure"]}
-        handler={handleRate}
+        handler={handlePressure}
       />
       {/* busyness */}
       <RatingMetric
@@ -124,7 +154,7 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
         start="Crowded"
         end="Empty"
         rating={route.params["busyness"]}
-        handler={handleRate}
+        handler={handleBusyness}
       />
       {/* taste */}
       <RatingMetric
@@ -132,7 +162,7 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
         start="Gross"
         end="Quality"
         rating={route.params["taste"]}
-        handler={handleRate}
+        handler={handleTaste}
       />
 
       <View style={styles.bottom_space} />
