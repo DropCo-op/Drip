@@ -1,12 +1,11 @@
-import { useState, useEffect, useRef } from 'react';
-import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import { useState, useEffect, useRef } from "react";
+import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
+import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
-import { getFountains } from '../utils/Fountains';
-import {s3} from '../App';
+import { getFountains } from "../utils/Fountains";
+import { s3 } from "../S3Storage";
 
 const MapScreen = ({ navigation }) => {
- 
   const [currentLocation, setCurrentLocation] = useState(null);
   const [initialLocation, setInitialLocation] = useState(null);
   const [coordinatesList, setMarkers] = useState(null);
@@ -24,14 +23,14 @@ const MapScreen = ({ navigation }) => {
       setCurrentLocation(location.coords);
 
       const romeCoords = {
-        longitude: 12.4964,  
-        latitude: 41.9028
-      }
+        longitude: 12.4964,
+        latitude: 41.9028,
+      };
 
       setInitialLocation({
         latitude: romeCoords.latitude,
         longitude: romeCoords.longitude,
-        latitudeDelta:  0.09,
+        latitudeDelta: 0.09,
         longitudeDelta: 0.09,
       });
       window.console.log("location has been set");
@@ -40,13 +39,13 @@ const MapScreen = ({ navigation }) => {
   }, []);
 
   const getParams = {
-    Bucket: 'drip-fountains-eu',
-    Key: 'fountains.json'
-  }
+    Bucket: "drip-fountains-eu",
+    Key: "fountains.json",
+  };
 
   s3.getObject(getParams, (err, data) => {
     if (err) {
-      console.error('Error retrieving JSON file from S3', err);
+      console.error("Error retrieving JSON file from S3", err);
     } else {
       setMarkers(JSON.parse(data.Body.toString())["fountains"]);
       // Now you have your coordinatesList, which should be an array of coordinates.
@@ -58,43 +57,46 @@ const MapScreen = ({ navigation }) => {
     try {
       window.console.log("triggered");
       const currentLocation = {
-        latitude: 99.9, 
-        longitude: 99.9
-      }
+        latitude: 99.9,
+        longitude: 99.9,
+      };
       const targetCoordinate = {
         latitude: 99.99,
-        longitude: 99.99
-      }
+        longitude: 99.99,
+      };
       // Calculate the region to focus on both the user and target coordinate.
       const region = {
         latitude: (currentLocation.latitude + targetCoordinate.latitude) / 2,
         longitude: (currentLocation.longitude + targetCoordinate.longitude) / 2,
-        latitudeDelta: Math.abs(currentLocation.latitude - targetCoordinate.latitude) * 1.5,
-        longitudeDelta: Math.abs(currentLocation.longitude - targetCoordinate.longitude) * 1.5,
+        latitudeDelta:
+          Math.abs(currentLocation.latitude - targetCoordinate.latitude) * 1.5,
+        longitudeDelta:
+          Math.abs(currentLocation.longitude - targetCoordinate.longitude) *
+          1.5,
       };
       window.console.log(currentLocation);
 
       // Set the calculated region to the MapView, which will animate to that region.
       mapRef.current.animateToRegion(region, 1000); // Adjust the duration as needed.
     } catch (error) {
-      window.console.error('Error navigating to target:', error);
+      window.console.error("Error navigating to target:", error);
     }
   };
 
   const handleBackNavigation = () => {
     // Request location permission once the map mounts
-    navigation.navigate('Login');
-  }
+    navigation.navigate("Login");
+  };
 
   const handleRatingsNavigation = (marker) => {
-    navigation.navigate('Ratings', marker);
+    navigation.navigate("Ratings", marker);
     window.console.log(marker);
     window.console.log("this is the marker \n\n\n\n ");
-  }
+  };
 
   return (
     <View style={styles.container}>
-      <View >
+      <View>
         <TouchableOpacity onPress={handleBackNavigation}>
           <Text style={styles.backButton}>&lt; Sign Out</Text>
         </TouchableOpacity>
@@ -105,23 +107,24 @@ const MapScreen = ({ navigation }) => {
           region={initialLocation}
           showsUserLocation={true}
           followsUserLocation={true}
-          style={{width: '100%', height: '100%'}}
+          style={{ width: "100%", height: "100%" }}
         >
-          {coordinatesList && (
-            coordinatesList.map(
-              (marker)=> {
+          {coordinatesList &&
+            coordinatesList.map((marker) => {
               return (
                 <Marker
-                coordinate={{
-                  latitude: marker.latitude,
-                  longitude: marker.longitude,
-                }}
-                title={marker.name}
-                onPress={() =>{window.console.log(marker); handleRatingsNavigation(marker)}}
+                  coordinate={{
+                    latitude: marker.latitude,
+                    longitude: marker.longitude,
+                  }}
+                  title={marker.name}
+                  onPress={() => {
+                    window.console.log(marker);
+                    handleRatingsNavigation(marker);
+                  }}
                 />
-              )
-            })
-          )}
+              );
+            })}
         </MapView>
       </View>
     </View>
@@ -130,20 +133,18 @@ const MapScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   backButton: {
-    paddingTop:"10%",
-    paddingLeft: '5%',
+    paddingTop: "10%",
+    paddingLeft: "5%",
     fontSize: 18,
-    color: 'grey'
+    color: "grey",
   },
   map: {
-    width: '100%',
-    height: '100%',
-    position: 'relative', 
+    width: "100%",
+    height: "100%",
+    position: "relative",
     paddingTop: "2%",
-    top: '0%',
+    top: "0%",
   },
 });
 
 export default MapScreen;
-
-

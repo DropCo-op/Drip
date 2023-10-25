@@ -1,6 +1,7 @@
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import React, { useState, useEffect } from "react";
 import BackBtn from "../utils/BackBtn";
+import { s3, uploadObjectToS3 } from "../S3Storage";
 
 const MoreInfo = ({ navigation, route }) => {
   const handleBack = () => {

@@ -3,13 +3,11 @@ import React, { useState, useEffect } from "react";
 import BackBtn from "../utils/BackBtn";
 import RatingMetric from "../utils/RatingMetric";
 import RatingClicks from "../utils/RatingClicks";
-import { uploadObjectToS3 } from "../S3Storage";
-import { s3 } from "../App";
+import { s3, uploadObjectToS3 } from "../S3Storage";
 
 const SubmitRatingsScreen = ({ navigation, route }) => {
   console.log("in ratings...");
   console.log(route);
-  // state = { rating: 0 };
   const [state, setState] = useState(0);
 
   const [name, setName] = useState("");
@@ -42,7 +40,7 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
 
     const key = ratings["name"] + ".json";
 
-    uploadObjectToS3(s3, "drip-fountains-eu", key, ratings);
+    uploadObjectToS3("drip-fountains-eu", key, ratings);
   };
 
   const handleNav = () => {
