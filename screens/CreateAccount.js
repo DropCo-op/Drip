@@ -2,6 +2,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'reac
 import React, { useState } from 'react';
 import {s3} from '../S3Storage.js';
 import { uploadObjectToS3 } from '../S3Storage.js';
+import sha256 from 'js-sha256';
 
 
 function User(username, email, password) {
@@ -21,9 +22,13 @@ const CreateAccountScreen = ({ navigation }) => {
   const handleCreateAccount = () => {
 
     if (myPassword == myConfirmPassword){
-	const userHash = myUsername + ".json";
-	const passwordHash = myPassword; // FIX
-	const newUser = new User(myUsername, myEmail, passwordHash);
+	const userHash = myUsername + ".json";	
+	const passHash = sha256(myPassword);
+
+	console.log('password');
+	console.log(passHash);	
+
+	const newUser = new User(myUsername, myEmail, passHash);
 
 	uploadObjectToS3('drip-users-eu', userHash, newUser);
 	navigation.navigate('Map');
