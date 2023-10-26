@@ -2,8 +2,9 @@ import { useState, useEffect, useRef } from "react";
 import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
-import { getFountains } from "../utils/Fountains";
-import { s3 } from "../S3Storage";
+import { getFountains } from '../utils/Fountains';
+import PropTypes from 'prop-types'; 
+import {s3} from '../App';
 
 const MapScreen = ({ navigation }) => {
   const [currentLocation, setCurrentLocation] = useState(null);
@@ -130,6 +131,10 @@ const MapScreen = ({ navigation }) => {
     </View>
   );
 };
+
+MapScreen.PropTypes = {
+  navigation: PropTypes.object.isRequired
+}
 
 const styles = StyleSheet.create({
   backButton: {
