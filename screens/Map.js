@@ -12,6 +12,8 @@ const MapScreen = ({ navigation }) => {
   const [coordinatesList, setMarkers] = useState(null);
   const mapRef = useRef(null);
 
+  
+
   useEffect(() => {
     const getLocation = async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -133,7 +135,9 @@ const MapScreen = ({ navigation }) => {
 };
 
 MapScreen.PropTypes = {
-  navigation: PropTypes.object.isRequired
+    navigation: PropTypes.shape({
+      navigate: PropTypes.func.isRequired,
+    }).isRequired,
 }
 
 const styles = StyleSheet.create({
