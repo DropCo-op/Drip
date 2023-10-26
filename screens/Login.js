@@ -1,30 +1,59 @@
-import { SafeAreaView, View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
-import React, { useState } from 'react';
+import { SafeAreaView, View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Animated, Easing } from 'react-native';
+import { useState, useRef } from 'react';
 import { s3 } from "../S3Storage";
+import sha256 from 'js-sha256';
 
 const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const bottomPosition = useRef(new Animated.Value(-100)).current;
+
+  const toggleErrorMessage = () => {
+    if (showErrorMessage) return;
+    setShowErrorMessage(true);
+
+    Animated.timing(bottomPosition, {
+      toValue: 20,
+      duration: 300,
+      easing: Easing.ease,
+      useNativeDriver: false,
+    }).start();
+
+    setTimeout(() => {
+      Animated.timing(bottomPosition, {
+        toValue: -100,
+        duration: 300,
+        easing: Easing.ease,
+        useNativeDriver: false,
+      }).start(() => {
+        setShowErrorMessage(false);
+      });
+    }, 2000);
+  };
 
   const handleLogin = () => {
     // check username
     s3.getObject({Bucket: 'drip-users-eu', Key: username.concat('.json')}, (err, data) => {
       if (err) {
         if (err.code == 'NoSuchKey') {
-          console.log('key does not exist');
+          setErrorMessage('Invalid username');
+          toggleErrorMessage();
         }
         else {
-          console.log('Error connecting to s3 bucket');
+          setErrorMessage('Cannot connect to server right now');
         }
       }
       else {
         // check password match
         user = JSON.parse(data.Body.toString());
-        if (password == user.password) {
+        if (sha256(password) == user.password) {
           navigation.navigate('Map');
         }
         else {
-          console.log('Password incorrect');
+          setErrorMessage('Incorrect password');
+          toggleErrorMessage();
         }
       }
     });
@@ -93,6 +122,13 @@ const LoginScreen = ({ navigation }) => {
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
       <View style={styles.bottomSpace} />
+
+      {/* error */}
+      {showErrorMessage && (
+        <Animated.View style={[styles.errorMessageBox, { bottom: bottomPosition }]}>
+          <Text style={styles.errorMessage}>{ errorMessage }</Text>
+        </Animated.View>
+      )}
     </SafeAreaView>
   );
 };
@@ -159,6 +195,24 @@ const styles = StyleSheet.create({
   },
   bottomSpace: {
     flex: 5
+  },
+  errorMessageBox: {
+    flex: 1,
+    flexDirection: "column",
+    alignItems: "center",
+    position: "absolute",
+    left: 0,
+    right: 0,
+    backgroundColor: "#FFFFFF",
+    padding: 10,
+    marginHorizontal: "10%",
+    borderRadius: 20,
+    zIndex: 999,
+  },
+  errorMessage: {
+    color: "#FF0000",
+    flex: 1,
+    fontSize: 14
   }
 });
 
