@@ -4,7 +4,7 @@ import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import { getFountains } from '../utils/Fountains';
 import PropTypes from 'prop-types'; 
-import {s3} from '../App';
+import {s3} from '../S3Storage';
 
 const MapScreen = ({ navigation }) => {
   const [currentLocation, setCurrentLocation] = useState(null);
