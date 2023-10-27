@@ -112,8 +112,7 @@ const MapScreen = ({ navigation }) => {
           followsUserLocation={true}
           style={{ width: "100%", height: "100%" }}
         >
-          {coordinatesList &&
-            coordinatesList.map((marker) => {
+           {coordinatesList?.map((marker) => {
               return (
                 <Marker
                   coordinate={{
