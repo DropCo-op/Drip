@@ -1,7 +1,7 @@
 import { s3 } from "../S3Storage";
 
 export async function getFountains(){
-    dummyData = await retrieveFountainsFromS3(s3);
+    let dummyData = await retrieveFountainsFromS3(s3);
     window.console.log(`getFountains ${dummyData}`)
     return dummyData;
 }

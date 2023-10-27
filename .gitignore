@@ -1,5 +1,6 @@
 # auth
 aws-credentials.json
+Navigation.js
 
 # Xcode
 !**/*.xcodeproj
