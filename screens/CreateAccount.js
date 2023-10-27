@@ -19,14 +19,11 @@ function emailCheck(emailInput){
 	const eEnds = eEnd.split('.');
 	const realEnd =  eEnds[eEnds.length - 1].toLowerCase();
 
-	if (
+	return (
 		eBeg.match(/^[A-Z0-9._%+-]+$/i) && // check start
     		validEnds.includes(realEnd) // check valid ends
-	){
-    		return true;
-  	}
+	);
 
-  	return false;
 }	
 
 
@@ -47,7 +44,7 @@ const CreateAccountScreen = ({ navigation }) => {
 
   const handleCreateAccount = () => {
 
-	var proceed = true;
+	let proceed = true;
 
 	// check that all spaces have something entered
 	if (myEmail.length == 0){
@@ -75,7 +72,7 @@ const CreateAccountScreen = ({ navigation }) => {
 	}
 
 	// check if email is valid
-	if (emailCheck(myEmail) == false){
+	if (!(emailCheck(myEmail))){
 		proceed = false;
 		console.log('Invalid email');
 		setErrorMessage("Invalid email. Please try again.");
