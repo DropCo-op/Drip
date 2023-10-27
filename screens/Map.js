@@ -9,7 +9,7 @@ import {s3} from '../S3Storage';
 const MapScreen = ({ navigation }) => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [initialLocation, setInitialLocation] = useState(null);
-  const [coordinatesList, setMarkers] = useState(null);
+  const [coordinatesList, setCoordinatesList] = useState(null);
   const mapRef = useRef(null);
 
   
@@ -50,7 +50,7 @@ const MapScreen = ({ navigation }) => {
     if (err) {
       console.error("Error retrieving JSON file from S3", err);
     } else {
-      setMarkers(JSON.parse(data.Body.toString())["fountains"]);
+      setCoordinatesList(JSON.parse(data.Body.toString())["fountains"]);
       // Now you have your coordinatesList, which should be an array of coordinates.
       // Proceed to rendering markers using React Native Maps.
     }
@@ -134,7 +134,7 @@ const MapScreen = ({ navigation }) => {
   );
 };
 
-MapScreen.PropTypes = {
+MapScreen.propTypes = {
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
     }).isRequired,
