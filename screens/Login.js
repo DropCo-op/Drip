@@ -47,7 +47,7 @@ const LoginScreen = ({ navigation }) => {
       }
       else {
         // check password match
-        user = JSON.parse(data.Body.toString());
+        let user = JSON.parse(data.Body.toString());
         if (sha256(password) == user.password) {
           navigation.navigate('Map');
         }
