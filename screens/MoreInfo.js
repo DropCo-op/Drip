@@ -1,18 +1,11 @@
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import BackBtn from "../utils/BackBtn";
-import { s3, uploadObjectToS3 } from "../S3Storage";
 
 const MoreInfo = ({ navigation, route }) => {
   const handleBack = () => {
     navigation.navigate("Ratings", route.params);
-  };
-
-  const fount = {
-    spoutCount: 2,
-    adjustableValve: true,
-    notes: "Not available",
-    history: "Not available",
   };
 
   const [spoutCount, setSpoutCount] = useState(0);
@@ -135,5 +128,10 @@ const styles = StyleSheet.create({
     padding: 1,
   },
 });
+
+// MoreInfo.propTypes = {
+//   route: PropTypes.shape.isRequired,
+//   navigation: PropTypes.shape.isRequired,
+// }
 
 export default MoreInfo;

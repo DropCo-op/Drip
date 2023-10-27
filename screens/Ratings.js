@@ -1,9 +1,9 @@
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import BackBtn from "../utils/BackBtn";
 import RatingMetric from "../utils/RatingMetric";
-import RatingClicks from "../utils/RatingClicks";
-import { s3, uploadObjectToS3 } from "../S3Storage";
+import { uploadObjectToS3 } from "../S3Storage";
 
 const SubmitRatingsScreen = ({ navigation, route }) => {
   console.log("in ratings...");
@@ -51,11 +51,6 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
     navigation.navigate("MoreInfo", route.params);
   };
 
-  const handleRate = (selectedRating) => {
-    setState(selectedRating);
-    console.log(state);
-  };
-
   const handleTemperature = (selectedRating) => {
     console.log("Before Temperature: " + temperature);
     console.log(temperature);
@@ -88,11 +83,10 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
 
       {/* title */}
       <View style={styles.title_box}>
-        <Text style={styles.title}>{route.params["name"]}</Text>
+        <Text style={styles.title}>{name}</Text>
       </View>
 
       <View style={styles.fountain_image}>
-        {/* TODO: add image */}
         <Image
           style={{
             height: "100%",
@@ -103,24 +97,6 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
           }}
           source={require("../assets/nasoni.jpeg")}
         />
-      </View>
-
-      {/* container for three buttons */}
-      <View style={styles.button_container}>
-        {/* submit button */}
-        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-          <Text style={styles.button_text}>Submit</Text>
-        </TouchableOpacity>
-
-        {/* navigate button */}
-        <TouchableOpacity style={styles.button} onPress={handleNav}>
-          <Text style={styles.button_text}>Navigate</Text>
-        </TouchableOpacity>
-
-        {/* info button */}
-        <TouchableOpacity style={styles.button} onPress={handleInfo}>
-          <Text style={styles.button_text}>More Info</Text>
-        </TouchableOpacity>
       </View>
 
       {/* temperature */}
@@ -157,6 +133,24 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
         handler={handleTaste}
       />
 
+      {/* container for three buttons */}
+      <View style={styles.button_container}>
+        {/* submit button */}
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+          <Text style={styles.button_text}>Submit</Text>
+        </TouchableOpacity>
+
+        {/* navigate button */}
+        <TouchableOpacity style={styles.button} onPress={handleNav}>
+          <Text style={styles.button_text}>Navigate</Text>
+        </TouchableOpacity>
+
+        {/* info button */}
+        <TouchableOpacity style={styles.button} onPress={handleInfo}>
+          <Text style={styles.button_text}>More Info</Text>
+        </TouchableOpacity>
+      </View>
+
       <View style={styles.bottom_space} />
     </View>
   );
@@ -185,8 +179,8 @@ const styles = StyleSheet.create({
   },
   fountain_image: {
     flex: 1,
-    borderColor: "black",
-    borderWidth: 2,
+    // borderColor: "black",
+    // borderWidth: 2,
     borderRadius: 15,
     width: "75%",
   },
@@ -222,5 +216,10 @@ const styles = StyleSheet.create({
     padding: 1,
   },
 });
+
+// SubmitRatingsScreen.propTypes = {
+//   route: PropTypes.shape.isRequired,
+//   navigation: PropTypes.shape.isRequired,
+// }
 
 export default SubmitRatingsScreen;

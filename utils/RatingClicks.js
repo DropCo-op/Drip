@@ -71,8 +71,8 @@ const styles = StyleSheet.create({
     height: "7%",
     flex: 1,
     borderColor: "white",
-    borderRadius: 15,
     borderWidth: 1,
+    borderRadius: 15,
   },
   droplets: {
     padding: 5,
