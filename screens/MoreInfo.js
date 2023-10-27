@@ -130,8 +130,22 @@ const styles = StyleSheet.create({
 });
 
 MoreInfo.propTypes = {
-  route: PropTypes.object.isRequired,
-  navigation: PropTypes.object.isRequired,
-}
+  route: PropTypes.shape({
+    params: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      temperature: PropTypes.number.isRequired,
+      pressure: PropTypes.number.isRequired,
+      taste: PropTypes.number.isRequired,
+      busyness: PropTypes.number.isRequired,
+      spoutCount: PropTypes.number.isRequired,
+      history: PropTypes.string.isRequired,
+      notes: PropTypes.string.isRequired,
+      adjustableValve: PropTypes.bool.isRequired,
+    }),
+  }),
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 export default MoreInfo;
