@@ -1,7 +1,6 @@
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import React, { useState } from 'react';
-import {s3} from '../S3Storage.js';
-import { uploadObjectToS3 } from '../S3Storage.js';
+import {uploadObjectToS3} from '../S3Storage.js';
 import sha256 from 'js-sha256';
 
 
@@ -20,14 +19,11 @@ function emailCheck(emailInput){
 	const eEnds = eEnd.split('.');
 	const realEnd =  eEnds[eEnds.length - 1].toLowerCase();
 
-	if (
+	return (
 		eBeg.match(/^[A-Z0-9._%+-]+$/i) && // check start
     		validEnds.includes(realEnd) // check valid ends
-	){
-    		return true;
-  	}
+	);
 
-  	return false;
 }	
 
 
@@ -48,7 +44,7 @@ const CreateAccountScreen = ({ navigation }) => {
 
   const handleCreateAccount = () => {
 
-	var proceed = true;
+	let proceed = true;
 
 	// check that all spaces have something entered
 	if (myEmail.length == 0){
@@ -76,7 +72,7 @@ const CreateAccountScreen = ({ navigation }) => {
 	}
 
 	// check if email is valid
-	if (emailCheck(myEmail) == false){
+	if (!(emailCheck(myEmail))){
 		proceed = false;
 		console.log('Invalid email');
 		setErrorMessage("Invalid email. Please try again.");
@@ -96,7 +92,7 @@ const CreateAccountScreen = ({ navigation }) => {
 	}
 
 
-    if (proceed == true){
+    if (proceed){
 	const userHash = myUsername + ".json";	
 	const passHash = sha256(myPassword);
 	const newUser = new User(myUsername, myEmail, passHash);
