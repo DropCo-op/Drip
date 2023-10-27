@@ -1,5 +1,6 @@
 import { SafeAreaView, View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Animated, Easing } from 'react-native';
 import { useState, useRef } from 'react';
+import PropTypes from "prop-types";
 import { s3 } from "../S3Storage";
 import sha256 from 'js-sha256';
 
@@ -60,14 +61,10 @@ const LoginScreen = ({ navigation }) => {
   };
 
   const handleCreateAccount = () => {
-    // navigation.navigate('Login');
-    // console.log("Create account");
     navigation.navigate('CreateAccount');
   };
 
   const handleForgotPassword = () => {
-    // navigation.navigate('Login');
-    // console.log("Forgot Password");
   };
 
   return (
@@ -215,6 +212,12 @@ const styles = StyleSheet.create({
     fontSize: 14
   }
 });
+
+LoginScreen.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 export default LoginScreen;
 
