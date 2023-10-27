@@ -2,6 +2,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'reac
 import React, { useState } from 'react';
 import {uploadObjectToS3} from '../S3Storage.js';
 import sha256 from 'js-sha256';
+import PropTypes from "prop-types";
 
 
 
@@ -273,6 +274,12 @@ const styles = StyleSheet.create({
     marginBottom: '5%'
   }
 });
+
+CreateAccountScreen.propTypes = {
+	navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 
 export default CreateAccountScreen;
