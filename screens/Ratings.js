@@ -8,7 +8,6 @@ import { uploadObjectToS3 } from "../S3Storage";
 const SubmitRatingsScreen = ({ navigation, route }) => {
   console.log("in ratings...");
   console.log(route);
-  const [state, setState] = useState(0);
 
   const [name, setName] = useState("");
   const [temperature, setTemperature] = useState(0);

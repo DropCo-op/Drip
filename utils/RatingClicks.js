@@ -4,13 +4,11 @@ import PropTypes from "prop-types";
 
 export default class RatingClicks extends Component {
   name;
-  rating;
   parentHandler;
 
   constructor(props) {
     super(props);
     this.name = props.name;
-    this.rating = props.rating;
     this.state = { rating: props.rating };
     this.parentHandler = props.parentHandler;
   }
