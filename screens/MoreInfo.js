@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import BackBtn from "../utils/BackBtn";
@@ -32,7 +32,6 @@ const MoreInfo = ({ navigation, route }) => {
       </View>
 
       <View style={styles.fountain_image}>
-        {/* TODO: add image */}
         <Image
           style={{
             height: "100%",

@@ -30,7 +30,7 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
   };
 
   const handleSubmit = () => {
-    // TODO: gray out the "submit" button, stays on the fountain page
+    // add: gray out the "submit" button, stays on the fountain page
     const ratings = { ...route.params };
     ratings["temperature"] = temperature;
     ratings["pressure"] = pressure;
