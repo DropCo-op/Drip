@@ -129,9 +129,9 @@ const styles = StyleSheet.create({
   },
 });
 
-// MoreInfo.propTypes = {
-//   route: PropTypes.shape.isRequired,
-//   navigation: PropTypes.shape.isRequired,
-// }
+MoreInfo.propTypes = {
+  route: PropTypes.object.isRequired,
+  navigation: PropTypes.object.isRequired,
+}
 
 export default MoreInfo;

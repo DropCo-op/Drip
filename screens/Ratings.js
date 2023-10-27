@@ -217,9 +217,16 @@ const styles = StyleSheet.create({
   },
 });
 
-// SubmitRatingsScreen.propTypes = {
-//   route: PropTypes.shape.isRequired,
-//   navigation: PropTypes.shape.isRequired,
-// }
+SubmitRatingsScreen.propTypes = {
+  route: PropTypes.shape({
+    params: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }),
+  }),
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+  avigation: PropTypes.object.isRequired,
+};
 
 export default SubmitRatingsScreen;
