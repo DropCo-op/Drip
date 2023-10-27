@@ -6,7 +6,6 @@ import PropTypes from "prop-types";
 import { s3 } from "../S3Storage";
 
 const MapScreen = ({ navigation }) => {
-  //const [currentLocation, setCurrentLocation] = useState(null);
   const [initialLocation, setInitialLocation] = useState(null);
   const [coordinatesList, setCoordinatesList] = useState(null);
   const mapRef = useRef(null);
@@ -20,7 +19,6 @@ const MapScreen = ({ navigation }) => {
       }
 
       let location = await Location.getLastKnownPositionAsync();
-      //setCurrentLocation(location.coords);
 
       const romeCoords = {
         longitude: 12.4964,
