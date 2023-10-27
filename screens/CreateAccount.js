@@ -1,7 +1,6 @@
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import React, { useState } from 'react';
-import {s3} from '../S3Storage.js';
-import { uploadObjectToS3 } from '../S3Storage.js';
+import {uploadObjectToS3} from '../S3Storage.js';
 import sha256 from 'js-sha256';
 
 
@@ -96,7 +95,7 @@ const CreateAccountScreen = ({ navigation }) => {
 	}
 
 
-    if (proceed == true){
+    if (proceed){
 	const userHash = myUsername + ".json";	
 	const passHash = sha256(myPassword);
 	const newUser = new User(myUsername, myEmail, passHash);
