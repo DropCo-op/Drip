@@ -6,7 +6,7 @@ export async function getFountains(){
     return dummyData;
 }
 
-export async function retrieveFountainsFromS3() {
+export async function retrieveFountainsFromS3(s3) {
   const getParams = {
     Bucket: 'drip-fountains-eu',
     Key: 'fountains.json'
