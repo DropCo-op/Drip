@@ -1,9 +1,12 @@
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import React, { useState } from 'react';
+import { s3 } from "../S3Storage";
 import {uploadObjectToS3} from '../S3Storage.js';
 import sha256 from 'js-sha256';
 import PropTypes from "prop-types";
 
+
+const userCheckCondition = true;
 
 
 // check if email is valid
@@ -25,7 +28,22 @@ function emailCheck(emailInput){
     		validEnds.includes(realEnd) // check valid ends
 	);
 
-}	
+}
+
+
+function userCheck(userInput, callback) {
+	s3.getObject({ Bucket: 'drip-users-eu', Key: userInput.concat('.json') }, (err, data) => {
+    		if (err) {
+      			if (err.code == 'NoSuchKey') {
+        			callback(true); // user does not exist
+      			} else {
+        			callback(false); // error
+			}      			
+    		} else {
+      			callback(false); // user exists
+    		}
+  	});
+}
 
 
 // create new user
@@ -54,56 +72,76 @@ const CreateAccountScreen = ({ navigation }) => {
 		setErrorMessage("Please enter an email.");
 	}
 
-	if (myUsername.length == 0){
+	else if (myUsername.length == 0){
 		proceed = false;
 		console.log('Username not entered');
 		setErrorMessage("Please enter a username.");
 	}
 
-	if (myPassword.length == 0){
+	else if (myPassword.length == 0){
 		proceed = false;
 		console.log('Password not entered');
 		setErrorMessage("Please enter a password");
 	}
 
-	if (myConfirmPassword.length == 0){
+	else if (myConfirmPassword.length == 0){
 		proceed = false;
 		console.log('Confirm Password not entered');
 		setErrorMessage("Please confirm your password.");
 	}
 
 	// check if email is valid
-	if (!(emailCheck(myEmail))){
+	else if (!(emailCheck(myEmail))){
 		proceed = false;
 		console.log('Invalid email');
 		setErrorMessage("Invalid email. Please try again.");
 	}
 
 	// check if username is between 6 and 32 chars
+	else if (myUsername.length < 6 || myUsername.length > 32){
+		proceed = false;
+		console.log('Invalid username length');
+		setErrorMessage("Username must be between 6 and 32 characters.");
+	}
 	
 
 	// check if any other users have that username
-	
+	else if (userCheckCondition) {
+    		userCheck(myUsername, (userDoesNotExist) => {
+      			if (userDoesNotExist) {
+        			console.log('Username is available.');
+        
+        			// Check if passwords match
+        			if (myPassword !== myConfirmPassword) {
+          				proceed = false;
+          				console.log('Passwords do not match');
+         				setErrorMessage("Passwords do not match; Please try again.");
+        			}	
 
-	// check if passwords match
-	if (myPassword != myConfirmPassword){
-		proceed = false;
-		console.log('Passwords do not match');
-		setErrorMessage("Passwords do not match; Please try again.");
-	}
+        			if (proceed) {
+          				console.log('Proceeding with account creation');
+          				const userHash = myUsername + ".json";
+          				const passHash = sha256(myPassword);
+          				const newUser = new User(myUsername, myEmail, passHash);
+          				uploadObjectToS3('drip-users-eu', userHash, newUser);
+          				navigation.navigate('Map');
+        			}
+      			} else {
+       				proceed = false;
+        			console.log('Username already in use');
+        			setErrorMessage("Username already in use. Please try again.");
+      			}
+    		});
+  	}
+};
 
 
-    if (proceed){
-	const userHash = myUsername + ".json";	
-	const passHash = sha256(myPassword);
-	const newUser = new User(myUsername, myEmail, passHash);
 
-	uploadObjectToS3('drip-users-eu', userHash, newUser);
-	navigation.navigate('Map');
-    } else {
-	console.log('Error creating account');
-    }
-  };
+
+
+
+
+
 
   const handleBack = () => {
     navigation.navigate('Login');
