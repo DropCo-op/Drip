@@ -68,9 +68,10 @@ const styles = StyleSheet.create({
     width: "90%",
     height: "7%",
     flex: 1,
-    borderColor: "white",
+    borderColor: "#00C2FF",
     borderWidth: 1,
     borderRadius: 15,
+    backgroundColor: "#EEE",
   },
   droplets: {
     padding: 5,
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
   rate_title: {
     flex: 1,
     fontSize: 20,
-    color: "white",
+    color: "black",
   },
 });
 

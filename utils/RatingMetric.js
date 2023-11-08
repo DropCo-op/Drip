@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
   },
   rate_scale_text: {
-    color: "white",
+    color: 'black',//"#00C2FF",
     fontSize: 20,
   },
 });

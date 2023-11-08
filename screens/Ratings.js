@@ -1,9 +1,10 @@
-import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Image, Linking } from "react-native";
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import BackBtn from "../utils/BackBtn";
 import RatingMetric from "../utils/RatingMetric";
 import { uploadObjectToS3 } from "../S3Storage";
+// import { Linking } from "react-native-linking";
 
 const SubmitRatingsScreen = ({ navigation, route }) => {
   console.log("in ratings...");
@@ -14,6 +15,8 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
   const [pressure, setPressure] = useState(0);
   const [taste, setTaste] = useState(0);
   const [busyness, setBusyness] = useState(0);
+  const [lat, setLat] = useState(0.0);
+  const [long, setLong] = useState(0.0);
 
   useEffect(() => {
     console.log("hi \n\n\n");
@@ -43,7 +46,14 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
   };
 
   const handleNav = () => {
-    navigation.navigate("Map");
+    // navigation.navigate("Map");
+    const lat = route.params["latitude"];
+    const long = route.params["longitude"];
+    const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${long}`;
+
+    Linking.openURL(url).catch((err) =>
+      console.error("Error Opening Google Maps:", err)
+    );
   };
 
   const handleInfo = () => {
@@ -80,10 +90,6 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
     <View style={styles.container}>
       <BackBtn handler={handleBack} style={styles.back_button} />
 
-      {/* title */}
-      <View style={styles.title_box}>
-        <Text style={styles.title}>{name}</Text>
-      </View>
 
       <View style={styles.fountain_image}>
         <Image
@@ -92,10 +98,15 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
             width: "100%",
             resizeMode: "cover",
             alignSelf: "center",
-            borderRadius: 15,
+            // borderRadius: 15,
           }}
           source={require("../assets/nasoni.jpeg")}
         />
+      </View>
+      
+      {/* title */}
+      <View style={styles.title_box}>
+        <Text style={styles.title}>{name}</Text>
       </View>
 
       {/* temperature */}
@@ -131,14 +142,10 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
         rating={route.params["taste"]}
         handler={handleTaste}
       />
+      <View style={{ marginBottom: "0%" }}></View>
 
       {/* container for three buttons */}
       <View style={styles.button_container}>
-        {/* submit button */}
-        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-          <Text style={styles.button_text}>Submit</Text>
-        </TouchableOpacity>
-
         {/* navigate button */}
         <TouchableOpacity style={styles.button} onPress={handleNav}>
           <Text style={styles.button_text}>Navigate</Text>
@@ -147,6 +154,13 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
         {/* info button */}
         <TouchableOpacity style={styles.button} onPress={handleInfo}>
           <Text style={styles.button_text}>More Info</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.button_container}>
+        {/* submit button */}
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+          <Text style={styles.button_text}>Submit</Text>
         </TouchableOpacity>
       </View>
 
@@ -161,7 +175,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "top",
     alignItems: "center",
-    backgroundColor: "#00C2FF",
+    backgroundColor: "#FFF",
   },
   title_box: {
     flex: 0.5,
@@ -173,30 +187,32 @@ const styles = StyleSheet.create({
   title: {
     flex: 1,
     fontSize: 36,
-    color: "white",
+    color: 'black',//"#00C2FF",
     height: "70%",
   },
   fountain_image: {
     flex: 1,
     // borderColor: "black",
     // borderWidth: 2,
-    borderRadius: 15,
-    width: "75%",
+    // borderRadius: 15,
+    width: "100%",
   },
   button_container: {
-    flex: 1,
+    // borderColor: "black",
+    // borderWidth: 2,
+    flex: 0.5,
     flexDirection: "row",
     width: "90%",
     columnGap: 15,
     marginBottom: 20,
-    marginTop: 20,
   },
   button: {
     flex: 1,
     justifyContent: "center",
-    borderColor: "white",
+    borderColor: "#00C2FF",
     borderWidth: 1,
     borderRadius: 15,
+    backgroundColor: "#00C2FF",
   },
   button_text: {
     color: "#FFFFFF",
@@ -210,7 +226,7 @@ const styles = StyleSheet.create({
     paddingTop: "10%",
     paddingLeft: "5%",
     fontSize: 18,
-    color: "white",
+    color: "#00C2FF",
     alignSelf: "flex-start",
     padding: 1,
   },
