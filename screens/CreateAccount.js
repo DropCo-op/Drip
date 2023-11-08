@@ -1,7 +1,7 @@
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import React, { useState } from 'react';
-import { s3 } from "../S3Storage";
-import {uploadObjectToS3} from '../S3Storage.js';
+import { s3 } from "../utils/S3Storage";
+import {uploadObjectToS3} from '../utils/S3Storage.js';
 import sha256 from 'js-sha256';
 import PropTypes from "prop-types";
 

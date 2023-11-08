@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import BackBtn from "../utils/BackBtn";
 import RatingMetric from "../utils/RatingMetric";
-import { uploadObjectToS3 } from "../S3Storage";
+import { uploadObjectToS3 } from "../utils/S3Storage";
 // import { Linking } from "react-native-linking";
 
 const SubmitRatingsScreen = ({ navigation, route }) => {

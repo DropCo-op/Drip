@@ -3,7 +3,8 @@ import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import PropTypes from "prop-types";
-import { s3 } from "../S3Storage";
+import { s3 } from "../utils/S3Storage";
+import { saveAuthenticationStatus } from '../utils/LocalAuth';
 
 const MapScreen = ({ navigation }) => {
   const [initialLocation, setInitialLocation] = useState(null);
@@ -52,6 +53,7 @@ const MapScreen = ({ navigation }) => {
 
   const handleBackNavigation = () => {
     // Request location permission once the map mounts
+    saveAuthenticationStatus(false);
     navigation.navigate("Login");
   };
 

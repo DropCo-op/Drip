@@ -10,20 +10,26 @@ import MapScreen from './screens/Map.js';
 import CreateAccountScreen from './screens/CreateAccount.js';
 import SubmitRatingsScreen from "./screens/Ratings.js";
 import MoreInfoScreen from "./screens/MoreInfo.js";
+import { getAuthenticationStatus } from "./utils/LocalAuth"
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
+  // check if authenticated
+  var isAuthenticated = getAuthenticationStatus();
+  var initialRouteName = "Login";
+  if (isAuthenticated) {
+    initialRouteName = "Map";
+  }
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login" screenOptions={{headerShown: false}}>
+        <Stack.Navigator initialRouteName={initialRouteName} screenOptions={{headerShown: false}}>
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Map" component={MapScreen} />
           <Stack.Screen name="Ratings" component={SubmitRatingsScreen}/>
-	        <Stack.Screen name="CreateAccount" component={CreateAccountScreen} />
+	      <Stack.Screen name="CreateAccount" component={CreateAccountScreen} />
           <Stack.Screen name="MoreInfo" component={MoreInfoScreen} />
-          {/* Add other screens and navigation options here */}
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

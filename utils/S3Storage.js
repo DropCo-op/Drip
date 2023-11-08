@@ -1,6 +1,6 @@
 // create bucket
 import AWS from 'aws-sdk';
-import awsCredentials from './aws-credentials.json';
+import awsCredentials from '../aws-credentials.json';
 AWS.config.update({
   region: 'eu-west-3',
   accessKeyId: awsCredentials.accessKeyId,

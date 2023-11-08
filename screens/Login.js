@@ -2,7 +2,8 @@ import { SafeAreaView, View, Text, TextInput, TouchableOpacity, StyleSheet, Imag
 import { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import ErrorMessage from '../utils/ErrorMessage';
-import { s3 } from '../S3Storage';
+import { s3 } from '../utils/S3Storage';
+import { saveAuthenticationStatus } from '../utils/LocalAuth';
 import sha256 from 'js-sha256';
 
 const LoginScreen = ({ navigation }) => {
@@ -36,6 +37,7 @@ const LoginScreen = ({ navigation }) => {
         let user = JSON.parse(data.Body.toString());
         setLoading(false);
         if (sha256(password) == user.password) {
+          saveAuthenticationStatus(true);
           navigation.navigate('Map');
         }
         else {
@@ -55,7 +57,9 @@ const LoginScreen = ({ navigation }) => {
     navigation.navigate('CreateAccount');
   };
 
-  const handleForgotPassword = () => {
+  const handleGuestLogin = () => {
+    saveAuthenticationStatus(false);
+    navigation.navigate('Map');
   };
 
   return (
@@ -95,13 +99,13 @@ const LoginScreen = ({ navigation }) => {
         autoCorrect={false}
       />
 
-      {/* create account, forgot password */}
+      {/* create account, continue as guest */}
       <View style = {styles.linkBox}>
         <TouchableOpacity style={styles.link} onPress={handleCreateAccount}>
           <Text style={[styles.link, {textAlign: "left"}]}>Create account</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.link} onPress={handleForgotPassword}>
-          <Text style={[styles.link, {textAlign: "right"}]}>Forgot password?</Text>
+        <TouchableOpacity style={styles.link} onPress={handleGuestLogin}>
+          <Text style={[styles.link, {textAlign: "right"}]}>Continue as guest?</Text>
         </TouchableOpacity>
       </View>
 
