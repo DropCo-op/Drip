@@ -1,8 +1,8 @@
 import { SafeAreaView, View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Animated, Easing } from 'react-native';
 import { useState, useRef } from 'react';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 import ErrorMessage from '../utils/ErrorMessage';
-import { s3 } from "../S3Storage";
+import { s3 } from '../S3Storage';
 import sha256 from 'js-sha256';
 
 const LoginScreen = ({ navigation }) => {
@@ -12,17 +12,21 @@ const LoginScreen = ({ navigation }) => {
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleLogin = () => {
-    // check username
     s3.getObject({Bucket: 'drip-users-eu', Key: username.concat('.json')}, (err, data) => {
       if (err) {
+        // check username
         if (err.code == 'NoSuchKey') {
           setErrorMessage('Invalid username');
         }
         else {
           setErrorMessage('Cannot connect to server right now');
         }
-        if (!showErrorMessage)
+        if (!showErrorMessage) {
           setShowErrorMessage(true);
+          setTimeout(() => {
+            setShowErrorMessage(false);
+          }, 2200);
+        }
       }
       else {
         // check password match
@@ -32,12 +36,15 @@ const LoginScreen = ({ navigation }) => {
         }
         else {
           setErrorMessage('Incorrect password');
-          if (!showErrorMessage)
+          if (!showErrorMessage) {
             setShowErrorMessage(true);
+            setTimeout(() => {
+              setShowErrorMessage(false);
+            }, 2200);
+          }
         }
       }
     });
-    setShowErrorMessage(false);
   };
 
   const handleCreateAccount = () => {
