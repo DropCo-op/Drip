@@ -26,11 +26,6 @@ const MoreInfo = ({ navigation, route }) => {
     <View style={styles.container}>
       <BackBtn handler={handleBack} style={styles.back_button} />
 
-      {/* title */}
-      <View style={styles.title_box}>
-        <Text style={styles.title}>{name}</Text>
-      </View>
-
       <View style={styles.fountain_image}>
         <Image
           style={{
@@ -38,32 +33,37 @@ const MoreInfo = ({ navigation, route }) => {
             width: "100%",
             resizeMode: "cover",
             alignSelf: "center",
-            borderRadius: 15,
+            // borderRadius: 15,
           }}
           source={require("../assets/nasoni.jpeg")}
         />
       </View>
 
+      {/* title */}
+      <View style={styles.title_box}>
+        <Text style={styles.title}>{name}</Text>
+      </View>
+
       <View style={{ flex: 0.5, flexDirection: "row", marginTop: "5%" }}>
         <Text
-          style={{ color: "white", textAlign: "left", flex: 1, fontSize: 24 }}
+          style={{ color: "black", textAlign: "left", flex: 1, fontSize: 24, paddingLeft: "5%" }}
         >
           Spout Count: {spoutCount}
         </Text>
         <Text
-          style={{ color: "white", textAlign: "right", flex: 1, fontSize: 24 }}
+          style={{ color: "black", textAlign: "right", flex: 1, fontSize: 24, paddingRight: "5%" }}
         >
           Adjustable? {adjustableValve ? "Yes" : "No"}
         </Text>
       </View>
 
       <View style={styles.text_section}>
-        <Text style={{ flex: 1, fontSize: 24, color: "white" }}>Notes</Text>
+        <Text style={{ flex: 1, fontSize: 24, color: "#00C2FF" }}>Notes</Text>
         <Text style={styles.text_info}>{notes}</Text>
       </View>
 
       <View style={styles.text_section}>
-        <Text style={{ flex: 1, fontSize: 24, color: "white" }}>History</Text>
+        <Text style={{ flex: 1, fontSize: 24, color: "#00C2FF" }}>History</Text>
         <Text style={styles.text_info}>{history}</Text>
       </View>
     </View>
@@ -76,9 +76,9 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "top",
     alignItems: "center",
-    backgroundColor: "#00C2FF",
-    paddingLeft: "5%",
-    paddingRight: "5%",
+    backgroundColor: "#FFF",
+    // paddingLeft: "5%",
+    // paddingRight: "5%",
   },
   title_box: {
     flex: 0.5,
@@ -90,15 +90,15 @@ const styles = StyleSheet.create({
   title: {
     flex: 1,
     fontSize: 36,
-    color: "white",
+    color: "black",
     height: "70%",
   },
   fountain_image: {
     flex: 1,
-    borderColor: "black",
-    borderWidth: 2,
-    width: "75%",
-    borderRadius: 15,
+    // borderColor: "black",
+    // borderWidth: 2,
+    // borderRadius: 15,
+    width: "100%",
   },
   text_section: {
     flex: 3,
@@ -106,12 +106,14 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingTop: 0,
     marginTop: 0,
+    paddingLeft: "5%",
+    paddingRight: "5%",
   },
   text_info: {
     flexWrap: "wrap",
     flex: 5,
-    color: "white",
-    borderColor: "white",
+    color: "black",//"#00C2FF",
+    borderColor: "#00C2FF",
     borderWidth: 2,
     borderRadius: 15,
     fontSize: 24,
@@ -122,7 +124,7 @@ const styles = StyleSheet.create({
     paddingTop: "10%",
     paddingLeft: "5%",
     fontSize: 18,
-    color: "white",
+    color: "#00C2FF",
     alignSelf: "flex-start",
     padding: 1,
   },
