@@ -1,9 +1,10 @@
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { SafeAreaView, View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import React, { useState } from 'react';
 import { s3 } from "../S3Storage";
 import {uploadObjectToS3} from '../S3Storage.js';
 import sha256 from 'js-sha256';
 import PropTypes from "prop-types";
+import ErrorMessage from '../utils/ErrorMessage';
 
 
 const userCheckCondition = true;
@@ -58,6 +59,7 @@ const CreateAccountScreen = ({ navigation }) => {
   const [myUsername, setMyUsername] = useState('');
   const [myPassword, setMyPassword] = useState('');
   const [myConfirmPassword, setMyConfirmPassword] = useState('');
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
 
@@ -70,24 +72,55 @@ const CreateAccountScreen = ({ navigation }) => {
 		proceed = false;
 		console.log('Email not entered');
 		setErrorMessage("Please enter an email.");
+	
+		if (!showErrorMessage) {
+          		setShowErrorMessage(true);
+          		setTimeout(() => {
+            			setShowErrorMessage(false);
+          		}, 2200);
+        	}
 	}
 
 	else if (myUsername.length == 0){
 		proceed = false;
 		console.log('Username not entered');
 		setErrorMessage("Please enter a username.");
+
+	
+		if (!showErrorMessage) {
+          		setShowErrorMessage(true);
+          		setTimeout(() => {
+            			setShowErrorMessage(false);
+          		}, 2200);
+        	}
 	}
 
 	else if (myPassword.length == 0){
 		proceed = false;
 		console.log('Password not entered');
 		setErrorMessage("Please enter a password");
+
+	
+		if (!showErrorMessage) {
+          		setShowErrorMessage(true);
+          		setTimeout(() => {
+            			setShowErrorMessage(false);
+          		}, 2200);
+        	}
 	}
 
 	else if (myConfirmPassword.length == 0){
 		proceed = false;
 		console.log('Confirm Password not entered');
 		setErrorMessage("Please confirm your password.");
+		
+	
+		if (!showErrorMessage) {
+          		setShowErrorMessage(true);
+          		setTimeout(() => {
+            			setShowErrorMessage(false);
+          		}, 2200);
+        	}
 	}
 
 	// check if email is valid
@@ -95,6 +128,13 @@ const CreateAccountScreen = ({ navigation }) => {
 		proceed = false;
 		console.log('Invalid email');
 		setErrorMessage("Invalid email. Please try again.");
+
+		if (!showErrorMessage) {
+          		setShowErrorMessage(true);
+          		setTimeout(() => {
+            			setShowErrorMessage(false);
+          		}, 2200);
+        	}			
 	}
 
 	// check if username is between 6 and 32 chars
@@ -102,6 +142,14 @@ const CreateAccountScreen = ({ navigation }) => {
 		proceed = false;
 		console.log('Invalid username length');
 		setErrorMessage("Username must be between 6 and 32 characters.");
+
+	
+		if (!showErrorMessage) {
+          		setShowErrorMessage(true);
+          		setTimeout(() => {
+            			setShowErrorMessage(false);
+          		}, 2200);
+        	}
 	}
 	
 
@@ -116,6 +164,14 @@ const CreateAccountScreen = ({ navigation }) => {
           				proceed = false;
           				console.log('Passwords do not match');
          				setErrorMessage("Passwords do not match; Please try again.");
+
+				
+					if (!showErrorMessage) {
+          					setShowErrorMessage(true);
+          					setTimeout(() => {
+            						setShowErrorMessage(false);
+          					}, 2200);
+        				}
         			}	
 
         			if (proceed) {
@@ -130,6 +186,13 @@ const CreateAccountScreen = ({ navigation }) => {
        				proceed = false;
         			console.log('Username already in use');
         			setErrorMessage("Username already in use. Please try again.");
+
+				if (!showErrorMessage) {
+          				setShowErrorMessage(true);
+          				setTimeout(() => {
+            					setShowErrorMessage(false);
+          				}, 2200);
+        			}	
       			}
     		});
   	}
@@ -149,7 +212,7 @@ const CreateAccountScreen = ({ navigation }) => {
 
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {/* title */}
       <View style={styles.titleBox}>
         <Image
@@ -232,12 +295,9 @@ const CreateAccountScreen = ({ navigation }) => {
    
 
       {/* Error message display */}
-      {errorMessage && (
-         <Text style={{ color: '#FFFFFF', textAlign: 'center' }}>{errorMessage}</Text>
-      )}
-      <View style={styles.errorSpace} />
+      <ErrorMessage errorMessage={errorMessage} showErrorMessage={showErrorMessage}/>
+    </SafeAreaView>
 
-  </View>
 
       
   );
@@ -308,8 +368,23 @@ const styles = StyleSheet.create({
   bottomSpace: {
     marginBottom: '5%'
   },
-  errorSpace: {
-    marginBottom: '5%'
+  errorMessageBox: {
+    flex: 1,
+    flexDirection: "column",
+    alignItems: "center",
+    position: "absolute",
+    left: 0,
+    right: 0,
+    backgroundColor: "#FFFFFF",
+    padding: 10,
+    marginHorizontal: "10%",
+    borderRadius: 20,
+    zIndex: 999,
+  },
+  errorMessage: {
+    color: "#FF0000",
+    flex: 1,
+    fontSize: 14
   }
 });
 
@@ -321,5 +396,3 @@ CreateAccountScreen.propTypes = {
 
 
 export default CreateAccountScreen;
-
-
