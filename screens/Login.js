@@ -1,4 +1,4 @@
-import { SafeAreaView, View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Animated, Easing } from 'react-native';
+import { SafeAreaView, View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ActivityIndicator} from 'react-native';
 import { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import ErrorMessage from '../utils/ErrorMessage';
@@ -10,10 +10,13 @@ const LoginScreen = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = () => {
+    setLoading(true);
     s3.getObject({Bucket: 'drip-users-eu', Key: username.concat('.json')}, (err, data) => {
       if (err) {
+        setLoading(false);
         // check username
         if (err.code == 'NoSuchKey') {
           setErrorMessage('Invalid username');
@@ -31,6 +34,7 @@ const LoginScreen = ({ navigation }) => {
       else {
         // check password match
         let user = JSON.parse(data.Body.toString());
+        setLoading(false);
         if (sha256(password) == user.password) {
           navigation.navigate('Map');
         }
@@ -107,6 +111,9 @@ const LoginScreen = ({ navigation }) => {
       </TouchableOpacity>
       <View style={styles.bottomSpace} />
 
+      {/* loading indicator */}
+      <ActivityIndicator style={styles.indicator} size="large" color="#FFFFFF" animating={loading}/>
+
       {/* error */}
       <ErrorMessage errorMessage={errorMessage} showErrorMessage={showErrorMessage}/>
     </SafeAreaView>
@@ -173,8 +180,12 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 24 
   },
+  indicator: {
+    flex: 1,
+    marginBottom: "20%"
+  },
   bottomSpace: {
-    flex: 5
+    flex: 1
   },
   errorMessageBox: {
     flex: 1,
