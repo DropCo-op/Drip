@@ -27,11 +27,10 @@ const MapScreen = ({ navigation }) => {
 
       setInitialLocation({
         latitude: (location.coords.latitude + romeCoords.latitude)/2,
-        longitude: (location.coords.latitude + romeCoords.longitude)/2,
+        longitude: (location.coords.longitude + romeCoords.longitude)/2,
         latitudeDelta: 0.09,
         longitudeDelta: 0.09,
       });
-      window.console.log("location has been set");
     };
     getLocation();
   }, []);
