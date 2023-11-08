@@ -1,38 +1,15 @@
 import { SafeAreaView, View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Animated, Easing } from 'react-native';
 import { useState, useRef } from 'react';
 import PropTypes from "prop-types";
+import ErrorMessage from '../utils/ErrorMessage';
 import { s3 } from "../S3Storage";
 import sha256 from 'js-sha256';
 
 const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
   const [showErrorMessage, setShowErrorMessage] = useState(false);
-  const bottomPosition = useRef(new Animated.Value(-100)).current;
-
-  const toggleErrorMessage = () => {
-    if (showErrorMessage) return;
-    setShowErrorMessage(true);
-
-    Animated.timing(bottomPosition, {
-      toValue: 20,
-      duration: 300,
-      easing: Easing.ease,
-      useNativeDriver: false,
-    }).start();
-
-    setTimeout(() => {
-      Animated.timing(bottomPosition, {
-        toValue: -100,
-        duration: 300,
-        easing: Easing.ease,
-        useNativeDriver: false,
-      }).start(() => {
-        setShowErrorMessage(false);
-      });
-    }, 2000);
-  };
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleLogin = () => {
     // check username
@@ -40,11 +17,12 @@ const LoginScreen = ({ navigation }) => {
       if (err) {
         if (err.code == 'NoSuchKey') {
           setErrorMessage('Invalid username');
-          toggleErrorMessage();
         }
         else {
           setErrorMessage('Cannot connect to server right now');
         }
+        if (!showErrorMessage)
+          setShowErrorMessage(true);
       }
       else {
         // check password match
@@ -54,10 +32,12 @@ const LoginScreen = ({ navigation }) => {
         }
         else {
           setErrorMessage('Incorrect password');
-          toggleErrorMessage();
+          if (!showErrorMessage)
+            setShowErrorMessage(true);
         }
       }
     });
+    setShowErrorMessage(false);
   };
 
   const handleCreateAccount = () => {
@@ -121,11 +101,7 @@ const LoginScreen = ({ navigation }) => {
       <View style={styles.bottomSpace} />
 
       {/* error */}
-      {showErrorMessage && (
-        <Animated.View style={[styles.errorMessageBox, { bottom: bottomPosition }]}>
-          <Text style={styles.errorMessage}>{ errorMessage }</Text>
-        </Animated.View>
-      )}
+      <ErrorMessage errorMessage={errorMessage} showErrorMessage={showErrorMessage}/>
     </SafeAreaView>
   );
 };
