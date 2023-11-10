@@ -8,7 +8,7 @@ import { saveAuthenticationStatus } from '../utils/LocalAuth';
 
 const MapScreen = ({ navigation }) => {
   const [initialLocation, setInitialLocation] = useState(null);
-  const [coordinatesList, setCoordinatesList] = useState(null);
+  const [coordinatesList, setCoordinatesList] = useState([]);
   const mapRef = useRef(null);
 
   useEffect(() => {
@@ -27,8 +27,8 @@ const MapScreen = ({ navigation }) => {
       };
 
       setInitialLocation({
-        latitude: (location.coords.latitude + romeCoords.latitude)/2,
-        longitude: (location.coords.longitude + romeCoords.longitude)/2,
+        latitude:( Math.abs((location.coords.latitude + romeCoords.latitude)/2))<20?(location.coords.latitude + romeCoords.latitude)/2: romeCoords.latitude,
+        longitude: ( Math.abs((location.coords.longitude + romeCoords.longitude)/2))<20?(location.coords.longitude+ romeCoords.longitude)/2: romeCoords.longitude,
         latitudeDelta: 0.09,
         longitudeDelta: 0.09,
       });
@@ -36,20 +36,45 @@ const MapScreen = ({ navigation }) => {
     getLocation();
   }, []);
 
-  const getParams = {
+  const listParams = {
     Bucket: "drip-fountains-eu",
-    Key: "fountains.json",
   };
-
-  s3.getObject(getParams, (err, data) => {
-    if (err) {
-      console.error("Error retrieving JSON file from S3", err);
+  
+  s3.listObjects(listParams, (listErr, listData) => {
+    if (listErr) {
+      console.error("Error listing objects in S3 bucket", listErr);
     } else {
-      setCoordinatesList(JSON.parse(data.Body.toString())["fountains"]);
-      // Now you have your coordinatesList, which should be an array of coordinates.
-      // Proceed to rendering markers using React Native Maps.
+      listData.Contents?.forEach((object) => {
+        const getParams = {
+          Bucket: listParams["Bucket"],
+          Key: object.Key
+        }
+        if (getParams["Key"]!='fountains.json'){
+          s3.getObject(getParams, (err, data) => {
+            if (err) {
+              console.error("Error retrieving JSON file from S3", err);
+            } else {
+              let fountain = JSON.parse(data.Body.toString());
+
+              if(fountain in coordinatesList){
+                
+              }
+              else{
+                coordinatesList.push(fountain);
+                console.log(coordinatesList);
+              }
+              
+            }
+        });
+      }
+      else{
+        console.log("key was the fountains.json");
+      }
+      });
+      
     }
-  });
+  })
+  
 
   const handleBackNavigation = () => {
     // Request location permission once the map mounts
@@ -65,10 +90,13 @@ const MapScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View>
+      <View style={styles.topBar}>
         <TouchableOpacity onPress={handleBackNavigation}>
           <Text style={styles.backButton}>&lt; Sign Out</Text>
         </TouchableOpacity>
+        {/* <TouchableOpacity onPress={handleRatingsNavigation(coordinatesList[0])}>
+          <Text style={styles.newFountain}>Report New Fountain</Text>
+        </TouchableOpacity> */}
       </View>
       <View style={styles.map}>
         <MapView
@@ -78,7 +106,7 @@ const MapScreen = ({ navigation }) => {
           followsUserLocation={true}
           style={{ width: "100%", height: "100%" }}
         >
-          {coordinatesList?.map((marker) => {
+          {coordinatesList.map((marker) => {
             return (
               <Marker
                 coordinate={{
@@ -110,6 +138,12 @@ const styles = StyleSheet.create({
   backButton: {
     paddingTop: "10%",
     paddingLeft: "5%",
+    fontSize: 18,
+    color: "grey",
+  },  
+  newFountain: {
+    paddingTop: "5%",
+    paddingLeft: "50%",
     fontSize: 18,
     color: "grey",
   },
