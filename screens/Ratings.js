@@ -1,4 +1,11 @@
-import { View, Text, TouchableOpacity, StyleSheet, Image, Linking } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  Linking,
+} from "react-native";
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import BackBtn from "../utils/BackBtn";
@@ -15,8 +22,6 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
   const [pressure, setPressure] = useState(0);
   const [taste, setTaste] = useState(0);
   const [busyness, setBusyness] = useState(0);
-  const [lat, setLat] = useState(0.0);
-  const [long, setLong] = useState(0.0);
 
   useEffect(() => {
     console.log("hi \n\n\n");
@@ -60,6 +65,10 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
     navigation.navigate("MoreInfo", route.params);
   };
 
+  const handleInput = () => {
+    navigation.navigate("InputFountain");
+  }
+
   const handleTemperature = (selectedRating) => {
     console.log("Before Temperature: " + temperature);
     console.log(temperature);
@@ -90,7 +99,6 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
     <View style={styles.container}>
       <BackBtn handler={handleBack} style={styles.back_button} />
 
-
       <View style={styles.fountain_image}>
         <Image
           style={{
@@ -103,7 +111,7 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
           source={require("../assets/nasoni.jpeg")}
         />
       </View>
-      
+
       {/* title */}
       <View style={styles.title_box}>
         <Text style={styles.title}>{name}</Text>
@@ -164,6 +172,10 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
         </TouchableOpacity>
       </View>
 
+      <TouchableOpacity onPress={handleInput}>
+        <Text style={styles.button_text}>Input</Text>
+      </TouchableOpacity>
+
       <View style={styles.bottom_space} />
     </View>
   );
@@ -187,7 +199,7 @@ const styles = StyleSheet.create({
   title: {
     flex: 1,
     fontSize: 36,
-    color: 'black',//"#00C2FF",
+    color: "black", //"#00C2FF",
     height: "70%",
   },
   fountain_image: {

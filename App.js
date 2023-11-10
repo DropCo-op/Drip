@@ -10,6 +10,8 @@ import MapScreen from './screens/Map.js';
 import CreateAccountScreen from './screens/CreateAccount.js';
 import SubmitRatingsScreen from "./screens/Ratings.js";
 import MoreInfoScreen from "./screens/MoreInfo.js";
+import InputFountainScreen from "./screens/InputFountain.js"
+import InputMoreScreen from "./screens/InputMore.js"
 import { getAuthenticationStatus } from "./utils/LocalAuth"
 
 const Stack = createNativeStackNavigator();
@@ -26,10 +28,12 @@ const App = () => {
       <NavigationContainer>
         <Stack.Navigator initialRouteName={initialRouteName} screenOptions={{headerShown: false}}>
           <Stack.Screen name="Login" component={LoginScreen} />
+	        <Stack.Screen name="CreateAccount" component={CreateAccountScreen} />
           <Stack.Screen name="Map" component={MapScreen} />
           <Stack.Screen name="Ratings" component={SubmitRatingsScreen}/>
-	      <Stack.Screen name="CreateAccount" component={CreateAccountScreen} />
           <Stack.Screen name="MoreInfo" component={MoreInfoScreen} />
+          <Stack.Screen name="InputFountain" component={InputFountainScreen} />
+          <Stack.Screen name="InputMore" component={InputMoreScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
