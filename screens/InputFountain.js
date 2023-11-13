@@ -4,8 +4,6 @@ import {
   TouchableOpacity,
   StyleSheet,
   TextInput,
-  Image,
-  Linking,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
@@ -33,7 +31,9 @@ const InputFountain = ({ navigation }) => {
   };
 
   const handleInfo = () => {
-    navigation.navigate("InputMore");
+    console.log("before")
+    console.log(name);
+    navigation.navigate("InputMore", {Name: name});
   };
 
   const handleTemperature = (selectedRating) => {
@@ -59,7 +59,8 @@ const InputFountain = ({ navigation }) => {
       {/* title */}
       <TextInput
         style={styles.title}
-        onChangeText={(text) => setName(text)}
+        onChangeText={setName}
+        // onChangeText={(text) => setName(text)}
         placeholder={"Enter Name"}
       />
 
