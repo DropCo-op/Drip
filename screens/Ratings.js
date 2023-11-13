@@ -34,7 +34,7 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
 
   const handleSubmit = () => {
     // add: gray out the "submit" button, stays on the fountain page
-    const allRatings = [...route.params["List"]].filter((fountain) => {return fountain["name"] != route.params["Marker"]["name"]})
+    var allRatings = [...route.params["List"]].filter((fountain) => {return fountain["name"] != route.params["Marker"]["name"]})
     const ratings = {...route.params["Marker"]};
     ratings["temperature"] = temperature;
     ratings["pressure"] = pressure;
@@ -42,6 +42,8 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
     ratings["busyness"] = busyness;
 
     allRatings.push(ratings);
+
+    allRatings = {"fountains": [allRatings]};
  
     uploadObjectToS3("drip-fountains-eu", "fountains.json", allRatings);
   };
