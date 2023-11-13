@@ -62,6 +62,10 @@ const CreateAccountScreen = ({ navigation }) => {
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
+  const handleInput = () => {
+    navigation.navigate("InputMap");
+  }
+
 
   const handleCreateAccount = () => {
 
@@ -212,7 +216,7 @@ const CreateAccountScreen = ({ navigation }) => {
 
 
   return (
-    <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.container}>
       {/* title */}
       <View style={styles.titleBox}>
         <Image
@@ -287,6 +291,13 @@ const CreateAccountScreen = ({ navigation }) => {
         </TouchableOpacity>
       </View>
 
+	{/* invisible button for my page */}
+	<TouchableOpacity onPress={handleInput}>
+        <Text style={styles.buttonText}>Input</Text>
+      </TouchableOpacity>
+
+      <View style={styles.bottomSpace} />
+
       {/* create account */}
       <TouchableOpacity style={styles.button} onPress={handleCreateAccount}>
         <Text style={styles.buttonText}>Create Account</Text>
@@ -297,8 +308,6 @@ const CreateAccountScreen = ({ navigation }) => {
       {/* Error message display */}
       <ErrorMessage errorMessage={errorMessage} showErrorMessage={showErrorMessage}/>
     </SafeAreaView>
-
-
       
   );
 };
