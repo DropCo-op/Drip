@@ -1,27 +1,30 @@
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import BackBtn from "../utils/BackBtn";
 
-const InputMore = ({ navigation }) => {
+const InputMore = ({ navigation, route }) => {
+
+  const [name, setName] = useState("")
+
   const handleBack = () => {
     navigation.navigate("InputFountain");
   };
 
-  const [spoutCount, setSpoutCount] = useState(0);
-  const [adjustableValve, setAdjustableValve] = useState(false);
-  const [notes, setNotes] = useState("");
-  const [history, setHistory] = useState("");
-  const [name, setName] = useState("");
+  const handleSubmit = () => {
+    // const allRatings = [...route.params["List"]];
+    // const ratings = {...route.params["Marker"]};
+    // ratings["temperature"] = temp;
+    // ratings[]
+
+    navigation.navigate("Map");
+  }
 
   useEffect(() => {
+    console.log("name: " + route.params["Name"]);
     console.log("input more info");
-    // setSpoutCount(route.params["spoutCount"]);
-    // setAdjustableValve(route.params["adjustableValve"]);
-    // setNotes(route.params["notes"]);
-    // setHistory(route.params["history"]);
-    // setName(route.params["name"]);
-  }, []); // The empty dependency array [] means it runs only once on mount
+    setName(route.params["Name"]);
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -33,44 +36,27 @@ const InputMore = ({ navigation }) => {
       </View>
 
       <View style={{ flex: 0.5, flexDirection: "row", marginTop: "5%" }}>
-        <Text
-          style={{
-            color: "black",
-            textAlign: "left",
-            flex: 1,
-            fontSize: 24,
-            paddingLeft: "5%",
-          }}
-        >
-          Spout Count:{" "}
-          <TextInput
-            style={styles.input}
-            onChangeText={(text) => setSpoutCount(text)}
-            placeholder={"0"}
-          />
-        </Text>
-        <Text
-          style={{
-            color: "black",
-            textAlign: "right",
-            flex: 1,
-            fontSize: 24,
-            paddingRight: "5%",
-          }}
-        >
-          Adjustable? {adjustableValve ? "Yes" : "No"}
-        </Text>
+        <Text style={styles.spout_count_text}>Spout Count:</Text>
+        <TextInput style={styles.spout_count_input} placeholder={"#"} />
+
+        <Text style={styles.adjustable_valve_text}>Adjustable?</Text>
+        <TextInput style={styles.adjustable_valve_input} placeholder={"Y/N"} />
       </View>
 
       <View style={styles.text_section}>
         <Text style={{ flex: 1, fontSize: 24, color: "black" }}>Notes</Text>
-        <Text style={styles.text_info}>{notes}</Text>
+        <TextInput multiline={true} style={styles.text_info} placeholder={"Enter any extra notes or comments about the fountain here"} />
       </View>
 
       <View style={styles.text_section}>
         <Text style={{ flex: 1, fontSize: 24, color: "black" }}>History</Text>
-        <Text style={styles.text_info}>{history}</Text>
+        <TextInput multiline={true} style={styles.text_info} placeholder={"Enter history information here, if available"} />
       </View>
+
+      {/* submit button */}
+      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+        <Text style={styles.button_text}>Submit</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -98,6 +84,39 @@ const styles = StyleSheet.create({
     color: "black",
     height: "70%",
   },
+  spout_count_text: {
+    color: "black",
+    flex: 1,
+    fontSize: 20,
+    paddingLeft: "5%",
+    textAlign: "left",
+    alignSelf: "center",
+    // borderColor: "black",
+    // borderWidth: 2,
+  },
+  spout_count_input: {
+    color: "black",
+    textAlign: "left",
+    flex: 0.5,
+    fontSize: 20,
+    // paddingRight: "2.5%",
+  },
+  adjustable_valve_text: {
+    color: "black",
+    textAlign: "right",
+    flex: 1,
+    fontSize: 20,
+    alignSelf: "center",
+    // borderColor: "black",
+    // borderWidth: 2,
+  },
+  adjustable_valve_input: {
+    color: "black",
+    textAlign: "center",
+    flex: 0.5,
+    fontSize: 20,
+    paddingRight: "5%",
+  },
   text_section: {
     flex: 3,
     flexDirection: "column",
@@ -117,6 +136,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginBottom: 20,
     padding: "2.5%",
+    textAlignVertical: "top",
   },
   back_button: {
     paddingTop: "10%",
@@ -125,6 +145,21 @@ const styles = StyleSheet.create({
     color: "#00C2FF",
     alignSelf: "flex-start",
     padding: 1,
+  },
+  button: {
+    flex: 0.5,
+    justifyContent: "center",
+    borderColor: "#00C2FF",
+    borderWidth: 1,
+    borderRadius: 15,
+    marginBottom: "5%",
+    backgroundColor: "#00C2FF",
+    width: "25%"
+  },
+  button_text: {
+    color: "#FFFFFF",
+    fontSize: 24,
+    alignSelf: "center",
   },
   input: {
     borderColor: "#00C2FF",
