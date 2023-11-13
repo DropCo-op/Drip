@@ -10,10 +10,10 @@ import MapScreen from './screens/Map.js';
 import CreateAccountScreen from './screens/CreateAccount.js';
 import SubmitRatingsScreen from "./screens/Ratings.js";
 import MoreInfoScreen from "./screens/MoreInfo.js";
-import InputFountainScreen from "./screens/InputFountain.js"
-import InputMoreScreen from "./screens/InputMore.js"
-import InputMapScreen from "./screens/InputMap.js"
-import { getAuthenticationStatus } from "./utils/LocalAuth"
+import InputFountainScreen from "./screens/InputFountain.js";
+import InputMoreScreen from "./screens/InputMore.js";
+import InputMapScreen from "./screens/InputMap.js";
+import { getAuthenticationStatus } from "./utils/LocalAuth";
 
 const Stack = createNativeStackNavigator();
 
