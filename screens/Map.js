@@ -47,8 +47,6 @@ const MapScreen = ({ navigation }) => {
       console.error("Error retrieving JSON file from S3", err);
     } else {
       setCoordinatesList(JSON.parse(data.Body.toString())["fountains"]);
-      // Now you have your coordinatesList, which should be an array of coordinates.
-      // Proceed to rendering markers using React Native Maps.
     }
   });
 
@@ -62,9 +60,15 @@ const MapScreen = ({ navigation }) => {
     navigation.navigate("Ratings", {Marker: marker, List: list});
   };
 
+  const handleDrag = (region) => {
+    console.log(`latitude is ${region.latitude}`);
+    console.log(`longitude is ${region.longitude}`)
+    console.log(mapRef.current.props.region)
+  }
+
   return (
     <View style={styles.container}>
-      <View>
+      <View style={styles.headerBar}>
         <TouchableOpacity onPress={handleBackNavigation}>
           <Text style={styles.backButton}>&lt; Sign Out</Text>
         </TouchableOpacity>
@@ -76,6 +80,7 @@ const MapScreen = ({ navigation }) => {
           showsUserLocation={true}
           followsUserLocation={true}
           style={{ width: "100%", height: "100%" }}
+          onRegionChangeComplete={handleDrag}
         >
           {coordinatesList?.map((marker) => {
             return (
@@ -105,11 +110,17 @@ MapScreen.propTypes = {
 };
 
 const styles = StyleSheet.create({
+  headerBar: {
+    // display: "flex",
+    // justifyContent: "flex-start",
+    // alignContent: "flex-end", 
+    height: "7%",
+    color: "purple",
+  },
   backButton: {
     paddingTop: "10%",
     paddingLeft: "5%",
     fontSize: 18,
-    color: "grey",
   },
   map: {
     width: "100%",
