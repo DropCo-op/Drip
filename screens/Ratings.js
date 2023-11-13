@@ -14,9 +14,6 @@ import { uploadObjectToS3 } from "../utils/S3Storage";
 // import { Linking } from "react-native-linking";
 
 const SubmitRatingsScreen = ({ navigation, route }) => {
-  console.log("in ratings...");
-  console.log(route);
-
   const [name, setName] = useState("");
   const [temperature, setTemperature] = useState(0);
   const [pressure, setPressure] = useState(0);
@@ -24,13 +21,11 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
   const [busyness, setBusyness] = useState(0);
 
   useEffect(() => {
-    console.log("hi \n\n\n");
-    console.log(route.params);
-    setName(route.params["name"]);
-    setTemperature(route.params["temperature"]);
-    setPressure(route.params["pressure"]);
-    setTaste(route.params["taste"]);
-    setBusyness(route.params["busyness"]);
+    setName(route.params["Marker"]["name"]);
+    setTemperature(route.params["Marker"]["temperature"]);
+    setPressure(route.params["Marker"]["pressure"]);
+    setTaste(route.params["Marker"]["taste"]);
+    setBusyness(route.params["Marker"]["busyness"]);
   }, []); // The empty dependency array [] means it runs only once on mount
 
   const handleBack = () => {
@@ -39,21 +34,22 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
 
   const handleSubmit = () => {
     // add: gray out the "submit" button, stays on the fountain page
-    const ratings = { ...route.params };
+    const allRatings = [...route.params["List"]].filter((fountain) => {return fountain["name"] != route.params["Marker"]["name"]})
+    const ratings = {...route.params["Marker"]};
     ratings["temperature"] = temperature;
     ratings["pressure"] = pressure;
     ratings["taste"] = taste;
     ratings["busyness"] = busyness;
 
-    const key = ratings["name"] + ".json";
-
-    uploadObjectToS3("drip-fountains-eu", key, ratings);
+    allRatings.push(ratings);
+ 
+    uploadObjectToS3("drip-fountains-eu", "fountains.json", allRatings);
   };
 
   const handleNav = () => {
     // navigation.navigate("Map");
-    const lat = route.params["latitude"];
-    const long = route.params["longitude"];
+    const lat = route.params["Marker"]["latitude"];
+    const long = route.params["Marker"]["longitude"];
     const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${long}`;
 
     Linking.openURL(url).catch((err) =>
@@ -62,7 +58,7 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
   };
 
   const handleInfo = () => {
-    navigation.navigate("MoreInfo", route.params);
+    navigation.navigate("MoreInfo", route.params["Marker"]);
   };
 
   const handleInput = () => {
@@ -70,29 +66,19 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
   }
 
   const handleTemperature = (selectedRating) => {
-    console.log("Before Temperature: " + temperature);
-    console.log(temperature);
     setTemperature(selectedRating);
-    console.log("After Temperature: " + temperature);
   };
 
   const handlePressure = (selectedRating) => {
-    console.log("Before Pressure: " + pressure);
     setPressure(selectedRating);
-    console.log("After Pressure: " + pressure);
   };
 
   const handleTaste = (selectedRating) => {
-    console.log("Before Taste: " + taste);
     setTaste(selectedRating);
-    console.log("After Taste: " + selectedRating);
   };
 
   const handleBusyness = (selectedRating) => {
-    console.log(selectedRating);
-    console.log("Before Busyness: " + busyness);
     setBusyness(selectedRating);
-    console.log("After Busyness: " + selectedRating);
   };
 
   return (
@@ -122,7 +108,7 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
         name="Temperature"
         start="Hot"
         end="Cold"
-        rating={route.params["temperature"]}
+        rating={route.params["Marker"]["temperature"]}
         handler={handleTemperature}
       />
 
@@ -131,7 +117,7 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
         name="Pressure"
         start="Weak"
         end="Strong"
-        rating={route.params["pressure"]}
+        rating={route.params["Marker"]["pressure"]}
         handler={handlePressure}
       />
       {/* busyness */}
@@ -139,7 +125,7 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
         name="Busyness"
         start="Crowded"
         end="Empty"
-        rating={route.params["busyness"]}
+        rating={route.params["Marker"]["busyness"]}
         handler={handleBusyness}
       />
       {/* taste */}
@@ -147,7 +133,7 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
         name="Taste"
         start="Gross"
         end="Quality"
-        rating={route.params["taste"]}
+        rating={route.params["Marker"]["taste"]}
         handler={handleTaste}
       />
       <View style={{ marginBottom: "0%" }}></View>
@@ -247,6 +233,7 @@ const styles = StyleSheet.create({
 SubmitRatingsScreen.propTypes = {
   route: PropTypes.shape({
     params: PropTypes.shape({
+      Marker: PropTypes.shape({
       name: PropTypes.string.isRequired,
       temperature: PropTypes.number.isRequired,
       pressure: PropTypes.number.isRequired,
@@ -256,6 +243,8 @@ SubmitRatingsScreen.propTypes = {
       history: PropTypes.string.isRequired,
       notes: PropTypes.string.isRequired,
       adjustableValve: PropTypes.bool.isRequired,
+      }),
+      List: PropTypes.array.isRequired,
     }),
   }),
   navigation: PropTypes.shape({

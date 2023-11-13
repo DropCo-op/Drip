@@ -15,14 +15,12 @@ export default class RatingClicks extends Component {
 
   handleRateClick = (rating) => {
     this.setState({ rating });
-    console.log("RatingClicks: " + rating);
     this.parentHandler(rating);
   };
 
   renderRates() {
     const { rating } = this.state;
     const drops = [];
-    console.log(this.state);
     for (let i = 1; i <= 5; i++) {
       drops.push(
         <TouchableOpacity

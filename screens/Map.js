@@ -27,8 +27,9 @@ const MapScreen = ({ navigation }) => {
       };
 
       setInitialLocation({
-        latitude: (location.coords.latitude + romeCoords.latitude)/2,
-        longitude: (location.coords.longitude + romeCoords.longitude)/2,
+        latitude:( Math.abs((location.coords.latitude + romeCoords.latitude)/2))<20?(location.coords.latitude + romeCoords.latitude)/2: romeCoords.latitude,
+        longitude: ( Math.abs((location.coords.longitude + romeCoords.longitude)/2))<20?(location.coords.longitude+ romeCoords.longitude)/2: romeCoords.longitude,
+        
         latitudeDelta: 0.09,
         longitudeDelta: 0.09,
       });
@@ -57,10 +58,8 @@ const MapScreen = ({ navigation }) => {
     navigation.navigate("Login");
   };
 
-  const handleRatingsNavigation = (marker) => {
-    navigation.navigate("Ratings", marker);
-    window.console.log(marker);
-    window.console.log("this is the marker \n\n\n\n ");
+  const handleRatingsNavigation = (marker, list) => {
+    navigation.navigate("Ratings", {Marker: marker, List: list});
   };
 
   return (
@@ -88,8 +87,7 @@ const MapScreen = ({ navigation }) => {
                 key={marker.name}
                 title={marker.name}
                 onPress={() => {
-                  window.console.log(marker);
-                  handleRatingsNavigation(marker);
+                  handleRatingsNavigation(marker, coordinatesList);
                 }}
               />
             );
