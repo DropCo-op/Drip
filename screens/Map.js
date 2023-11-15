@@ -78,8 +78,8 @@ const MapScreen = ({ navigation }) => {
         <TouchableOpacity style={styles.backButton} onPress={handleBackNavigation}>
           <Text style={styles.buttonText}>&lt; Sign Out</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.newFountainButton} onPress={handleBackNavigation}>
-          <Text style={styles.buttonText} onPress={handleNewFountainNavigation(coordinatesList)}> + New Fountain</Text>
+        <TouchableOpacity style={styles.newFountainButton} onPress={()=> handleNewFountainNavigation(coordinatesList)}>
+          <Text style={styles.buttonText}> + New Fountain</Text>
         </TouchableOpacity>
       </View>
       
