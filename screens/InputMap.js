@@ -56,22 +56,17 @@ const InputMapScreen = ({ navigation }) => {
 
 	
 	const handleDrag = (region) => {
-    	//	console.log(`latitude is ${region.latitude}`);
-    	//	console.log(`longitude is ${region.longitude}`)
-
 		if (centerCoordinate) {
     			setCenterCoordinate({
       				latitude: region.latitude,
       				longitude: region.longitude,
     			});
   		}		
-	
-    	//	console.log(mapRef.current.props.region)
   	};
 
 	const handleNext = () => {
 		if (loc) {
-    			navigation.navigate("InputFountain");
+    			navigation.navigate("InputFountain", {Latitude : centerCoordinate.latitude, Longitude : centerCoordinate.longitude});
 		} else {
 			setErrorMessage("Please set fountain location.");
 	
