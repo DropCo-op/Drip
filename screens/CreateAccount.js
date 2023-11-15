@@ -74,7 +74,6 @@ const CreateAccountScreen = ({ navigation }) => {
 	// check that all spaces have something entered
 	if (myEmail.length == 0){
 		proceed = false;
-		console.log('Email not entered');
 		setErrorMessage("Please enter an email.");
 	
 		if (!showErrorMessage) {
@@ -87,7 +86,6 @@ const CreateAccountScreen = ({ navigation }) => {
 
 	else if (myUsername.length == 0){
 		proceed = false;
-		console.log('Username not entered');
 		setErrorMessage("Please enter a username.");
 
 	
@@ -101,7 +99,6 @@ const CreateAccountScreen = ({ navigation }) => {
 
 	else if (myPassword.length == 0){
 		proceed = false;
-		console.log('Password not entered');
 		setErrorMessage("Please enter a password");
 
 	
@@ -115,7 +112,6 @@ const CreateAccountScreen = ({ navigation }) => {
 
 	else if (myConfirmPassword.length == 0){
 		proceed = false;
-		console.log('Confirm Password not entered');
 		setErrorMessage("Please confirm your password.");
 		
 	
@@ -130,7 +126,6 @@ const CreateAccountScreen = ({ navigation }) => {
 	// check if email is valid
 	else if (!(emailCheck(myEmail))){
 		proceed = false;
-		console.log('Invalid email');
 		setErrorMessage("Invalid email. Please try again.");
 
 		if (!showErrorMessage) {
@@ -144,7 +139,6 @@ const CreateAccountScreen = ({ navigation }) => {
 	// check if username is between 6 and 32 chars
 	else if (myUsername.length < 6 || myUsername.length > 32){
 		proceed = false;
-		console.log('Invalid username length');
 		setErrorMessage("Username must be between 6 and 32 characters.");
 
 	
@@ -166,7 +160,6 @@ const CreateAccountScreen = ({ navigation }) => {
         			// Check if passwords match
         			if (myPassword !== myConfirmPassword) {
           				proceed = false;
-          				console.log('Passwords do not match');
          				setErrorMessage("Passwords do not match; Please try again.");
 
 				
@@ -179,7 +172,6 @@ const CreateAccountScreen = ({ navigation }) => {
         			}	
 
         			if (proceed) {
-          				console.log('Proceeding with account creation');
           				const userHash = myUsername + ".json";
           				const passHash = sha256(myPassword);
           				const newUser = new User(myUsername, myEmail, passHash);
@@ -188,7 +180,6 @@ const CreateAccountScreen = ({ navigation }) => {
         			}
       			} else {
        				proceed = false;
-        			console.log('Username already in use');
         			setErrorMessage("Username already in use. Please try again.");
 
 				if (!showErrorMessage) {

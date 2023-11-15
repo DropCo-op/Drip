@@ -61,9 +61,9 @@ const MapScreen = ({ navigation }) => {
   };
 
   const handleDrag = (region) => {
-    console.log(`latitude is ${region.latitude}`);
-    console.log(`longitude is ${region.longitude}`)
-    console.log(mapRef.current.props.region)
+  //  console.log(`latitude is ${region.latitude}`);
+  //  console.log(`longitude is ${region.longitude}`)
+  //  console.log(mapRef.current.props.region)
   }
 
   return (
