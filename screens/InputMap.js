@@ -1,15 +1,14 @@
 import * as React from 'react';
 import { useState, useEffect, useRef } from "react";
 import MapView, { Marker } from 'react-native-maps';
-import { SafeAreaView, StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
-import * as Location from "expo-location";
+import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import PropTypes from "prop-types";
 import { getLocation } from '../utils/Location.js';
 import Message from '../utils/Message.js';
 import ErrorMessage from '../utils/ErrorMessage.js';
 
 
-const InputMapScreen = ({ navigation }) => {
+const InputMapScreen = ({ navigation, route }) => {
 
 	const [showMessage, setShowMessage] = useState(false);
   	const [message, setMessage] = useState('');
@@ -34,7 +33,7 @@ const InputMapScreen = ({ navigation }) => {
     			initializeCenterCoordinate();
  		}, []);
 
-
+	
 	const [userLocation, setUserLocation] = useState(null);
  		useEffect(() => {
     			const initializeLocation = async () => {
@@ -67,7 +66,9 @@ const InputMapScreen = ({ navigation }) => {
 
 	const handleNext = () => {
 		if (loc) {
-    			navigation.navigate("InputFountain", {Latitude : centerCoordinate.latitude, Longitude : centerCoordinate.longitude});
+    			navigation.navigate("InputFountain", {List: route.params, 
+								Latitude : centerCoordinate.latitude, 
+								Longitude : centerCoordinate.longitude});
 		} else {
 			setErrorMessage("Please set fountain location.");
 	
