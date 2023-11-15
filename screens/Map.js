@@ -113,9 +113,9 @@ const styles = StyleSheet.create({
   headerBar: {
     // display: "flex",
     // justifyContent: "flex-start",
-    // alignContent: "flex-end", 
-    height: "7%",
-    color: "purple",
+    // // alignContent: "flex-end", 
+    // height: "7%",
+    // color: "purple",
   },
   backButton: {
     paddingTop: "10%",
