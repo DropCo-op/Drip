@@ -5,6 +5,7 @@ import * as Location from "expo-location";
 import PropTypes from "prop-types";
 import { s3 } from "../utils/S3Storage";
 import { saveAuthenticationStatus } from '../utils/LocalAuth';
+import { getFountains } from "../utils/DDBStorage";
 
 const MapScreen = ({ navigation }) => {
   const [initialLocation, setInitialLocation] = useState(null);
@@ -33,13 +34,14 @@ const MapScreen = ({ navigation }) => {
         latitudeDelta: 0.09,
         longitudeDelta: 0.09,
       });
+      getFountains(); 
     };
     getLocation();
   }, []);
 
   const getParams = {
     Bucket: "drip-fountains-eu",
-    Key: "fountains.json",
+    Key: "fountains2.json",
   };
 
   s3.getObject(getParams, (err, data) => {
@@ -60,6 +62,10 @@ const MapScreen = ({ navigation }) => {
     navigation.navigate("Ratings", {Marker: marker, List: list});
   };
 
+  const handleNewFountainNavigation = () => {
+    navigation.navigate("InputMap");
+  }
+
   const handleDrag = (region) => {
   //  console.log(`latitude is ${region.latitude}`);
   //  console.log(`longitude is ${region.longitude}`)
@@ -69,10 +75,14 @@ const MapScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.headerBar}>
-        <TouchableOpacity onPress={handleBackNavigation}>
-          <Text style={styles.backButton}>&lt; Sign Out</Text>
+        <TouchableOpacity style={styles.backButton} onPress={handleBackNavigation}>
+          <Text style={styles.buttonText}>&lt; Sign Out</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.newFountainButton} onPress={handleBackNavigation}>
+          <Text style={styles.buttonText} onPress={handleNewFountainNavigation}> + New Fountain</Text>
         </TouchableOpacity>
       </View>
+      
       <View style={styles.map}>
         <MapView
           ref={mapRef}
@@ -111,16 +121,22 @@ MapScreen.propTypes = {
 
 const styles = StyleSheet.create({
   headerBar: {
-    // display: "flex",
-    // justifyContent: "flex-start",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: "5%",
     // // alignContent: "flex-end", 
     // height: "7%",
     // color: "purple",
   },
   backButton: {
-    paddingTop: "10%",
-    paddingLeft: "5%",
-    fontSize: 18,
+    margin: "2%",
+  },
+  newFountainButton: {
+    margin: "2%",
+  },
+  buttonText: {
+    fontSize: 18
   },
   map: {
     width: "100%",
