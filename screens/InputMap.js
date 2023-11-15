@@ -1,21 +1,109 @@
 import * as React from 'react';
-import MapView from 'react-native-maps';
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
-import BackBtn from "../utils/BackBtn";
+import { useState, useEffect, useRef } from "react";
+import MapView, { Marker } from 'react-native-maps';
+import { SafeAreaView, StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
+import * as Location from "expo-location";
+import PropTypes from "prop-types";
+import { getLocation } from '../utils/Location.js';
+import Message from '../utils/Message.js';
+import ErrorMessage from '../utils/ErrorMessage.js';
+
 
 const InputMapScreen = ({ navigation }) => {
+
+	const [showMessage, setShowMessage] = useState(false);
+  	const [message, setMessage] = useState('');
+
+	const [showErrorMessage, setShowErrorMessage] = useState(false);
+  	const [errorMessage, setErrorMessage] = useState('');
+
+	const [loc, setLoc] = useState(false);
+
+	const mapRef = useRef(null);
+
+	const [centerCoordinate, setCenterCoordinate] = useState(null);
+		useEffect(() => {
+    			const initializeCenterCoordinate = async () => {
+      				try {
+        				const location = await getLocation();
+        				setCenterCoordinate(location);
+      				} catch (error) {
+        				console.error('Error fetching location:', error);
+      				}
+    			};
+    			initializeCenterCoordinate();
+ 		}, []);
+
+
+	const [userLocation, setUserLocation] = useState(null);
+ 		useEffect(() => {
+    			const initializeLocation = async () => {
+      				try {
+        				const location = await getLocation();
+        				setUserLocation(location);
+      				} catch (error) {
+        				console.error('Error fetching location:', error);
+     				}
+    			};
+
+    		initializeLocation();
+  	}, []);
+
 
 	const handleBackNavigation = () => {
     		navigation.navigate("Map");
   	};
 
-	const handleDrag = () => {
-		console.log(region);
+	
+	const handleDrag = (region) => {
+    	//	console.log(`latitude is ${region.latitude}`);
+    	//	console.log(`longitude is ${region.longitude}`)
+
+		if (centerCoordinate) {
+    			setCenterCoordinate({
+      				latitude: region.latitude,
+      				longitude: region.longitude,
+    			});
+  		}		
+	
+    	//	console.log(mapRef.current.props.region)
+  	};
+
+	const handleNext = () => {
+		if (loc) {
+    			navigation.navigate("InputFountain");
+		} else {
+			setErrorMessage("Please set fountain location.");
+	
+			if (!showErrorMessage) {
+          			setShowErrorMessage(true);
+          			setTimeout(() => {
+            				setShowErrorMessage(false);
+          			}, 2200);
+       			}
+		}
+  	};
+
+	const handleSetLoc = () => {
+		console.log(centerCoordinate);
+
+		setLoc(true);
+
+		setMessage("Location set!");
+
+		if (!showMessage) {
+          		setShowMessage(true);
+          		setTimeout(() => {
+            			setShowMessage(false);
+          		}, 2200);
+        	}
 	};
 
 	return (
-		<View style={styles.container}>
- 			<View>
+		<SafeAreaView style={styles.container}>
+
+			<View>
+				{/* back button */}
         			<TouchableOpacity onPress={handleBackNavigation}>
           				<Text style={styles.backButton}>&lt; Back</Text>
         			</TouchableOpacity>
@@ -23,31 +111,99 @@ const InputMapScreen = ({ navigation }) => {
 
 			<View style={styles.map}>
 
-				<MapView       
-          			//	region={initialLocation}
+				<MapView 
+					ref = {mapRef}      
+          				region={userLocation}
+          				showsUserLocation={true}
           				style={{ width: "100%", height: "100%" }}
         				onRegionChangeComplete={handleDrag}
 				>
+
+				<Marker
+          				coordinate={centerCoordinate}
+          				title="Fountain"
+          				description="Input fountain marker"
+        			/>
 		
 				</MapView>
 			</View>
-		</View>		
+
+
+			<View style={styles.button_container_loc}>
+				{/* set location button */}
+				<TouchableOpacity style={styles.button} onPress={handleSetLoc}>
+					<Text style={styles.button_text}>Set Location</Text>
+				</TouchableOpacity>
+			</View>
+
+			<View style={styles.button_container_next}>
+        			{/* next page button */}
+        			<TouchableOpacity style={styles.button} onPress={handleNext}>
+          				<Text style={styles.button_text}>Next</Text>
+        			</TouchableOpacity>
+      			</View>
+	
+
+			{/* error */}
+      			<ErrorMessage errorMessage={errorMessage} showErrorMessage={showErrorMessage}/>
+
+			{/* loc message */}
+      			<Message message={message} showMessage={showMessage}/>
+    		</SafeAreaView>	
 	);
 }
 
+
+
+InputMapScreen.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+
 const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+	},
+	map: {
+		flex: 1,
+	},
+	button_container_loc : {
+		position: "absolute",
+		bottom: '12.5%',
+		paddingBottom: '5%', 
+	        left: '5%',
+		right: '5%',	
+		flexDirection: "column",
+		justifyContent: "space-around",
+	},
+	button_container_next: {
+		position: "absolute",
+		bottom: '5%',
+		left: '5%',
+		right: '5%',
+		flexDirection: "column",
+		justifyContent: "space-around",
+  	},
+	button: {
+		backgroundColor: "#3498db",
+		padding: 15,
+		borderRadius: 5,
+		flex: 1,
+		marginHorizontal: 10,
+	},
+	button_text: {
+    		color: "#FFFFFF",
+    		fontSize: 18,
+   		alignSelf: "center",
+  	},
 	backButton: {
-    		paddingTop: "10%",
+    		paddingTop: "5%",
     		paddingLeft: "5%",
+		paddingBottom: "5%",
     		fontSize: 18,
     		color: "grey",
-  	},
-	map: {
-    		width: "100%",
-    		height: "100%",
-    		position: "relative",
-    		paddingTop: "2%",
-    		top: "0%",
   	},
 });
 
