@@ -10,14 +10,10 @@ export const getLocation = async () => {
 
   return {
     latitude:
-      Math.abs((location.coords.latitude + romeCoords.latitude) / 2) < 20
-        ? (location.coords.latitude + romeCoords.latitude) / 2
-        : romeCoords.latitude,
+      location.coords.latitude,
     longitude:
-      Math.abs((location.coords.longitude + romeCoords.longitude) / 2) < 20
-        ? (location.coords.longitude + romeCoords.longitude) / 2
-        : romeCoords.longitude,
-    latitudeDelta: 0.09,
-    longitudeDelta: 0.09,
+      location.coords.longitude,
+    latitudeDelta: 0.001,
+    longitudeDelta: 0.001,
   };
 };
