@@ -62,8 +62,8 @@ const MapScreen = ({ navigation }) => {
     navigation.navigate("Ratings", {Marker: marker, List: list});
   };
 
-  const handleNewFountainNavigation = () => {
-    navigation.navigate("InputMap");
+  const handleNewFountainNavigation = (list) => {
+    navigation.navigate("InputMap", list);
   }
 
   const handleDrag = (region) => {
@@ -79,7 +79,7 @@ const MapScreen = ({ navigation }) => {
           <Text style={styles.buttonText}>&lt; Sign Out</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.newFountainButton} onPress={handleBackNavigation}>
-          <Text style={styles.buttonText} onPress={handleNewFountainNavigation}> + New Fountain</Text>
+          <Text style={styles.buttonText} onPress={handleNewFountainNavigation(coordinatesList)}> + New Fountain</Text>
         </TouchableOpacity>
       </View>
       
