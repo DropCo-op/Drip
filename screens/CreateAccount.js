@@ -62,10 +62,6 @@ const CreateAccountScreen = ({ navigation }) => {
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const handleInput = () => {
-    navigation.navigate("InputMap");
-  }
-
 
   const handleCreateAccount = () => {
 
@@ -194,13 +190,6 @@ const CreateAccountScreen = ({ navigation }) => {
 };
 
 
-
-
-
-
-
-
-
   const handleBack = () => {
     navigation.navigate('Login');
   };
@@ -281,13 +270,6 @@ const CreateAccountScreen = ({ navigation }) => {
           <Text style={[styles.link, {textAlign: "left"}]}>&lt; Back to Login</Text>
         </TouchableOpacity>
       </View>
-
-	{/* invisible button for my page */}
-	<TouchableOpacity onPress={handleInput}>
-        <Text style={styles.buttonText}>Input</Text>
-      </TouchableOpacity>
-
-      <View style={styles.bottomSpace} />
 
       {/* create account */}
       <TouchableOpacity style={styles.button} onPress={handleCreateAccount}>
