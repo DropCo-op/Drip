@@ -25,8 +25,8 @@ const InputMapScreen = ({ navigation }) => {
 		useEffect(() => {
     			const initializeCenterCoordinate = async () => {
       				try {
-        				const location = await getLocation();
-        				setCenterCoordinate(location);
+        				const loc1 = await getLocation();
+        				setCenterCoordinate(loc1);
       				} catch (error) {
         				console.error('Error fetching location:', error);
       				}
@@ -39,8 +39,8 @@ const InputMapScreen = ({ navigation }) => {
  		useEffect(() => {
     			const initializeLocation = async () => {
       				try {
-        				const location = await getLocation();
-        				setUserLocation(location);
+        				const loc2 = await getLocation();
+        				setUserLocation(loc2);
       				} catch (error) {
         				console.error('Error fetching location:', error);
      				}
@@ -56,6 +56,7 @@ const InputMapScreen = ({ navigation }) => {
 
 	
 	const handleDrag = (region) => {
+		
 		if (centerCoordinate) {
     			setCenterCoordinate({
       				latitude: region.latitude,
@@ -79,11 +80,9 @@ const InputMapScreen = ({ navigation }) => {
 		}
   	};
 
-	const handleSetLoc = () => {
-		console.log(centerCoordinate);
-
+	const handleSetLoc = (region) => {
 		setLoc(true);
-
+		
 		setMessage("Location set!");
 
 		if (!showMessage) {
@@ -108,7 +107,7 @@ const InputMapScreen = ({ navigation }) => {
 
 				<MapView 
 					ref = {mapRef}      
-          				region={userLocation}
+          				region={centerCoordinate}
           				showsUserLocation={true}
           				style={{ width: "100%", height: "100%" }}
         				onRegionChangeComplete={handleDrag}
