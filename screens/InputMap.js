@@ -33,22 +33,6 @@ const InputMapScreen = ({ navigation, route }) => {
     			initializeCenterCoordinate();
  		}, []);
 
-	
-	const [userLocation, setUserLocation] = useState(null);
- 		useEffect(() => {
-    			const initializeLocation = async () => {
-      				try {
-        				const loc2 = await getLocation();
-        				setUserLocation(loc2);
-      				} catch (error) {
-        				console.error('Error fetching location:', error);
-     				}
-    			};
-
-    		initializeLocation();
-  	}, []);
-
-
 	const handleBackNavigation = () => {
     		navigation.navigate("Map");
   	};
@@ -151,6 +135,9 @@ const InputMapScreen = ({ navigation, route }) => {
 
 
 InputMapScreen.propTypes = {
+  route: PropTypes.shape({
+    params: PropTypes.array.isRequired,
+  }),
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
   }).isRequired,
