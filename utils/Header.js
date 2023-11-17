@@ -31,7 +31,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#00C2FF",
     flexDirection: "row",
     alignItems: "left",
-    marginTop: "5%"
+    marginTop: "5%",
+    marginBottom: "1%"
   },
   backButton: {
     flex: 1,
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
     marginVertical: "1%",
   },
   backButtonText: {
-   fontSize: 20,
+   fontSize: 22,
    color: "#FFFFFF"
   },
 });

@@ -1,5 +1,6 @@
 import {
   View,
+  SafeAreaView,
   Text,
   TouchableOpacity,
   StyleSheet,
@@ -8,7 +9,7 @@ import {
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import BackBtn from "../utils/BackBtn";
+import Header from "../utils/Header";
 import RatingMetric from "../utils/RatingMetric";
 import { uploadObjectToS3 } from "../utils/S3Storage";
 // import { Linking } from "react-native-linking";
@@ -85,9 +86,12 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <BackBtn handler={handleBack} style={styles.back_button} />
+    <SafeAreaView style={styles.backColor}>
+      <Header handler={handleBack}/>
 
+      <View style={styles.container}>
+
+      {/*
       <View style={styles.fountain_image}>
         <Image
           style={{
@@ -100,6 +104,7 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
           source={require("../assets/nasoni.jpeg")}
         />
       </View>
+      */}
 
       {/* title */}
       <View style={styles.title_box}>
@@ -165,17 +170,24 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.bottom_space} />
-    </View>
+      <View style={styles.bottom_space}/>
+
+      </View>
+    </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({
+  backColor: {
+    backgroundColor: "#00C2FF",
+    height: "100%"
+  },
   container: {
     flex: 1,
+    display: "flex",
     flexDirection: "column",
     justifyContent: "top",
     alignItems: "center",
-    backgroundColor: "#FFF",
+    backgroundColor: "#FFFFFF",
   },
   title_box: {
     flex: 0.5,

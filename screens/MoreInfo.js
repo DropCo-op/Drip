@@ -1,7 +1,7 @@
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, SafeAreaView, Text, StyleSheet, Image } from "react-native";
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import BackBtn from "../utils/BackBtn";
+import Header from "../utils/Header";
 
 const MoreInfo = ({ navigation, route }) => {
   const handleBack = () => {
@@ -23,8 +23,9 @@ const MoreInfo = ({ navigation, route }) => {
   }, []); // The empty dependency array [] means it runs only once on mount
 
   return (
-    <View style={styles.container}>
-      <BackBtn handler={handleBack} style={styles.back_button} />
+    <SafeAreaView style={styles.backColor}>
+      <Header handler={handleBack}/>
+      <View style={styles.container}>
 
       <View style={styles.fountain_image}>
         <Image
@@ -78,17 +79,22 @@ const MoreInfo = ({ navigation, route }) => {
         <Text style={{ flex: 1, fontSize: 24, color: "#00C2FF" }}>History</Text>
         <Text style={styles.text_info}>{history}</Text>
       </View>
-    </View>
+      </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  backColor: {
+    backgroundColor: "#00C2FF",
+    height: "100%"
+  },
   container: {
     flex: 1,
     flexDirection: "column",
     justifyContent: "top",
     alignItems: "center",
-    backgroundColor: "#FFF",
+    backgroundColor: "#FFFFFF",
     // paddingLeft: "5%",
     // paddingRight: "5%",
   },
