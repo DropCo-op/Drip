@@ -3,11 +3,6 @@ import * as Location from 'expo-location';
 export const getLocation = async () => {
   let location = await Location.getLastKnownPositionAsync();
 
-  const romeCoords = {
-    longitude: 12.4964,
-    latitude: 41.9028,
-  };
-
   return {
     latitude:
       location.coords.latitude,
