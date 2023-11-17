@@ -51,6 +51,7 @@ const InputMore = ({ navigation, route }) => {
     ratings["taste"] = taste;
     ratings["adjustableValve"] = adjustableValve;
     ratings["spoutCount"] = spoutCount;
+    ratings["ratingCount"] = 1; 
 
     if (!validateSpoutCount(spoutCount)) {
       // TODO: prompt for value check

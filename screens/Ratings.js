@@ -34,17 +34,18 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
 
   const handleSubmit = () => {
     // add: gray out the "submit" button, stays on the fountain page
-    var allRatings = [...route.params["List"]].filter((fountain) => {return fountain["name"] != route.params["Marker"]["name"]})
-    const ratings = {...route.params["Marker"]};
-    ratings["temperature"] = temperature;
-    ratings["pressure"] = pressure;
-    ratings["taste"] = taste;
-    ratings["busyness"] = busyness;
+    var allRatings = [...route.params.List].filter((fountain) => {return fountain["name"] != route.params["Marker"]["name"]})
+    const ratings = {...route.params.Marker};
+    ratings["ratingCount"]++; 
+    ratings["temperature"] = (temperature + (route.params.Marker.temperature * route.params.Marker.ratingCount))/ratings.ratingCount;
+    ratings["pressure"] = (pressure + (route.params.Marker.pressure * route.params.Marker.ratingCount))/ratings.ratingCount
+    ratings["taste"] = (taste + (route.params.Marker.taste * route.params.Marker.ratingCount))/ratings.ratingCount;
+    ratings["busyness"] = (busyness + (route.params.Marker.busyness * route.params.Marker.ratingCount))/ratings.ratingCount;
 
     allRatings.push(ratings);
 
     allRatings = {"fountains": allRatings};
- 
+
     uploadObjectToS3("drip-fountains-eu", "fountains3.json", allRatings);
   };
 
@@ -110,7 +111,7 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
         name="Temperature"
         start="Hot"
         end="Cold"
-        rating={route.params["Marker"]["temperature"]}
+        rating={Math.round(route.params["Marker"]["temperature"])}
         handler={handleTemperature}
       />
 
@@ -119,7 +120,7 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
         name="Pressure"
         start="Weak"
         end="Strong"
-        rating={route.params["Marker"]["pressure"]}
+        rating={Math.round(route.params["Marker"]["pressure"])}
         handler={handlePressure}
       />
       {/* busyness */}
@@ -127,7 +128,7 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
         name="Busyness"
         start="Crowded"
         end="Empty"
-        rating={route.params["Marker"]["busyness"]}
+        rating={Math.round(route.params["Marker"]["busyness"])}
         handler={handleBusyness}
       />
       {/* taste */}
@@ -135,7 +136,7 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
         name="Taste"
         start="Gross"
         end="Quality"
-        rating={route.params["Marker"]["taste"]}
+        rating={Math.round(route.params["Marker"]["taste"])}
         handler={handleTaste}
       />
       <View style={{ marginBottom: "0%" }}></View>
@@ -168,7 +169,6 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
