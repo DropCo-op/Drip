@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, Animated, Easing, StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
 
 const Message = ({ message = '', showMessage }) => {
   const bottomPosition = new Animated.Value(-100);
@@ -20,7 +21,7 @@ const Message = ({ message = '', showMessage }) => {
           easing: Easing.ease,
           useNativeDriver: false,
         }).start(() => {
-          setShowMessage = false;
+          let setShowMessage = false;
         });
       }, 2000);
     }
@@ -52,5 +53,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
 });
+
+
+Message.propTypes = {
+  message: PropTypes.string.isRequired,
+  showMessage: PropTypes.bool.isRequired,
+};
+
 
 export default Message;
