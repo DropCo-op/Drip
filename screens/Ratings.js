@@ -161,10 +161,6 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity onPress={handleInput}>
-        <Text style={styles.button_text}>Input</Text>
-      </TouchableOpacity>
-
       <View style={styles.bottom_space} />
     </View>
   );
