@@ -89,23 +89,16 @@ const InputMore = ({ navigation, route }) => {
   };
 
   const onChangeAdjustable = (input) => {
-    if (
-      input == "no" ||
-      input == "No" ||
-      input == "NO" ||
-      input == "N" ||
-      input == "n"
-    ) {
+    const no = ["no", "No", "NO", "nO", "N", "n"];
+    const yes = ["yes", "Yes", "YES", "yeS", "yES", "yEs", "Y", "y"];
+    
+    if (no.includes(input)) {
       setAdjustableValve(false);
-    } else if (
-      input == "yes" ||
-      input == "Yes" ||
-      input == "YES" ||
-      input == "y" ||
-      input == "Y"
-    ) {
+    } 
+    else if (yes.includes(input)) {
       setAdjustableValve(true);
-    } else {
+    } 
+    else {
       setAdjustableValve("fail");
     }
   };
