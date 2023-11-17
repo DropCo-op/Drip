@@ -15,11 +15,11 @@ const MoreInfo = ({ navigation, route }) => {
   const [name, setName] = useState("");
 
   useEffect(() => {
-    setSpoutCount(route.params["spoutCount"]);
-    setAdjustableValve(route.params["adjustableValve"]);
-    setNotes(route.params["notes"]);
-    setHistory(route.params["history"]);
-    setName(route.params["name"]);
+    setSpoutCount(route.params["Marker"]["spoutCount"]);
+    setAdjustableValve(route.params["Marker"]["adjustableValve"]);
+    setNotes(route.params["Marker"]["notes"]);
+    setHistory(route.params["Marker"]["history"]);
+    setName(route.params["Marker"]["name"]);
   }, []); // The empty dependency array [] means it runs only once on mount
 
   return (
@@ -46,12 +46,24 @@ const MoreInfo = ({ navigation, route }) => {
 
       <View style={{ flex: 0.5, flexDirection: "row", marginTop: "5%" }}>
         <Text
-          style={{ color: "black", textAlign: "left", flex: 1, fontSize: 24, paddingLeft: "5%" }}
+          style={{
+            color: "black",
+            textAlign: "left",
+            flex: 1,
+            fontSize: 24,
+            paddingLeft: "5%",
+          }}
         >
           Spout Count: {spoutCount}
         </Text>
         <Text
-          style={{ color: "black", textAlign: "right", flex: 1, fontSize: 24, paddingRight: "5%" }}
+          style={{
+            color: "black",
+            textAlign: "right",
+            flex: 1,
+            fontSize: 24,
+            paddingRight: "5%",
+          }}
         >
           Adjustable? {adjustableValve ? "Yes" : "No"}
         </Text>
@@ -112,7 +124,7 @@ const styles = StyleSheet.create({
   text_info: {
     flexWrap: "wrap",
     flex: 5,
-    color: "black",//"#00C2FF",
+    color: "black", //"#00C2FF",
     borderColor: "#00C2FF",
     borderWidth: 2,
     borderRadius: 15,
@@ -133,15 +145,17 @@ const styles = StyleSheet.create({
 MoreInfo.propTypes = {
   route: PropTypes.shape({
     params: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      temperature: PropTypes.number.isRequired,
-      pressure: PropTypes.number.isRequired,
-      taste: PropTypes.number.isRequired,
-      busyness: PropTypes.number.isRequired,
-      spoutCount: PropTypes.number.isRequired,
-      history: PropTypes.string.isRequired,
-      notes: PropTypes.string.isRequired,
-      adjustableValve: PropTypes.bool.isRequired,
+      Marker: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        temperature: PropTypes.number.isRequired,
+        pressure: PropTypes.number.isRequired,
+        taste: PropTypes.number.isRequired,
+        busyness: PropTypes.number.isRequired,
+        spoutCount: PropTypes.number.isRequired,
+        history: PropTypes.string.isRequired,
+        notes: PropTypes.string.isRequired,
+        adjustableValve: PropTypes.bool.isRequired,
+      }),
     }),
   }),
   navigation: PropTypes.shape({

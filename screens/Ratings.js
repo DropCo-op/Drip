@@ -60,7 +60,7 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
   };
 
   const handleInfo = () => {
-    navigation.navigate("MoreInfo", route.params["Marker"]);
+    navigation.navigate("MoreInfo", {Marker: route.params["Marker"], List: route.params["List"]});
   };
 
   const handleInput = () => {
