@@ -40,7 +40,7 @@ const MapScreen = ({ navigation }) => {
 
   const getParams = {
     Bucket: "drip-fountains-eu",
-    Key: "fountains2.json",
+    Key: "fountains3.json",
   };
 
   s3.getObject(getParams, (err, data) => {
@@ -48,8 +48,6 @@ const MapScreen = ({ navigation }) => {
       console.error("Error retrieving JSON file from S3", err);
     } else {
       setCoordinatesList(JSON.parse(data.Body.toString())["fountains"]);
-
-      console.log(coordinatesList)
     }
   });
 
