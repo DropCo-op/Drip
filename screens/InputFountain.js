@@ -11,9 +11,7 @@ import BackBtn from "../utils/BackBtn";
 import RatingMetric from "../utils/RatingMetric";
 import { uploadObjectToS3 } from "../utils/S3Storage";
 
-const InputFountain = ({ navigation }) => {
-  console.log("in ratings...");
-
+const InputFountain = ({ navigation, route }) => {
   const [name, setName] = useState("");
   const [temperature, setTemperature] = useState(0);
   const [pressure, setPressure] = useState(0);
@@ -23,7 +21,8 @@ const InputFountain = ({ navigation }) => {
   const [long, setLong] = useState(0.0);
 
   useEffect(() => {
-    console.log("hi \n\n\n");
+    setLat(route.params["Latitude"]);
+    setLong(route.params["Longitude"]);
   }, []); // The empty dependency array [] means it runs only once on mount
 
   const handleBack = () => {
@@ -31,9 +30,16 @@ const InputFountain = ({ navigation }) => {
   };
 
   const handleInfo = () => {
-    console.log("before")
-    console.log(name);
-    navigation.navigate("InputMore", {Name: name});
+    navigation.navigate("InputMore", {
+      Name: name,
+      Latitude: lat,
+      Longitude: long,
+      Temperature: temperature,
+      Pressure: pressure,
+      Busyness: busyness,
+      Taste: taste,
+      List: route.params["List"],
+    });
   };
 
   const handleTemperature = (selectedRating) => {
@@ -139,7 +145,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 15,
     backgroundColor: "#00C2FF",
-    width: "25%"
+    width: "25%",
   },
   button_text: {
     color: "#FFFFFF",

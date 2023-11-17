@@ -1,30 +1,110 @@
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import BackBtn from "../utils/BackBtn";
+import { uploadObjectToS3 } from "../utils/S3Storage";
 
 const InputMore = ({ navigation, route }) => {
+  const [name, setName] = useState("");
+  const [lat, setLat] = useState(0.0);
+  const [long, setLong] = useState(0.0);
+  const [notes, setNotes] = useState("");
+  const [history, setHistory] = useState("");
+  const [temperature, setTemperature] = useState(0);
+  const [pressure, setPressure] = useState(0);
+  const [taste, setTaste] = useState(0);
+  const [busyness, setBusyness] = useState(0);
+  const [adjustableValve, setAdjustableValve] = useState(false);
+  const [spoutCount, setSpoutCount] = useState(1);
 
-  const [name, setName] = useState("")
+  useEffect(() => {
+    setName(route.params["Name"]);
+    setLat(route.params["Latitude"]);
+    setLong(route.params["Longitude"]);
+    setTemperature(route.params["Temperature"]);
+    setPressure(route.params["Pressure"]);
+    setBusyness(route.params["Busyness"]);
+    setTaste(route.params["Taste"]);
+  }, []);
 
   const handleBack = () => {
-    navigation.navigate("InputFountain");
+    navigation.navigate("InputFountain", route);
   };
 
   const handleSubmit = () => {
-    // const allRatings = [...route.params["List"]];
-    // const ratings = {...route.params["Marker"]};
-    // ratings["temperature"] = temp;
-    // ratings[]
+    var allRatings = [...route.params["List"]];
+    const ratings = { ...route.params["Marker"] };
+    ratings["name"] = name;
+    ratings["latitude"] = lat;
+    ratings["longitude"] = long;
+    ratings["notes"] = notes;
+    ratings["history"] = history;
+    ratings["temperature"] = temperature;
+    ratings["pressure"] = pressure;
+    ratings["busyness"] = busyness;
+    ratings["taste"] = taste;
+    ratings["adjustableValve"] = adjustableValve;
+    ratings["spoutCount"] = spoutCount;
 
-    navigation.navigate("Map");
-  }
+    if (!validateSpoutCount(spoutCount)) {
+      // TODO: prompt for value check
+      console.log("invalid spout input");
+    } else if (!validateAdjustable(adjustableValve)) {
+      // TODO: prompt for value check
+      console.log("invalid adjustable input");
+    } else {
+      allRatings.push(ratings);
+      allRatings = { fountains: allRatings };
 
-  useEffect(() => {
-    console.log("name: " + route.params["Name"]);
-    console.log("input more info");
-    setName(route.params["Name"]);
-  }, []);
+      uploadObjectToS3("drip-fountains-eu", "fountains3.json", allRatings);
+
+      navigation.navigate("Map");
+    }
+  };
+
+  const onChangeAdjustable = (input) => {
+    if (
+      input == "no" ||
+      input == "No" ||
+      input == "NO" ||
+      input == "N" ||
+      input == "n"
+    ) {
+      setAdjustableValve(false);
+    } else if (
+      input == "yes" ||
+      input == "Yes" ||
+      input == "YES" ||
+      input == "y" ||
+      input == "Y"
+    ) {
+      setAdjustableValve(true);
+    } else {
+      setAdjustableValve("fail");
+    }
+  };
+
+  const validateSpoutCount = (input) => {
+    if (!isNaN(input)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const validateAdjustable = (input) => {
+    if (typeof input == "boolean") {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -37,20 +117,40 @@ const InputMore = ({ navigation, route }) => {
 
       <View style={{ flex: 0.5, flexDirection: "row", marginTop: "5%" }}>
         <Text style={styles.spout_count_text}>Spout Count:</Text>
-        <TextInput style={styles.spout_count_input} placeholder={"#"} />
+        <TextInput
+          onChangeText={setSpoutCount}
+          style={styles.spout_count_input}
+          placeholder={"#"}
+        />
 
         <Text style={styles.adjustable_valve_text}>Adjustable?</Text>
-        <TextInput style={styles.adjustable_valve_input} placeholder={"Y/N"} />
+        <TextInput
+          onChangeText={onChangeAdjustable}
+          style={styles.adjustable_valve_input}
+          placeholder={"Y/N"}
+        />
       </View>
 
       <View style={styles.text_section}>
         <Text style={{ flex: 1, fontSize: 24, color: "black" }}>Notes</Text>
-        <TextInput multiline={true} style={styles.text_info} placeholder={"Enter any extra notes or comments about the fountain here"} />
+        <TextInput
+          onChangeText={setNotes}
+          multiline={true}
+          style={styles.text_info}
+          placeholder={
+            "Enter any extra notes or comments about the fountain here"
+          }
+        />
       </View>
 
       <View style={styles.text_section}>
         <Text style={{ flex: 1, fontSize: 24, color: "black" }}>History</Text>
-        <TextInput multiline={true} style={styles.text_info} placeholder={"Enter history information here, if available"} />
+        <TextInput
+          onChangeText={setHistory}
+          multiline={true}
+          style={styles.text_info}
+          placeholder={"Enter history information here, if available"}
+        />
       </View>
 
       {/* submit button */}
@@ -154,7 +254,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     marginBottom: "5%",
     backgroundColor: "#00C2FF",
-    width: "25%"
+    width: "25%",
   },
   button_text: {
     color: "#FFFFFF",

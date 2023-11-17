@@ -43,9 +43,9 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
 
     allRatings.push(ratings);
 
-    allRatings = {"fountains": [allRatings]};
+    allRatings = {"fountains": allRatings};
  
-    uploadObjectToS3("drip-fountains-eu", "fountains.json", allRatings);
+    uploadObjectToS3("drip-fountains-eu", "fountains3.json", allRatings);
   };
 
   const handleNav = () => {
