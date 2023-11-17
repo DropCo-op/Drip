@@ -28,11 +28,11 @@ const MapScreen = ({ navigation }) => {
       };
 
       setInitialLocation({
-        latitude:( Math.abs((location.coords.latitude + romeCoords.latitude)/2))<20?(location.coords.latitude + romeCoords.latitude)/2: romeCoords.latitude,
-        longitude: ( Math.abs((location.coords.longitude + romeCoords.longitude)/2))<20?(location.coords.longitude+ romeCoords.longitude)/2: romeCoords.longitude,
+        latitude:location.coords.latitude,
+        longitude:location.coords.longitude,
         
-        latitudeDelta: 0.09,
-        longitudeDelta: 0.09,
+        latitudeDelta: ( Math.abs(location.coords.latitude - romeCoords.latitude))<1?Math.abs(location.coords.latitude - romeCoords.latitude)+0.01: 0.001,
+        longitudeDelta:( Math.abs(location.coords.longitude - romeCoords.longitude))<1?Math.abs(location.coords.longitude - romeCoords.longitude)+0.01: 0.001, 
       });
     };
     getLocation();
