@@ -106,6 +106,10 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
         <Text style={styles.title}>{name}</Text>
       </View>
 
+      <View style={styles.numRatings}>
+        <Text style={styles.numRatingsText}>Ratings: {route.params.Marker.ratingCount}</Text>
+      </View>
+
       {/* temperature */}
       <RatingMetric
         name="Temperature"
@@ -185,6 +189,16 @@ const styles = StyleSheet.create({
     fontSize: 36,
     color: "black", //"#00C2FF",
     height: "70%",
+  },
+  numRatings: {
+    display: 'flex',
+    width: "89%",
+    marginTop: "2%",
+    float: 'left',
+  },
+  numRatingsText:{
+    fontSize: 18, 
+    color: '#707080',
   },
   fountain_image: {
     flex: 1,
