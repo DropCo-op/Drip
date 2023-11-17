@@ -9,6 +9,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import BackBtn from "../utils/BackBtn";
 import { uploadObjectToS3 } from "../utils/S3Storage";
+import ErrorMessage from '../utils/ErrorMessage';
 
 const InputMore = ({ navigation, route }) => {
   const [name, setName] = useState("");
@@ -22,6 +23,8 @@ const InputMore = ({ navigation, route }) => {
   const [busyness, setBusyness] = useState(0);
   const [adjustableValve, setAdjustableValve] = useState(false);
   const [spoutCount, setSpoutCount] = useState(1);
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     setName(route.params["Name"]);
@@ -54,11 +57,27 @@ const InputMore = ({ navigation, route }) => {
     ratings["ratingCount"] = 1; 
 
     if (!validateSpoutCount(spoutCount)) {
-      // TODO: prompt for value check
-      console.log("invalid spout input");
+      setErrorMessage("Please input a number for Spout Count.");
+
+      if(!showErrorMessage) {
+        setShowErrorMessage(true);
+        setTimeout(() => {
+          setShowErrorMessage(false);
+        }, 2200);
+      }
+      console.log("invalid Spout Count input");
+
     } else if (!validateAdjustable(adjustableValve)) {
-      // TODO: prompt for value check
+      setErrorMessage('Please input "Y" or "N" for Adjustable.');
+
+      if(!showErrorMessage) {
+        setShowErrorMessage(true);
+        setTimeout(() => {
+          setShowErrorMessage(false);
+        }, 2200);
+      }
       console.log("invalid adjustable input");
+
     } else {
       allRatings.push(ratings);
       allRatings = { fountains: allRatings };
@@ -158,6 +177,9 @@ const InputMore = ({ navigation, route }) => {
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
         <Text style={styles.button_text}>Submit</Text>
       </TouchableOpacity>
+
+      {/* Error message display */}
+      <ErrorMessage errorMessage={errorMessage} showErrorMessage={showErrorMessage}/>
     </View>
   );
 };
