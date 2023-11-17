@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
+import { View, SafeAreaView, StyleSheet, TouchableOpacity, Text } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import PropTypes from "prop-types";
@@ -72,7 +72,7 @@ const MapScreen = ({ navigation }) => {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.headerBar}>
         <TouchableOpacity style={styles.backButton} onPress={handleBackNavigation}>
           <Text style={styles.buttonText}>&lt; Sign Out</Text>
@@ -108,7 +108,7 @@ const MapScreen = ({ navigation }) => {
           })}
         </MapView>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -119,6 +119,9 @@ MapScreen.propTypes = {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#00C2FF"
+  },
   headerBar: {
     display: "flex",
     flexDirection: "row",
@@ -129,13 +132,16 @@ const styles = StyleSheet.create({
     // color: "purple",
   },
   backButton: {
-    margin: "2%",
+    marginHorizontal: "5%",
+    marginVertical: "1%"
   },
   newFountainButton: {
-    margin: "2%",
+    marginHorizontal: "5%",
+    marginVertical: "1%"
   },
   buttonText: {
-    fontSize: 18
+    fontSize: 20,
+    color: "#FFFFFF"
   },
   map: {
     width: "100%",
