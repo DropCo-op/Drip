@@ -197,6 +197,14 @@ const CreateAccountScreen = ({ navigation }) => {
 
   return (
       <SafeAreaView style={styles.container}>
+
+      {/* back to login */}
+      <View style = {styles.headerBar}>
+        <TouchableOpacity style={styles.backButton} onPress={handleBack}>
+          <Text style={styles.backButtonText}>&lt; Back to Login</Text>
+        </TouchableOpacity>
+      </View>
+
       {/* title */}
       <View style={styles.titleBox}>
         <Image
@@ -264,12 +272,7 @@ const CreateAccountScreen = ({ navigation }) => {
 
       />
 
-      {/* back to login */}
-      <View style = {styles.linkBox}>
-        <TouchableOpacity style={styles.link} onPress={handleBack}>
-          <Text style={[styles.link, {textAlign: "left"}]}>&lt; Back to Login</Text>
-        </TouchableOpacity>
-      </View>
+
 
       {/* create account */}
       <TouchableOpacity style={styles.button} onPress={handleCreateAccount}>
@@ -294,6 +297,21 @@ const styles = StyleSheet.create({
     justifyContent: "top",
     alignItems: "center",
     backgroundColor: "#00C2FF"
+  },
+  headerBar: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "left",
+    marginTop: "5%"
+  },
+  backButton: {
+    flex: 1,
+    marginHorizontal: "5%",
+    marginVertical: "1%",
+  },
+  backButtonText: {
+    fontSize: 20,
+    color: "#FFFFFF"
   },
   titleBox: {
     flex: 10,
@@ -325,19 +343,6 @@ const styles = StyleSheet.create({
     marginBottom: "5%",
     color: "#FFFFFF",
     fontSize: 16
-  },
-  linkBox: {
-    position: 'absolute',
-    top: '5%',
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "left",
-    width: "80%"
-  },
-  link: {
-    flex: 1,
-    fontSize: 16,
-    color: "#FFFFFF",
   },
   button: {
     flex: 2,

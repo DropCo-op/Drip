@@ -127,15 +127,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: "5%",
-    // // alignContent: "flex-end", 
-    // height: "7%",
-    // color: "purple",
   },
   backButton: {
+    flex: 1,
     marginHorizontal: "5%",
     marginVertical: "1%"
   },
   newFountainButton: {
+    flex: 1,
     marginHorizontal: "5%",
     marginVertical: "1%"
   },
