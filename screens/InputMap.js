@@ -189,8 +189,8 @@ const styles = StyleSheet.create({
 		marginHorizontal: 10,
 	},
 	button_text: {
-    		color: "#FFFFFF",
-    		fontSize: 18,
+		color: "#FFFFFF",
+		fontSize: 18,
    		alignSelf: "center",
   	},
 	backButton: {

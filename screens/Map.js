@@ -34,7 +34,6 @@ const MapScreen = ({ navigation }) => {
         latitudeDelta: 0.09,
         longitudeDelta: 0.09,
       });
-      getFountains(); 
     };
     getLocation();
   }, []);
@@ -49,6 +48,8 @@ const MapScreen = ({ navigation }) => {
       console.error("Error retrieving JSON file from S3", err);
     } else {
       setCoordinatesList(JSON.parse(data.Body.toString())["fountains"]);
+
+      console.log(coordinatesList)
     }
   });
 

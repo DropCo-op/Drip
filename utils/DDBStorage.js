@@ -14,12 +14,12 @@ const params = {
     TableName: 'drip-fountains'
 }
 
-    ddb.scan(params, (err, data) => {
-        if (err) {
-          console.error('Error scanning DynamoDB table:', err);
-        } else {
-          // Items retrieved successfully
-          console.log('Items retrieved from DynamoDB:', data.Items);
-        }
-      });
+    // ddb.scan(params, (err, data) => {
+    //     if (err) {
+    //       console.error('Error scanning DynamoDB table:', err);
+    //     } else {
+    //       // Items retrieved successfully
+    //       console.log('Items retrieved from DynamoDB:', data.Items);
+    //     }
+    //   });
 
