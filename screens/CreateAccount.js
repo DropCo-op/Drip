@@ -1,5 +1,6 @@
 import { SafeAreaView, View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import React, { useState } from 'react';
+import Header from "../utils/Header";
 import { s3 } from "../utils/S3Storage";
 import {uploadObjectToS3} from '../utils/S3Storage.js';
 import sha256 from 'js-sha256';
@@ -198,12 +199,14 @@ const CreateAccountScreen = ({ navigation }) => {
   return (
       <SafeAreaView style={styles.container}>
 
-      {/* back to login */}
+      {/* back to login 
       <View style = {styles.headerBar}>
         <TouchableOpacity style={styles.backButton} onPress={handleBack}>
           <Text style={styles.backButtonText}>&lt; Back to Login</Text>
         </TouchableOpacity>
       </View>
+      */}
+      <Header handler={handleBack}/>
 
       {/* title */}
       <View style={styles.titleBox}>
