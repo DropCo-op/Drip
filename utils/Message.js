@@ -21,7 +21,7 @@ const Message = ({ message = '', showMessage }) => {
           easing: Easing.ease,
           useNativeDriver: false,
         }).start(() => {
-          setShowMessage = false;
+          const setShowMessage = false;
         });
       }, 2000);
     }
