@@ -1,5 +1,6 @@
 import {
   View,
+  SafeAreaView,
   Text,
   TouchableOpacity,
   StyleSheet,
@@ -7,7 +8,7 @@ import {
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import BackBtn from "../utils/BackBtn";
+import Header from "../utils/Header";
 import RatingMetric from "../utils/RatingMetric";
 import { uploadObjectToS3 } from "../utils/S3Storage";
 
@@ -59,8 +60,11 @@ const InputFountain = ({ navigation, route }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <BackBtn handler={handleBack} style={styles.back_button} />
+    <SafeAreaView style={{backgroundColor: "#00C2FF", height: "100%"}}>
+
+      <Header handler={handleBack} />
+
+      <View style={styles.container}>
 
       {/* title */}
       <TextInput
@@ -70,48 +74,49 @@ const InputFountain = ({ navigation, route }) => {
         placeholder={"Enter Name"}
       />
 
-      {/* temperature */}
-      <RatingMetric
-        name="Temperature"
-        start="Hot"
-        end="Cold"
-        rating={0}
-        handler={handleTemperature}
-      />
+        {/* temperature */}
+        <RatingMetric
+          name="Temperature"
+          start="Hot"
+          end="Cold"
+          rating={0}
+          handler={handleTemperature}
+        />
 
-      {/* pressure */}
-      <RatingMetric
-        name="Pressure"
-        start="Weak"
-        end="Strong"
-        rating={0}
-        handler={handlePressure}
-      />
-      {/* busyness */}
-      <RatingMetric
-        name="Busyness"
-        start="Crowded"
-        end="Empty"
-        rating={0}
-        handler={handleBusyness}
-      />
-      {/* taste */}
-      <RatingMetric
-        name="Taste"
-        start="Gross"
-        end="Quality"
-        rating={0}
-        handler={handleTaste}
-      />
-      <View style={{ marginBottom: "0%" }}></View>
+        {/* pressure */}
+        <RatingMetric
+          name="Pressure"
+          start="Weak"
+          end="Strong"
+          rating={0}
+          handler={handlePressure}
+        />
+        {/* busyness */}
+        <RatingMetric
+          name="Busyness"
+          start="Crowded"
+          end="Empty"
+          rating={0}
+          handler={handleBusyness}
+        />
+        {/* taste */}
+        <RatingMetric
+          name="Taste"
+          start="Gross"
+          end="Quality"
+          rating={0}
+          handler={handleTaste}
+        />
+        <View style={{ marginBottom: "0%" }}></View>
 
-      {/* info button */}
-      <TouchableOpacity style={styles.button} onPress={handleInfo}>
-        <Text style={styles.button_text}>Next</Text>
-      </TouchableOpacity>
-
-      <View style={styles.bottom_space} />
-    </View>
+        {/* info button */}
+        <TouchableOpacity style={styles.button} onPress={handleInfo}>
+          <Text style={styles.button_text}>Next</Text>
+        </TouchableOpacity>
+  
+        <View style={styles.bottom_space} />
+      </View>
+    </SafeAreaView>
   );
 };
 
