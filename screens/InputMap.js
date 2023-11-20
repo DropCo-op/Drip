@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState, useEffect, useRef } from "react";
 import MapView, { Marker } from 'react-native-maps';
-import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import PropTypes from "prop-types";
 import { getLocation } from '../utils/Location.js';
 import Message from '../utils/Message.js';
@@ -102,9 +102,17 @@ const InputMapScreen = ({ navigation, route }) => {
           				coordinate={centerCoordinate}
           				title="Fountain"
           				description="Input fountain marker"
-        			/>
-		
+						style={{opacity: 0}}
+        		>
+					<Image 
+					style={{opacity: 0}}
+					/>
+				</Marker>
+				
 				</MapView>
+				<Image
+				source={require("../assets/droplet.png")}
+				style={styles.markerImage} />
 			</View>
 
 
@@ -187,6 +195,15 @@ const styles = StyleSheet.create({
     		fontSize: 18,
     		color: "grey",
   	},
+	  markerImage: {
+		width: "7%", 
+		height: "7%",
+		resizeMode: "contain",
+		zIndex: 2,
+		position: "absolute",
+		top: "45%",
+		marginHorizontal: "45%"
+	  }
 });
 
 export default InputMapScreen;

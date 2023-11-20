@@ -1,11 +1,10 @@
 import { useState, useEffect, useRef } from "react";
-import { View, SafeAreaView, StyleSheet, TouchableOpacity, Text } from "react-native";
+import { View, SafeAreaView, StyleSheet, TouchableOpacity, Text, Image } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import PropTypes from "prop-types";
 import { s3 } from "../utils/S3Storage";
 import { saveAuthenticationStatus } from '../utils/LocalAuth';
-import { getFountains } from "../utils/DDBStorage";
 
 const MapScreen = ({ navigation }) => {
   const [initialLocation, setInitialLocation] = useState(null);
@@ -28,11 +27,11 @@ const MapScreen = ({ navigation }) => {
       };
 
       setInitialLocation({
-        latitude:location.coords.latitude,
-        longitude:location.coords.longitude,
+        latitude:location?.coords?.latitude,
+        longitude:location?.coords?.longitude,
         
-        latitudeDelta: ( Math.abs(location.coords.latitude - romeCoords.latitude))<1?Math.abs(location.coords.latitude - romeCoords.latitude)+0.01: 0.001,
-        longitudeDelta:( Math.abs(location.coords.longitude - romeCoords.longitude))<1?Math.abs(location.coords.longitude - romeCoords.longitude)+0.01: 0.001, 
+        latitudeDelta: ( Math.abs(location?.coords?.latitude - romeCoords.latitude))<1?Math.abs(location?.coords?.latitude - romeCoords.latitude)+0.01: 0.001,
+        longitudeDelta:( Math.abs(location?.coords?.longitude - romeCoords.longitude))<1?Math.abs(location?.coords?.longitude - romeCoords.longitude)+0.01: 0.001, 
       });
     };
     getLocation();
@@ -103,7 +102,12 @@ const MapScreen = ({ navigation }) => {
                 onPress={() => {
                   handleRatingsNavigation(marker, coordinatesList);
                 }}
-              />
+              >
+                <Image
+                  source={require("../assets/droplet.png")}
+                  style={styles.markerImage}
+                />
+              </Marker>
             );
           })}
         </MapView>
@@ -149,6 +153,11 @@ const styles = StyleSheet.create({
     paddingTop: "2%",
     top: "0%",
   },
+  markerImage: {
+    width: 30, 
+    height: 30,
+    resizeMode: "contain"
+  }
 });
 
 export default MapScreen;
