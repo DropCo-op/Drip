@@ -23,7 +23,7 @@ const MoreInfo = ({ navigation, route }) => {
   }, []); // The empty dependency array [] means it runs only once on mount
 
   return (
-    <SafeAreaView style={styles.backColor}>
+    <SafeAreaView style={{backgroundColor: "#00C2FF", height: "100%"}}>
       <Header handler={handleBack} />
       <View style={styles.container}>
         <View style={styles.fountain_image}>
@@ -86,10 +86,6 @@ const MoreInfo = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
-  backColor: {
-    backgroundColor: "#00C2FF",
-    height: "100%",
-  },
   container: {
     flex: 1,
     flexDirection: "column",

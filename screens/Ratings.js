@@ -102,24 +102,11 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
   };
 
   return (
-    <SafeAreaView style={styles.backColor}>
+    <SafeAreaView style={{backgroundColor: "#00C2FF", height: "100%"}}>
+
       <Header handler={handleBack} />
 
       <View style={styles.container}>
-        {/*
-      <View style={styles.fountain_image}>
-        <Image
-          style={{
-            height: "100%",
-            width: "100%",
-            resizeMode: "cover",
-            alignSelf: "center",
-            // borderRadius: 15,
-          }}
-          source={require("../assets/nasoni.jpeg")}
-        />
-      </View>
-      */}
 
         {/* title */}
         <View style={styles.title_box}>
@@ -193,10 +180,6 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
   );
 };
 const styles = StyleSheet.create({
-  backColor: {
-    backgroundColor: "#00C2FF",
-    height: "100%",
-  },
   container: {
     flex: 1,
     display: "flex",
