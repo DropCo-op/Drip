@@ -13,6 +13,7 @@ import PropTypes from "prop-types";
 import { getLocation } from "../utils/Location.js";
 import Message from "../utils/Message.js";
 import ErrorMessage from "../utils/ErrorMessage.js";
+import Header from "../utils/Header";
 
 const InputMapScreen = ({ navigation, route }) => {
   const [showMessage, setShowMessage] = useState(false);
@@ -38,7 +39,7 @@ const InputMapScreen = ({ navigation, route }) => {
     initializeCenterCoordinate();
   }, []);
 
-  const handleBackNavigation = () => {
+  const handleBack = () => {
     navigation.navigate("Map");
   };
 
@@ -84,59 +85,58 @@ const InputMapScreen = ({ navigation, route }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View>
-        {/* back button */}
-        <TouchableOpacity onPress={handleBackNavigation}>
-          <Text style={styles.backButton}>&lt; Back</Text>
-        </TouchableOpacity>
-      </View>
+    <SafeAreaView style={{backgroundColor: "#00C2FF", height: "100%"}}>
 
-      <View style={styles.map}>
-        <MapView
-          ref={mapRef}
-          region={centerCoordinate}
-          showsUserLocation={true}
-          style={{ width: "100%", height: "100%" }}
-          onRegionChangeComplete={handleDrag}
-        >
-          <Marker
-            coordinate={centerCoordinate}
-            title="Fountain"
-            description="Input fountain marker"
-            style={{ opacity: 0 }}
+      <Header handler={handleBack} />
+
+      <View style={styles.container}>
+
+        <View style={styles.map}>
+          <MapView
+            ref={mapRef}
+            region={centerCoordinate}
+            showsUserLocation={true}
+            style={{ width: "100%", height: "100%" }}
+            onRegionChangeComplete={handleDrag}
           >
-            <Image style={{ opacity: 0 }} />
-          </Marker>
-        </MapView>
-        <Image
-          source={require("../assets/droplet.png")}
-          style={styles.markerImage}
+            <Marker
+              coordinate={centerCoordinate}
+              title="Fountain"
+              description="Input fountain marker"
+              style={{ opacity: 0 }}
+            >
+              <Image style={{ opacity: 0 }} />
+            </Marker>
+          </MapView>
+          <Image
+            source={require("../assets/droplet.png")}
+            style={styles.markerImage}
+          />
+        </View>
+
+        <View style={styles.button_container_loc}>
+          {/* set location button */}
+          <TouchableOpacity style={styles.button} onPress={handleSetLoc}>
+            <Text style={styles.button_text}>Set Location</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.button_container_next}>
+          {/* next page button */}
+          <TouchableOpacity style={styles.button} onPress={handleNext}>
+            <Text style={styles.button_text}>Next</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* error */}
+        <ErrorMessage
+          errorMessage={errorMessage}
+          showErrorMessage={showErrorMessage}
         />
+
+        {/* loc message */}
+        <Message message={message} showMessage={showMessage} />
       </View>
-
-      <View style={styles.button_container_loc}>
-        {/* set location button */}
-        <TouchableOpacity style={styles.button} onPress={handleSetLoc}>
-          <Text style={styles.button_text}>Set Location</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.button_container_next}>
-        {/* next page button */}
-        <TouchableOpacity style={styles.button} onPress={handleNext}>
-          <Text style={styles.button_text}>Next</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* error */}
-      <ErrorMessage
-        errorMessage={errorMessage}
-        showErrorMessage={showErrorMessage}
-      />
-
-      {/* loc message */}
-      <Message message={message} showMessage={showMessage} />
     </SafeAreaView>
   );
 };
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   button: {
-    backgroundColor: "#3498db",
+    backgroundColor: "#00C2FF",
     padding: 15,
     borderRadius: 5,
     flex: 1,
