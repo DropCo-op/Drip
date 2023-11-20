@@ -1,10 +1,17 @@
 import { useState, useEffect, useRef } from "react";
-import { View, SafeAreaView, StyleSheet, TouchableOpacity, Text, Image } from "react-native";
+import {
+  View,
+  SafeAreaView,
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+  Image,
+} from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import PropTypes from "prop-types";
 import { s3 } from "../utils/S3Storage";
-import { saveAuthenticationStatus } from '../utils/LocalAuth';
+import { saveAuthenticationStatus } from "../utils/LocalAuth";
 
 const MapScreen = ({ navigation }) => {
   const [initialLocation, setInitialLocation] = useState(null);
@@ -27,11 +34,18 @@ const MapScreen = ({ navigation }) => {
       };
 
       setInitialLocation({
-        latitude:location?.coords?.latitude,
-        longitude:location?.coords?.longitude,
-        
-        latitudeDelta: ( Math.abs(location?.coords?.latitude - romeCoords.latitude))<1?Math.abs(location?.coords?.latitude - romeCoords.latitude)+0.01: 0.001,
-        longitudeDelta:( Math.abs(location?.coords?.longitude - romeCoords.longitude))<1?Math.abs(location?.coords?.longitude - romeCoords.longitude)+0.01: 0.001, 
+        latitude: location?.coords?.latitude,
+        longitude: location?.coords?.longitude,
+
+        latitudeDelta:
+          Math.abs(location?.coords?.latitude - romeCoords.latitude) < 1
+            ? Math.abs(location?.coords?.latitude - romeCoords.latitude) + 0.01
+            : 0.001,
+        longitudeDelta:
+          Math.abs(location?.coords?.longitude - romeCoords.longitude) < 1
+            ? Math.abs(location?.coords?.longitude - romeCoords.longitude) +
+              0.01
+            : 0.001,
       });
     };
     getLocation();
@@ -57,30 +71,36 @@ const MapScreen = ({ navigation }) => {
   };
 
   const handleRatingsNavigation = (marker, list) => {
-    navigation.navigate("Ratings", {Marker: marker, List: list});
+    navigation.navigate("Ratings", { Marker: marker, List: list });
   };
 
   const handleNewFountainNavigation = (list) => {
     navigation.navigate("InputMap", list);
-  }
+  };
 
   const handleDrag = (region) => {
-  //  console.log(`latitude is ${region.latitude}`);
-  //  console.log(`longitude is ${region.longitude}`)
-  //  console.log(mapRef.current.props.region)
-  }
+    //  console.log(`latitude is ${region.latitude}`);
+    //  console.log(`longitude is ${region.longitude}`)
+    //  console.log(mapRef.current.props.region)
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerBar}>
-        <TouchableOpacity style={styles.backButton} onPress={handleBackNavigation}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={handleBackNavigation}
+        >
           <Text style={styles.buttonText}>&lt; Sign Out</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.newFountainButton} onPress={()=> handleNewFountainNavigation(coordinatesList)}>
+        <TouchableOpacity
+          style={styles.newFountainButton}
+          onPress={() => handleNewFountainNavigation(coordinatesList)}
+        >
           <Text style={styles.buttonText}> + New Fountain</Text>
         </TouchableOpacity>
       </View>
-      
+
       <View style={styles.map}>
         <MapView
           ref={mapRef}
@@ -124,7 +144,7 @@ MapScreen.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#00C2FF"
+    backgroundColor: "#00C2FF",
   },
   headerBar: {
     display: "flex",
@@ -135,16 +155,16 @@ const styles = StyleSheet.create({
   backButton: {
     flex: 1,
     marginHorizontal: "5%",
-    marginVertical: "1%"
+    marginVertical: "1%",
   },
   newFountainButton: {
     flex: 1,
     marginHorizontal: "5%",
-    marginVertical: "1%"
+    marginVertical: "1%",
   },
   buttonText: {
     fontSize: 20,
-    color: "#FFFFFF"
+    color: "#FFFFFF",
   },
   map: {
     width: "100%",
@@ -154,10 +174,10 @@ const styles = StyleSheet.create({
     top: "0%",
   },
   markerImage: {
-    width: 30, 
+    width: 30,
     height: 30,
-    resizeMode: "contain"
-  }
+    resizeMode: "contain",
+  },
 });
 
 export default MapScreen;

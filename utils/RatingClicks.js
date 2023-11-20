@@ -11,13 +11,13 @@ export default class RatingClicks extends Component {
     this.name = props.name;
     this.state = { rating: props.rating };
     this.parentHandler = props.parentHandler;
-    this.changed = false; 
+    this.changed = false;
   }
 
   handleRateClick = (rating) => {
     this.setState({ rating });
     this.parentHandler(rating);
-    this.changed = true; 
+    this.changed = true;
   };
 
   renderRates() {
@@ -35,11 +35,13 @@ export default class RatingClicks extends Component {
             key={i}
             source={
               i <= rating
-                ? (this.changed? require("../assets/logo.png"):require("../assets/selected.png"))
+                ? this.changed
+                  ? require("../assets/logo.png")
+                  : require("../assets/selected.png")
                 : require("../assets/unselected.png")
             }
           />
-        </TouchableOpacity>
+        </TouchableOpacity>,
       );
     }
 

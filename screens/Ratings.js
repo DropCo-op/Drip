@@ -35,17 +35,30 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
 
   const handleSubmit = () => {
     // add: gray out the "submit" button, stays on the fountain page
-    var allRatings = [...route.params.List].filter((fountain) => {return fountain["name"] != route.params["Marker"]["name"]})
-    const ratings = {...route.params.Marker};
-    ratings["ratingCount"]++; 
-    ratings["temperature"] = (temperature + (route.params.Marker.temperature * route.params.Marker.ratingCount))/ratings.ratingCount;
-    ratings["pressure"] = (pressure + (route.params.Marker.pressure * route.params.Marker.ratingCount))/ratings.ratingCount
-    ratings["taste"] = (taste + (route.params.Marker.taste * route.params.Marker.ratingCount))/ratings.ratingCount;
-    ratings["busyness"] = (busyness + (route.params.Marker.busyness * route.params.Marker.ratingCount))/ratings.ratingCount;
+    var allRatings = [...route.params.List].filter((fountain) => {
+      return fountain["name"] != route.params["Marker"]["name"];
+    });
+    const ratings = { ...route.params.Marker };
+    ratings["ratingCount"]++;
+    ratings["temperature"] =
+      (temperature +
+        route.params.Marker.temperature * route.params.Marker.ratingCount) /
+      ratings.ratingCount;
+    ratings["pressure"] =
+      (pressure +
+        route.params.Marker.pressure * route.params.Marker.ratingCount) /
+      ratings.ratingCount;
+    ratings["taste"] =
+      (taste + route.params.Marker.taste * route.params.Marker.ratingCount) /
+      ratings.ratingCount;
+    ratings["busyness"] =
+      (busyness +
+        route.params.Marker.busyness * route.params.Marker.ratingCount) /
+      ratings.ratingCount;
 
     allRatings.push(ratings);
 
-    allRatings = {"fountains": allRatings};
+    allRatings = { fountains: allRatings };
 
     uploadObjectToS3("drip-fountains-eu", "fountains3.json", allRatings);
   };
@@ -57,17 +70,20 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
     const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${long}`;
 
     Linking.openURL(url).catch((err) =>
-      console.error("Error Opening Google Maps:", err)
+      console.error("Error Opening Google Maps:", err),
     );
   };
 
   const handleInfo = () => {
-    navigation.navigate("MoreInfo", {Marker: route.params["Marker"], List: route.params["List"]});
+    navigation.navigate("MoreInfo", {
+      Marker: route.params["Marker"],
+      List: route.params["List"],
+    });
   };
 
   const handleInput = () => {
     navigation.navigate("InputFountain");
-  }
+  };
 
   const handleTemperature = (selectedRating) => {
     setTemperature(selectedRating);
@@ -87,11 +103,10 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={styles.backColor}>
-      <Header handler={handleBack}/>
+      <Header handler={handleBack} />
 
       <View style={styles.container}>
-
-      {/*
+        {/*
       <View style={styles.fountain_image}>
         <Image
           style={{
@@ -106,72 +121,73 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
       </View>
       */}
 
-      {/* title */}
-      <View style={styles.title_box}>
-        <Text style={styles.title}>{name}</Text>
-      </View>
+        {/* title */}
+        <View style={styles.title_box}>
+          <Text style={styles.title}>{name}</Text>
+        </View>
 
-      <View style={styles.numRatings}>
-        <Text style={styles.numRatingsText}>Ratings: {route.params.Marker.ratingCount}</Text>
-      </View>
+        <View style={styles.numRatings}>
+          <Text style={styles.numRatingsText}>
+            Ratings: {route.params.Marker.ratingCount}
+          </Text>
+        </View>
 
-      {/* temperature */}
-      <RatingMetric
-        name="Temperature"
-        start="Hot"
-        end="Cold"
-        rating={Math.round(route.params["Marker"]["temperature"])}
-        handler={handleTemperature}
-      />
+        {/* temperature */}
+        <RatingMetric
+          name="Temperature"
+          start="Hot"
+          end="Cold"
+          rating={Math.round(route.params["Marker"]["temperature"])}
+          handler={handleTemperature}
+        />
 
-      {/* pressure */}
-      <RatingMetric
-        name="Pressure"
-        start="Weak"
-        end="Strong"
-        rating={Math.round(route.params["Marker"]["pressure"])}
-        handler={handlePressure}
-      />
-      {/* busyness */}
-      <RatingMetric
-        name="Busyness"
-        start="Crowded"
-        end="Empty"
-        rating={Math.round(route.params["Marker"]["busyness"])}
-        handler={handleBusyness}
-      />
-      {/* taste */}
-      <RatingMetric
-        name="Taste"
-        start="Gross"
-        end="Quality"
-        rating={Math.round(route.params["Marker"]["taste"])}
-        handler={handleTaste}
-      />
-      <View style={{ marginBottom: "0%" }}></View>
+        {/* pressure */}
+        <RatingMetric
+          name="Pressure"
+          start="Weak"
+          end="Strong"
+          rating={Math.round(route.params["Marker"]["pressure"])}
+          handler={handlePressure}
+        />
+        {/* busyness */}
+        <RatingMetric
+          name="Busyness"
+          start="Crowded"
+          end="Empty"
+          rating={Math.round(route.params["Marker"]["busyness"])}
+          handler={handleBusyness}
+        />
+        {/* taste */}
+        <RatingMetric
+          name="Taste"
+          start="Gross"
+          end="Quality"
+          rating={Math.round(route.params["Marker"]["taste"])}
+          handler={handleTaste}
+        />
+        <View style={{ marginBottom: "0%" }}></View>
 
-      {/* container for three buttons */}
-      <View style={styles.button_container}>
-        {/* navigate button */}
-        <TouchableOpacity style={styles.button} onPress={handleNav}>
-          <Text style={styles.button_text}>Navigate</Text>
-        </TouchableOpacity>
+        {/* container for three buttons */}
+        <View style={styles.button_container}>
+          {/* navigate button */}
+          <TouchableOpacity style={styles.button} onPress={handleNav}>
+            <Text style={styles.button_text}>Navigate</Text>
+          </TouchableOpacity>
 
-        {/* info button */}
-        <TouchableOpacity style={styles.button} onPress={handleInfo}>
-          <Text style={styles.button_text}>More Info</Text>
-        </TouchableOpacity>
-      </View>
+          {/* info button */}
+          <TouchableOpacity style={styles.button} onPress={handleInfo}>
+            <Text style={styles.button_text}>More Info</Text>
+          </TouchableOpacity>
+        </View>
 
-      <View style={styles.button_container}>
-        {/* submit button */}
-        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-          <Text style={styles.button_text}>Submit</Text>
-        </TouchableOpacity>
-      </View>
+        <View style={styles.button_container}>
+          {/* submit button */}
+          <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+            <Text style={styles.button_text}>Submit</Text>
+          </TouchableOpacity>
+        </View>
 
-      <View style={styles.bottom_space}/>
-
+        <View style={styles.bottom_space} />
       </View>
     </SafeAreaView>
   );
@@ -179,7 +195,7 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   backColor: {
     backgroundColor: "#00C2FF",
-    height: "100%"
+    height: "100%",
   },
   container: {
     flex: 1,
@@ -203,14 +219,14 @@ const styles = StyleSheet.create({
     height: "70%",
   },
   numRatings: {
-    display: 'flex',
+    display: "flex",
     width: "89%",
     marginTop: "2%",
-    float: 'left',
+    float: "left",
   },
-  numRatingsText:{
-    fontSize: 18, 
-    color: '#707080',
+  numRatingsText: {
+    fontSize: 18,
+    color: "#707080",
   },
   fountain_image: {
     flex: 1,
@@ -258,15 +274,15 @@ SubmitRatingsScreen.propTypes = {
   route: PropTypes.shape({
     params: PropTypes.shape({
       Marker: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      temperature: PropTypes.number.isRequired,
-      pressure: PropTypes.number.isRequired,
-      taste: PropTypes.number.isRequired,
-      busyness: PropTypes.number.isRequired,
-      spoutCount: PropTypes.number.isRequired,
-      history: PropTypes.string.isRequired,
-      notes: PropTypes.string.isRequired,
-      adjustableValve: PropTypes.bool.isRequired,
+        name: PropTypes.string.isRequired,
+        temperature: PropTypes.number.isRequired,
+        pressure: PropTypes.number.isRequired,
+        taste: PropTypes.number.isRequired,
+        busyness: PropTypes.number.isRequired,
+        spoutCount: PropTypes.number.isRequired,
+        history: PropTypes.string.isRequired,
+        notes: PropTypes.string.isRequired,
+        adjustableValve: PropTypes.bool.isRequired,
       }),
       List: PropTypes.array.isRequired,
     }),

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, Animated, Easing, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from "react";
+import { View, Text, Animated, Easing, StyleSheet } from "react-native";
 
 const ErrorMessage = ({ errorMessage, showErrorMessage }) => {
   const bottomPosition = new Animated.Value(-100);
@@ -26,7 +26,6 @@ const ErrorMessage = ({ errorMessage, showErrorMessage }) => {
     }
   }, [showErrorMessage]);
 
-
   return showErrorMessage ? (
     <Animated.View style={[styles.errorMessageBox, { bottom: bottomPosition }]}>
       <Text style={styles.errorMessage}>{errorMessage}</Text>
@@ -36,22 +35,21 @@ const ErrorMessage = ({ errorMessage, showErrorMessage }) => {
 
 const styles = StyleSheet.create({
   errorMessageBox: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    position: 'absolute',
+    flexDirection: "column",
+    alignItems: "center",
+    position: "absolute",
     left: 0,
     right: 0,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     padding: 10,
-    marginHorizontal: '10%',
+    marginHorizontal: "10%",
     borderRadius: 20,
     zIndex: 999,
   },
   errorMessage: {
-    color: '#FF0000',
+    color: "#FF0000",
     fontSize: 14,
   },
 });
 
 export default ErrorMessage;
-

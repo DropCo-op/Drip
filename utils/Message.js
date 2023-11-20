@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import { View, Text, Animated, Easing, StyleSheet } from 'react-native';
-import PropTypes from 'prop-types';
+import React, { useEffect } from "react";
+import { View, Text, Animated, Easing, StyleSheet } from "react-native";
+import PropTypes from "prop-types";
 
-const Message = ({ message = '', showMessage }) => {
+const Message = ({ message = "", showMessage }) => {
   const bottomPosition = new Animated.Value(-100);
 
   useEffect(() => {
@@ -20,12 +20,10 @@ const Message = ({ message = '', showMessage }) => {
           duration: 300,
           easing: Easing.ease,
           useNativeDriver: false,
-        }).start(() => {
-        });
+        }).start(() => {});
       }, 2000);
     }
   }, [showMessage]);
-
 
   return showMessage ? (
     <Animated.View style={[styles.messageBox, { bottom: bottomPosition }]}>
@@ -36,28 +34,26 @@ const Message = ({ message = '', showMessage }) => {
 
 const styles = StyleSheet.create({
   messageBox: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    position: 'absolute',
+    flexDirection: "column",
+    alignItems: "center",
+    position: "absolute",
     left: 0,
     right: 0,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     padding: 10,
-    marginHorizontal: '10%',
+    marginHorizontal: "10%",
     borderRadius: 20,
     zIndex: 999,
   },
   message: {
-    color: '#000000',
+    color: "#000000",
     fontSize: 14,
   },
 });
-
 
 Message.propTypes = {
   message: PropTypes.string.isRequired,
   showMessage: PropTypes.bool.isRequired,
 };
-
 
 export default Message;

@@ -24,61 +24,62 @@ const MoreInfo = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={styles.backColor}>
-      <Header handler={handleBack}/>
+      <Header handler={handleBack} />
       <View style={styles.container}>
+        <View style={styles.fountain_image}>
+          <Image
+            style={{
+              height: "100%",
+              width: "100%",
+              resizeMode: "cover",
+              alignSelf: "center",
+              // borderRadius: 15,
+            }}
+            source={require("../assets/nasoni.jpeg")}
+          />
+        </View>
 
-      <View style={styles.fountain_image}>
-        <Image
-          style={{
-            height: "100%",
-            width: "100%",
-            resizeMode: "cover",
-            alignSelf: "center",
-            // borderRadius: 15,
-          }}
-          source={require("../assets/nasoni.jpeg")}
-        />
-      </View>
+        {/* title */}
+        <View style={styles.title_box}>
+          <Text style={styles.title}>{name}</Text>
+        </View>
 
-      {/* title */}
-      <View style={styles.title_box}>
-        <Text style={styles.title}>{name}</Text>
-      </View>
+        <View style={{ flex: 0.5, flexDirection: "row", marginTop: "5%" }}>
+          <Text
+            style={{
+              color: "black",
+              textAlign: "left",
+              flex: 1,
+              fontSize: 24,
+              paddingLeft: "5%",
+            }}
+          >
+            Spout Count: {spoutCount}
+          </Text>
+          <Text
+            style={{
+              color: "black",
+              textAlign: "right",
+              flex: 1,
+              fontSize: 24,
+              paddingRight: "5%",
+            }}
+          >
+            Adjustable? {adjustableValve ? "Yes" : "No"}
+          </Text>
+        </View>
 
-      <View style={{ flex: 0.5, flexDirection: "row", marginTop: "5%" }}>
-        <Text
-          style={{
-            color: "black",
-            textAlign: "left",
-            flex: 1,
-            fontSize: 24,
-            paddingLeft: "5%",
-          }}
-        >
-          Spout Count: {spoutCount}
-        </Text>
-        <Text
-          style={{
-            color: "black",
-            textAlign: "right",
-            flex: 1,
-            fontSize: 24,
-            paddingRight: "5%",
-          }}
-        >
-          Adjustable? {adjustableValve ? "Yes" : "No"}
-        </Text>
-      </View>
+        <View style={styles.text_section}>
+          <Text style={{ flex: 1, fontSize: 24, color: "#00C2FF" }}>Notes</Text>
+          <Text style={styles.text_info}>{notes}</Text>
+        </View>
 
-      <View style={styles.text_section}>
-        <Text style={{ flex: 1, fontSize: 24, color: "#00C2FF" }}>Notes</Text>
-        <Text style={styles.text_info}>{notes}</Text>
-      </View>
-
-      <View style={styles.text_section}>
-        <Text style={{ flex: 1, fontSize: 24, color: "#00C2FF" }}>History</Text>
-        <Text style={styles.text_info}>{history}</Text>
-      </View>
+        <View style={styles.text_section}>
+          <Text style={{ flex: 1, fontSize: 24, color: "#00C2FF" }}>
+            History
+          </Text>
+          <Text style={styles.text_info}>{history}</Text>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -87,7 +88,7 @@ const MoreInfo = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   backColor: {
     backgroundColor: "#00C2FF",
-    height: "100%"
+    height: "100%",
   },
   container: {
     flex: 1,

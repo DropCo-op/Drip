@@ -9,7 +9,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import BackBtn from "../utils/BackBtn";
 import { uploadObjectToS3 } from "../utils/S3Storage";
-import ErrorMessage from '../utils/ErrorMessage';
+import ErrorMessage from "../utils/ErrorMessage";
 
 const InputMore = ({ navigation, route }) => {
   const [name, setName] = useState("");
@@ -24,7 +24,7 @@ const InputMore = ({ navigation, route }) => {
   const [adjustableValve, setAdjustableValve] = useState(false);
   const [spoutCount, setSpoutCount] = useState(1);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     setName(route.params["Name"]);
@@ -54,30 +54,28 @@ const InputMore = ({ navigation, route }) => {
     ratings["taste"] = taste;
     ratings["adjustableValve"] = adjustableValve;
     ratings["spoutCount"] = spoutCount;
-    ratings["ratingCount"] = 1; 
+    ratings["ratingCount"] = 1;
 
     if (!validateSpoutCount(spoutCount)) {
       setErrorMessage("Please input a number for Spout Count.");
 
-      if(!showErrorMessage) {
+      if (!showErrorMessage) {
         setShowErrorMessage(true);
         setTimeout(() => {
           setShowErrorMessage(false);
         }, 2200);
       }
       console.log("invalid Spout Count input");
-
     } else if (!validateAdjustable(adjustableValve)) {
       setErrorMessage('Please input "Y" or "N" for Adjustable.');
 
-      if(!showErrorMessage) {
+      if (!showErrorMessage) {
         setShowErrorMessage(true);
         setTimeout(() => {
           setShowErrorMessage(false);
         }, 2200);
       }
       console.log("invalid adjustable input");
-
     } else {
       allRatings.push(ratings);
       allRatings = { fountains: allRatings };
@@ -91,14 +89,12 @@ const InputMore = ({ navigation, route }) => {
   const onChangeAdjustable = (input) => {
     const no = ["no", "No", "NO", "nO", "N", "n"];
     const yes = ["yes", "Yes", "YES", "yeS", "yES", "yEs", "Y", "y"];
-    
+
     if (no.includes(input)) {
       setAdjustableValve(false);
-    } 
-    else if (yes.includes(input)) {
+    } else if (yes.includes(input)) {
       setAdjustableValve(true);
-    } 
-    else {
+    } else {
       setAdjustableValve("fail");
     }
   };
@@ -172,7 +168,10 @@ const InputMore = ({ navigation, route }) => {
       </TouchableOpacity>
 
       {/* Error message display */}
-      <ErrorMessage errorMessage={errorMessage} showErrorMessage={showErrorMessage}/>
+      <ErrorMessage
+        errorMessage={errorMessage}
+        showErrorMessage={showErrorMessage}
+      />
     </View>
   );
 };

@@ -1,75 +1,81 @@
-import { SafeAreaView, View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ActivityIndicator} from 'react-native';
-import { useState, useRef } from 'react';
-import PropTypes from 'prop-types';
-import ErrorMessage from '../utils/ErrorMessage';
-import { s3 } from '../utils/S3Storage';
-import { saveAuthenticationStatus } from '../utils/LocalAuth';
-import sha256 from 'js-sha256';
+import {
+  SafeAreaView,
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  ActivityIndicator,
+} from "react-native";
+import { useState, useRef } from "react";
+import PropTypes from "prop-types";
+import ErrorMessage from "../utils/ErrorMessage";
+import { s3 } from "../utils/S3Storage";
+import { saveAuthenticationStatus } from "../utils/LocalAuth";
+import sha256 from "js-sha256";
 
 const LoginScreen = ({ navigation }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [showErrorMessage, setShowErrorMessage] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleLogin = () => {
     setLoading(true);
-    s3.getObject({Bucket: 'drip-users-eu', Key: username.concat('.json')}, (err, data) => {
-      if (err) {
-        setLoading(false);
-        // check username
-        if (err.code == 'NoSuchKey') {
-          setErrorMessage('Invalid username');
-        }
-        else {
-          setErrorMessage('Cannot connect to server right now');
-        }
-        if (!showErrorMessage) {
-          setShowErrorMessage(true);
-          setTimeout(() => {
-            setShowErrorMessage(false);
-          }, 2200);
-        }
-      }
-      else {
-        // check password match
-        let user = JSON.parse(data.Body.toString());
-        setLoading(false);
-        if (sha256(password) == user.password) {
-          saveAuthenticationStatus(true);
-          navigation.navigate('Map');
-        }
-        else {
-          setErrorMessage('Incorrect password');
+    s3.getObject(
+      { Bucket: "drip-users-eu", Key: username.concat(".json") },
+      (err, data) => {
+        if (err) {
+          setLoading(false);
+          // check username
+          if (err.code == "NoSuchKey") {
+            setErrorMessage("Invalid username");
+          } else {
+            setErrorMessage("Cannot connect to server right now");
+          }
           if (!showErrorMessage) {
             setShowErrorMessage(true);
             setTimeout(() => {
               setShowErrorMessage(false);
             }, 2200);
           }
+        } else {
+          // check password match
+          let user = JSON.parse(data.Body.toString());
+          setLoading(false);
+          if (sha256(password) == user.password) {
+            saveAuthenticationStatus(true);
+            navigation.navigate("Map");
+          } else {
+            setErrorMessage("Incorrect password");
+            if (!showErrorMessage) {
+              setShowErrorMessage(true);
+              setTimeout(() => {
+                setShowErrorMessage(false);
+              }, 2200);
+            }
+          }
         }
-      }
-    });
+      },
+    );
   };
 
   const handleCreateAccount = () => {
-    navigation.navigate('CreateAccount');
+    navigation.navigate("CreateAccount");
   };
 
   const handleGuestLogin = () => {
     saveAuthenticationStatus(false);
-    navigation.navigate('Map');
+    navigation.navigate("Map");
   };
 
   return (
     <SafeAreaView style={styles.container}>
       {/* title */}
       <View style={styles.titleBox}>
-        <Image
-          style={styles.title}
-          source={require("../assets/title.png")}
-        />
+        <Image style={styles.title} source={require("../assets/title.png")} />
       </View>
 
       {/* username */}
@@ -100,12 +106,16 @@ const LoginScreen = ({ navigation }) => {
       />
 
       {/* create account, continue as guest */}
-      <View style = {styles.linkBox}>
+      <View style={styles.linkBox}>
         <TouchableOpacity style={styles.link} onPress={handleCreateAccount}>
-          <Text style={[styles.link, {textAlign: "left"}]}>Create account</Text>
+          <Text style={[styles.link, { textAlign: "left" }]}>
+            Create account
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.link} onPress={handleGuestLogin}>
-          <Text style={[styles.link, {textAlign: "right"}]}>Continue as guest?</Text>
+          <Text style={[styles.link, { textAlign: "right" }]}>
+            Continue as guest?
+          </Text>
         </TouchableOpacity>
       </View>
 
@@ -116,10 +126,18 @@ const LoginScreen = ({ navigation }) => {
       <View style={styles.bottomSpace} />
 
       {/* loading indicator */}
-      <ActivityIndicator style={styles.indicator} size="large" color="#FFFFFF" animating={loading}/>
+      <ActivityIndicator
+        style={styles.indicator}
+        size="large"
+        color="#FFFFFF"
+        animating={loading}
+      />
 
       {/* error */}
-      <ErrorMessage errorMessage={errorMessage} showErrorMessage={showErrorMessage}/>
+      <ErrorMessage
+        errorMessage={errorMessage}
+        showErrorMessage={showErrorMessage}
+      />
     </SafeAreaView>
   );
 };
@@ -130,7 +148,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "top",
     alignItems: "center",
-    backgroundColor: "#00C2FF"
+    backgroundColor: "#00C2FF",
   },
   titleBox: {
     flex: 10,
@@ -140,7 +158,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: null,
     height: null,
-    resizeMode: 'contain'
+    resizeMode: "contain",
   },
   inputLabelContainer: {
     flex: 1,
@@ -168,28 +186,28 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     alignItems: "left",
-    width: "80%"
+    width: "80%",
   },
   link: {
     flex: 1,
     fontSize: 16,
     color: "#FFFFFF",
-    textDecorationLine: 'underline'
+    textDecorationLine: "underline",
   },
   button: {
     flex: 2,
-    marginTop: "20%"
+    marginTop: "20%",
   },
   buttonText: {
     color: "#FFFFFF",
-    fontSize: 24 
+    fontSize: 24,
   },
   indicator: {
     flex: 1,
-    marginBottom: "20%"
+    marginBottom: "20%",
   },
   bottomSpace: {
-    flex: 1
+    flex: 1,
   },
   errorMessageBox: {
     flex: 1,
@@ -207,8 +225,8 @@ const styles = StyleSheet.create({
   errorMessage: {
     color: "#FF0000",
     flex: 1,
-    fontSize: 14
-  }
+    fontSize: 14,
+  },
 });
 
 LoginScreen.propTypes = {
@@ -218,4 +236,3 @@ LoginScreen.propTypes = {
 };
 
 export default LoginScreen;
-
