@@ -78,12 +78,6 @@ const MapScreen = ({ navigation }) => {
     navigation.navigate("InputMap", list);
   };
 
-  const handleDrag = (region) => {
-    //  console.log(`latitude is ${region.latitude}`);
-    //  console.log(`longitude is ${region.longitude}`)
-    //  console.log(mapRef.current.props.region)
-  };
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerBar}>
@@ -108,7 +102,6 @@ const MapScreen = ({ navigation }) => {
           showsUserLocation={true}
           followsUserLocation={true}
           style={{ width: "100%", height: "100%" }}
-          onRegionChangeComplete={handleDrag}
         >
           {coordinatesList?.map((marker) => {
             return (
