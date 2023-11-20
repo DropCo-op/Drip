@@ -1,5 +1,6 @@
 import {
   View,
+  SafeAreaView,
   Text,
   StyleSheet,
   TextInput,
@@ -7,7 +8,7 @@ import {
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import BackBtn from "../utils/BackBtn";
+import Header from "../utils/Header";
 import { uploadObjectToS3 } from "../utils/S3Storage";
 import ErrorMessage from "../utils/ErrorMessage";
 
@@ -116,63 +117,67 @@ const InputMore = ({ navigation, route }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <BackBtn handler={handleBack} style={styles.back_button} />
+    <SafeAreaView style={{backgroundColor: "#00C2FF", height: "100%"}}>
 
-      {/* title */}
-      <View style={styles.title_box}>
-        <Text style={styles.title}>{name}</Text>
-      </View>
+      <Header handler={handleBack} />
 
-      <View style={{ flex: 0.5, flexDirection: "row", marginTop: "5%" }}>
-        <Text style={styles.spout_count_text}>Spout Count:</Text>
-        <TextInput
-          onChangeText={setSpoutCount}
-          style={styles.spout_count_input}
-          placeholder={"#"}
+      <View style={styles.container}>
+
+        {/* title */}
+        <View style={styles.title_box}>
+          <Text style={styles.title}>{name}</Text>
+        </View>
+
+        <View style={{ flex: 0.5, flexDirection: "row", marginTop: "5%" }}>
+          <Text style={styles.spout_count_text}>Spout Count:</Text>
+          <TextInput
+            onChangeText={setSpoutCount}
+            style={styles.spout_count_input}
+            placeholder={"#"}
+          />
+
+          <Text style={styles.adjustable_valve_text}>Adjustable?</Text>
+          <TextInput
+            onChangeText={onChangeAdjustable}
+            style={styles.adjustable_valve_input}
+            placeholder={"Y/N"}
+          />
+        </View>
+
+        <View style={styles.text_section}>
+          <Text style={{ flex: 1, fontSize: 24, color: "black" }}>Notes</Text>
+          <TextInput
+            onChangeText={setNotes}
+            multiline={true}
+            style={styles.text_info}
+            placeholder={
+              "Enter any extra notes or comments about the fountain here"
+            }
+          />
+        </View>
+
+        <View style={styles.text_section}>
+          <Text style={{ flex: 1, fontSize: 24, color: "black" }}>History</Text>
+          <TextInput
+            onChangeText={setHistory}
+            multiline={true}
+            style={styles.text_info}
+            placeholder={"Enter history information here, if available"}
+          />
+        </View>
+
+        {/* submit button */}
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+          <Text style={styles.button_text}>Submit</Text>
+        </TouchableOpacity>
+
+        {/* Error message display */}
+        <ErrorMessage
+          errorMessage={errorMessage}
+          showErrorMessage={showErrorMessage}
         />
-
-        <Text style={styles.adjustable_valve_text}>Adjustable?</Text>
-        <TextInput
-          onChangeText={onChangeAdjustable}
-          style={styles.adjustable_valve_input}
-          placeholder={"Y/N"}
-        />
       </View>
-
-      <View style={styles.text_section}>
-        <Text style={{ flex: 1, fontSize: 24, color: "black" }}>Notes</Text>
-        <TextInput
-          onChangeText={setNotes}
-          multiline={true}
-          style={styles.text_info}
-          placeholder={
-            "Enter any extra notes or comments about the fountain here"
-          }
-        />
-      </View>
-
-      <View style={styles.text_section}>
-        <Text style={{ flex: 1, fontSize: 24, color: "black" }}>History</Text>
-        <TextInput
-          onChangeText={setHistory}
-          multiline={true}
-          style={styles.text_info}
-          placeholder={"Enter history information here, if available"}
-        />
-      </View>
-
-      {/* submit button */}
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.button_text}>Submit</Text>
-      </TouchableOpacity>
-
-      {/* Error message display */}
-      <ErrorMessage
-        errorMessage={errorMessage}
-        showErrorMessage={showErrorMessage}
-      />
-    </View>
+    </SafeAreaView>
   );
 };
 
