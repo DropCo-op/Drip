@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { View, Text, Animated, Easing, StyleSheet } from "react-native";
+import PropTypes from "prop-types";
 
 const ErrorMessage = ({ errorMessage, showErrorMessage }) => {
   const bottomPosition = new Animated.Value(-100);
@@ -20,7 +21,6 @@ const ErrorMessage = ({ errorMessage, showErrorMessage }) => {
           easing: Easing.ease,
           useNativeDriver: false,
         }).start(() => {
-          setShowErrorMessage = false;
         });
       }, 2000);
     }
@@ -51,5 +51,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
 });
+
+ErrorMessage.propTypes = {
+  errorMessage: PropTypes.string.isRequired,
+  showErrorMessage: PropTypes.bool.isRequired,
+};
 
 export default ErrorMessage;
