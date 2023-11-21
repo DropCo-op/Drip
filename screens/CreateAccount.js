@@ -61,6 +61,16 @@ function User(username, email, password) {
   this.password = String(password);
 }
 
+function showMessage(setErrorMessage, setShowErrorMessage, showErrorMessage, message) {
+  setErrorMessage(message);
+  if (!showErrorMessage) {
+    setShowErrorMessage(true);
+    setTimeout(() => {
+      setShowErrorMessage(false);
+    }, 2200);
+  }
+}
+
 const CreateAccountScreen = ({ navigation }) => {
   const [myEmail, setMyEmail] = useState("");
   const [myUsername, setMyUsername] = useState("");
@@ -72,113 +82,73 @@ const CreateAccountScreen = ({ navigation }) => {
   const handleCreateAccount = () => {
     let proceed = true;
 
-    // check that all spaces have something entered
-    if (myEmail.length == 0) {
+    const showError = (message) => {
       proceed = false;
-      setErrorMessage("Please enter an email.");
+      showMessage(setErrorMessage, setShowErrorMessage, showErrorMessage, message);
+    };
 
-      if (!showErrorMessage) {
-        setShowErrorMessage(true);
-        setTimeout(() => {
-          setShowErrorMessage(false);
-        }, 2200);
+    const checkRequiredFields = () => {
+      if (myEmail.length == 0) {
+	showError("Please enter an email.");
+      } else if (myUsername.length == 0) {
+	showError("Please enter a username.");
+      } else if (myPassword.length == 0) { 
+	showError("Please enter a password.");
+      } else if (myConfirmPassword.length == 0) {
+	showError("Please confirm your password.");
       }
-    } else if (myUsername.length == 0) {
-      proceed = false;
-      setErrorMessage("Please enter a username.");
+    };
 
-      if (!showErrorMessage) {
-        setShowErrorMessage(true);
-        setTimeout(() => {
-          setShowErrorMessage(false);
-        }, 2200);
+    const validateEmail = () => {
+      if (!emailCheck(myEmail)) {
+	showError("Invalid email. Please try again.");
       }
-    } else if (myPassword.length == 0) {
-      proceed = false;
-      setErrorMessage("Please enter a password");
+    };
 
-      if (!showErrorMessage) {
-        setShowErrorMessage(true);
-        setTimeout(() => {
-          setShowErrorMessage(false);
-        }, 2200);
+    const validateUsernameLength = () => {
+      if (myUsername.length < 6 || myUsername.length > 32) {
+	showError("Username must be between 6 and 32 characters.");
       }
-    } else if (myConfirmPassword.length == 0) {
-      proceed = false;
-      setErrorMessage("Please confirm your password.");
+    };    
 
-      if (!showErrorMessage) {
-        setShowErrorMessage(true);
-        setTimeout(() => {
-          setShowErrorMessage(false);
-        }, 2200);
+    const handleUserCheck = () => {
+      if (userCheckCondition) {
+	userCheck(myUsername, (userDoesNotExist) => {
+	  if (userDoesNotExist) {
+            checkPasswordMatch();
+	  } else {
+	    showError("Username already in use. Please try again.");
+	  }
+	});
+      }    
+    };
+
+    const checkPasswordMatch = () => {
+      if (myPassword !== myConfirmPassword) {
+	showError("Passwords do not match; Please try again.");
+      } else {
+	proceed = true;
+	createNewUser();
       }
-    }
+    };
 
-    // check if email is valid
-    else if (!emailCheck(myEmail)) {
-      proceed = false;
-      setErrorMessage("Invalid email. Please try again.");
+    const createNewUser = () => {
+      const userHash = myUsername + ".json";
+      const passHash = sha256(myPassword);
+      const newUser = new User(myUsername, myEmail, passHash);
+      uploadObjectToS3("drip-users-eu", userHash, newUser);
+      navigation.navigate("Map");
+    };
 
-      if (!showErrorMessage) {
-        setShowErrorMessage(true);
-        setTimeout(() => {
-          setShowErrorMessage(false);
-        }, 2200);
+    checkRequiredFields();
+    if (proceed) {
+      validateEmail();
+      if (proceed) {
+        validateUsernameLength();
+	if (proceed) {
+	  handleUserCheck();
+	}
       }
-    }
-
-    // check if username is between 6 and 32 chars
-    else if (myUsername.length < 6 || myUsername.length > 32) {
-      proceed = false;
-      setErrorMessage("Username must be between 6 and 32 characters.");
-
-      if (!showErrorMessage) {
-        setShowErrorMessage(true);
-        setTimeout(() => {
-          setShowErrorMessage(false);
-        }, 2200);
-      }
-    }
-
-    // check if any other users have that username
-    else if (userCheckCondition) {
-      userCheck(myUsername, (userDoesNotExist) => {
-        if (userDoesNotExist) {
-          console.log("Username is available.");
-
-          // Check if passwords match
-          if (myPassword !== myConfirmPassword) {
-            proceed = false;
-            setErrorMessage("Passwords do not match; Please try again.");
-
-            if (!showErrorMessage) {
-              setShowErrorMessage(true);
-              setTimeout(() => {
-                setShowErrorMessage(false);
-              }, 2200);
-            }
-          }
-
-          if (proceed) {
-            const userHash = myUsername + ".json";
-            const passHash = sha256(myPassword);
-            const newUser = new User(myUsername, myEmail, passHash);
-            uploadObjectToS3("drip-users-eu", userHash, newUser);
-            navigation.navigate("Map");
-          }
-        } else {
-          proceed = false;
-          setErrorMessage("Username already in use. Please try again.");
-
-          if (!showErrorMessage) {
-            setShowErrorMessage(true);
-            setTimeout(() => {
-              setShowErrorMessage(false);
-            }, 2200);
-          }
-        }
-      });
     }
   };
 
