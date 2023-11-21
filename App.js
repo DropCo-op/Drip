@@ -1,11 +1,10 @@
 // react native
-import { NavigationContainer, StackActions } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import {
-  createNativeStackNavigator,
-  NativeStackScreenProps,
+  createNativeStackNavigator
 } from "@react-navigation/native-stack";
-import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
-import { StyleSheet, Text } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { StyleSheet } from "react-native";
 
 // local
 import LoginScreen from "./screens/Login.js";
@@ -22,8 +21,8 @@ const Stack = createNativeStackNavigator();
 
 const App = () => {
   // check if authenticated
-  var isAuthenticated = getAuthenticationStatus();
-  var initialRouteName = "Login";
+  let isAuthenticated = getAuthenticationStatus();
+  let initialRouteName = "Login";
   if (isAuthenticated) {
     initialRouteName = "Map";
   }
