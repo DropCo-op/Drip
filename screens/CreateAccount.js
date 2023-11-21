@@ -88,37 +88,25 @@ const CreateAccountScreen = ({ navigation }) => {
     };
 
     const checkRequiredFields = () => {
-      if (myEmail.length == 0) {
-	showError("Please enter an email.");
-      } else if (myUsername.length == 0) {
-	showError("Please enter a username.");
-      } else if (myPassword.length == 0) { 
-	showError("Please enter a password.");
-      } else if (myConfirmPassword.length == 0) {
-	showError("Please confirm your password.");
-      }
+      if (myEmail.length == 0) showError("Please enter an email.");
+      else if (myUsername.length == 0) showError("Please enter a username.");
+      else if (myPassword.length == 0) showError("Please enter a password.");
+      else if (myConfirmPassword.length == 0) showError("Please confirm your password.");
     };
 
     const validateEmail = () => {
-      if (!emailCheck(myEmail)) {
-	showError("Invalid email. Please try again.");
-      }
+      if (!emailCheck(myEmail)) showError("Invalid email. Please try again.");
     };
 
     const validateUsernameLength = () => {
-      if (myUsername.length < 6 || myUsername.length > 32) {
-	showError("Username must be between 6 and 32 characters.");
-      }
+      if (myUsername.length < 6 || myUsername.length > 32) showError("Username must be between 6 and 32 characters.");
     };    
 
     const handleUserCheck = () => {
       if (userCheckCondition) {
 	userCheck(myUsername, (userDoesNotExist) => {
-	  if (userDoesNotExist) {
-            checkPasswordMatch();
-	  } else {
-	    showError("Username already in use. Please try again.");
-	  }
+	  if (userDoesNotExist) checkPasswordMatch();
+	  else showError("Username already in use. Please try again.");
 	});
       }    
     };
