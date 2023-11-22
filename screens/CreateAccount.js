@@ -78,10 +78,8 @@ const CreateAccountScreen = ({ navigation }) => {
   const [myConfirmPassword, setMyConfirmPassword] = useState("");
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [proceed, setProceed] = useState(true);
 
   const showError = (message) => {
-    setProceed(false);
     showMessage(setErrorMessage, setShowErrorMessage, showErrorMessage, message);
   };  
 
@@ -138,9 +136,6 @@ const CreateAccountScreen = ({ navigation }) => {
   };
 
   const handleCreateAccount = () => {
-    setProceed(true); // Reset the proceed state before each attempt
-
-    // Call functions in sequence
     if (checkRequiredFields() && validateEmail() && validateUsernameLength() && userCheckCondition) {
       userCheck(myUsername, (userDoesNotExist) => {
         if (userDoesNotExist) {
