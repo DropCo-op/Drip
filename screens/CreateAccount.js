@@ -78,80 +78,80 @@ const CreateAccountScreen = ({ navigation }) => {
   const [myConfirmPassword, setMyConfirmPassword] = useState("");
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [proceed, setProceed] = useState(true);
 
-  const handleCreateAccount = () => {
-    let proceed = true;
+  const showError = (message) => {
+    setProceed(false);
+    showMessage(setErrorMessage, setShowErrorMessage, showErrorMessage, message);
+  };  
 
-    const showError = (message) => {
-      proceed = false;
-      showMessage(setErrorMessage, setShowErrorMessage, showErrorMessage, message);
-    };
+  const checkRequiredFields = () => {
+    if (myEmail.length === 0) {
+      showError("Please enter an email.");
+      return false;
+    } else if (myUsername.length === 0) {
+      showError("Please enter a username.");
+      return false;
+    } else if (myPassword.length === 0) {
+      showError("Please enter a password.");
+      return false;
+    } else if (myConfirmPassword.length === 0) {
+      showError("Please confirm your password.");
+      return false;
+    }
 
-    const checkRequiredFields = () => {
-      if (myEmail.length == 0) {
-	showError("Please enter an email.");
-      } else if (myUsername.length == 0) {
-	showError("Please enter a username.");
-      } else if (myPassword.length == 0) {
-	showError("Please enter a password.");
-      } else if (myConfirmPassword.length == 0) { 
-	showError("Please confirm your password.");
-      }
-    };
+    return true;
+  };
 
-    const validateEmail = () => {
-      if (!emailCheck(myEmail)) {
-        showError("Invalid email. Please try again.");
-      }
-    };
+  const validateEmail = () => {
+    if (!emailCheck(myEmail)) {
+      showError("Invalid email. Please try again.");
+      return false;
+    }
 
-    const validateUsernameLength = () => {
-      if (myUsername.length < 6 || myUsername.length > 32) {
-	showError("Username must be between 6 and 32 characters.");
-      }
-    };    
+    return true;
+  };
 
-    const handleUserCheck = () => {
-      if (userCheckCondition) {
-	userCheck(myUsername, (userDoesNotExist) => {
-	  if (userDoesNotExist) {
-	    checkPasswordMatch();
-	  } else {
-	    showError("Username already in use. Please try again.");
-	  }
-	});
-      }    
-    };
+  const validateUsernameLength = () => {
+    if (myUsername.length < 6 || myUsername.length > 32) {
+      showError("Username must be between 6 and 32 characters.");
+      return false;
+    }
 
-    const checkPasswordMatch = () => {
-      if (myPassword !== myConfirmPassword) {
-	showError("Passwords do not match; Please try again.");
-      } else {
-	proceed = true;
-	createNewUser();
-      }
-    };
+    return true;
+  };
 
-    const createNewUser = () => {
-      const userHash = myUsername + ".json";
-      const passHash = sha256(myPassword);
-      const newUser = new User(myUsername, myEmail, passHash);
-      uploadObjectToS3("drip-users-eu", userHash, newUser);
-      navigation.navigate("Map");
-    };
-
-    checkRequiredFields();
-    if (proceed) {
-      validateEmail();
-      if (proceed) {
-        validateUsernameLength();
-	if (proceed) {
-	  handleUserCheck();
-	}
-      }
+  const checkPasswordMatch = () => {
+    if (myPassword !== myConfirmPassword) {
+      showError("Passwords do not match; Please try again.");
+    } else {
+      createNewUser();
     }
   };
 
+  const createNewUser = () => {
+    const userHash = myUsername + ".json";
+    const passHash = sha256(myPassword);
+    const newUser = new User(myUsername, myEmail, passHash);
+    uploadObjectToS3("drip-users-eu", userHash, newUser);
+    navigation.navigate("Map");
+  };
+
+  const handleCreateAccount = () => {
+    setProceed(true); // Reset the proceed state before each attempt
+
+    // Call functions in sequence
+    if (checkRequiredFields() && validateEmail() && validateUsernameLength() && userCheckCondition) {
+      userCheck(myUsername, (userDoesNotExist) => {
+        if (userDoesNotExist) {
+          checkPasswordMatch();
+        } else {
+          showError("Username already in use. Please try again.");
+        }
+      });
+    }
+  };
+   
   const handleBack = () => {
     navigation.navigate("Login");
   };
