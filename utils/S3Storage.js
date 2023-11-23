@@ -25,8 +25,3 @@ export async function uploadObjectToS3(bucketName, key, object) {
     }
   });
 }
-
-// download from bucket
-export async function retrieveObjectFromS3(bucketName, key) {
-  // TODO: make this work
-}
