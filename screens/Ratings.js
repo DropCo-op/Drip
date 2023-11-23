@@ -4,7 +4,6 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
-  Image,
   Linking,
 } from "react-native";
 import React, { useState, useEffect } from "react";
@@ -12,7 +11,6 @@ import PropTypes from "prop-types";
 import Header from "../utils/Header";
 import RatingMetric from "../utils/RatingMetric";
 import { uploadObjectToS3 } from "../utils/S3Storage";
-// import { Linking } from "react-native-linking";
 
 const SubmitRatingsScreen = ({ navigation, route }) => {
   const [name, setName] = useState("");
@@ -35,7 +33,7 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
 
   const handleSubmit = () => {
     // add: gray out the "submit" button, stays on the fountain page
-    var allRatings = [...route.params.List].filter((fountain) => {
+    let allRatings = [...route.params.List].filter((fountain) => {
       return fountain["name"] != route.params["Marker"]["name"];
     });
     const ratings = { ...route.params.Marker };
@@ -64,7 +62,6 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
   };
 
   const handleNav = () => {
-    // navigation.navigate("Map");
     const lat = route.params["Marker"]["latitude"];
     const long = route.params["Marker"]["longitude"];
     const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${long}`;
@@ -79,10 +76,6 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
       Marker: route.params["Marker"],
       List: route.params["List"],
     });
-  };
-
-  const handleInput = () => {
-    navigation.navigate("InputFountain");
   };
 
   const handleTemperature = (selectedRating) => {
@@ -266,6 +259,9 @@ SubmitRatingsScreen.propTypes = {
         history: PropTypes.string.isRequired,
         notes: PropTypes.string.isRequired,
         adjustableValve: PropTypes.bool.isRequired,
+	ratingCount: PropTypes.number.isRequired,
+	longitude: PropTypes.number.isRequired,
+	latitude: PropTypes.number.isRequired,
       }),
       List: PropTypes.array.isRequired,
     }),
