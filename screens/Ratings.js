@@ -102,7 +102,7 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
       <View style={styles.container}>
 
         {/* title */}
-        <View style={styles.title_box}>
+        <View style={styles.title_box} testID='title'>
           <Text style={styles.title}>{name}</Text>
         </View>
 
