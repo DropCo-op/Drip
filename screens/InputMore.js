@@ -54,7 +54,7 @@ const InputMore = ({ navigation, route }) => {
     ratings["busyness"] = busyness;
     ratings["taste"] = taste;
     ratings["adjustableValve"] = adjustableValve;
-    ratings["spoutCount"] = spoutCount;
+    ratings["spoutCount"] = Number(spoutCount);
     ratings["ratingCount"] = 1;
 
     if (!validateSpoutCount(spoutCount)) {

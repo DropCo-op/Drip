@@ -204,14 +204,9 @@ const styles = StyleSheet.create({
   },
   fountain_image: {
     flex: 1,
-    // borderColor: "black",
-    // borderWidth: 2,
-    // borderRadius: 15,
     width: "100%",
   },
   button_container: {
-    // borderColor: "black",
-    // borderWidth: 2,
     flex: 0.5,
     flexDirection: "row",
     width: "90%",
@@ -253,7 +248,7 @@ SubmitRatingsScreen.propTypes = {
         pressure: PropTypes.number.isRequired,
         taste: PropTypes.number.isRequired,
         busyness: PropTypes.number.isRequired,
-        spoutCount: PropTypes.number.isRequired,
+        spoutCount: PropTypes.any.isRequired,
         history: PropTypes.string.isRequired,
         notes: PropTypes.string.isRequired,
         adjustableValve: PropTypes.bool.isRequired,
