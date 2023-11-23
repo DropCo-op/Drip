@@ -95,8 +95,8 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
   };
 
   return (
-    <SafeAreaView style={{ backgroundColor: "#00C2FF", height: "100%" }}>
-      <Header handler={handleBack} />
+    <SafeAreaView style={{ backgroundColor: "#00C2FF", height: "100%" }} testID='container'>
+      <Header handler={handleBack}/>
 
       <View style={styles.container}>
         {/* title */}
@@ -104,7 +104,7 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
           <Text style={styles.title}>{name}</Text>
         </View>
 
-        <View style={styles.numRatings}>
+        <View style={styles.numRatings} testID='numRatings'>
           <Text style={styles.numRatingsText}>
             Ratings: {route.params.Marker.ratingCount}
           </Text>
