@@ -13,7 +13,7 @@ export default class Header extends React.Component {
   render() {
     return (
       <View style={styles.headerBar} testID="head">
-        <TouchableOpacity style={styles.backButton} onPress={this.handler}>
+        <TouchableOpacity style={styles.backButton} onPress={this.handler} testID="butt">
           <Text style={styles.backButtonText}>&lt; Back</Text>
         </TouchableOpacity>
       </View>
