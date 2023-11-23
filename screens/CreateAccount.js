@@ -164,7 +164,7 @@ const CreateAccountScreen = ({ navigation }) => {
 
       {/* title */}
       <View style={styles.titleBox}>
-        <Image style={styles.title} source={require("../assets/title.png")} />
+        <Image style={styles.title} source={require("../assets/title.png")} testID="title"/>
       </View>
 
       {/* email */}
@@ -178,6 +178,7 @@ const CreateAccountScreen = ({ navigation }) => {
         autoCorrect={false}
         onChangeText={(text) => setMyEmail(text)}
         value={myEmail}
+	testID="email-input"
       />
 
       {/* username */}
@@ -191,6 +192,7 @@ const CreateAccountScreen = ({ navigation }) => {
         autoCorrect={false}
         onChangeText={(text) => setMyUsername(text)}
         value={myUsername}
+	testID="username-input"
       />
 
       {/* password */}
@@ -205,6 +207,7 @@ const CreateAccountScreen = ({ navigation }) => {
         autoCorrect={false}
         onChangeText={(text) => setMyPassword(text)}
         value={myPassword}
+	testID="password-input"
       />
 
       {/* confirm password */}
@@ -219,6 +222,7 @@ const CreateAccountScreen = ({ navigation }) => {
         autoCorrect={false}
         onChangeText={(text) => setMyConfirmPassword(text)}
         value={myConfirmPassword}
+	testID="confirm-password-input"
       />
 
       {/* create account */}
