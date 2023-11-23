@@ -2,8 +2,6 @@ import { render, fireEvent } from "@testing-library/react-native";
 import React from "react";
 import Header from "../utils/Header";
 
-const handler = () => {}
-
 describe("Test Header", () => {
 
   test("Render header", async () => {
