@@ -117,7 +117,7 @@ const InputMore = ({ navigation, route }) => {
 
         {/* title */}
         <View style={styles.title_box}>
-          <Text style={styles.title}>{name}</Text>
+          <Text style={styles.title} testID="nameField">{name}</Text>
         </View>
 
         <View style={{ flex: 0.5, flexDirection: "row", marginTop: "5%" }}>
@@ -145,6 +145,7 @@ const InputMore = ({ navigation, route }) => {
             placeholder={
               "Enter any extra notes or comments about the fountain here"
             }
+            testID="notesOrCommentsTextField"
           />
         </View>
 
@@ -155,11 +156,12 @@ const InputMore = ({ navigation, route }) => {
             multiline={true}
             style={styles.text_info}
             placeholder={"Enter history information here, if available"}
+            testID="HistoryTextInput"
           />
         </View>
 
         {/* submit button */}
-        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+        <TouchableOpacity style={styles.button} onPress={handleSubmit} testID="submitButton">
           <Text style={styles.button_text}>Submit</Text>
         </TouchableOpacity>
 
