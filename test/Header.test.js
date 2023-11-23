@@ -6,12 +6,12 @@ const handler = () => {}
 
 describe("Test Header", () => {
 
-  it("Render header", async () => {
+  test("Render header", async () => {
     let { getByTestId } = render(<Header handler={ handler }/>);
     expect(getByTestId("head")).toBeTruthy();
   });
 
-  it("Press button", async () => {
+  test("Press button", async () => {
     const handle = jest.fn();
     let { getByTestId } = render(<Header handler={ handle }/>);
     fireEvent.press(getByTestId("butt"));

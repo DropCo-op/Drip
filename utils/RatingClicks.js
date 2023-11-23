@@ -48,12 +48,12 @@ export default class RatingClicks extends Component {
     return (
       <View style={{ flexDirection: "column", flex: 2, width: "100%" }}>
         <View style={styles.rate_title_container}>
-          <Text style={styles.rate_title}>{this.name}</Text>
+          <Text style={styles.rate_title} testID="name">{this.name}</Text>
           <Text style={[styles.rate_title, { textAlign: "right" }]}>
             Rating: {this.state.rating}/5
           </Text>
         </View>
-        <View style={styles.container}>{this.renderRates()}</View>
+        <View style={styles.container} testID="drops">{this.renderRates()}</View>
       </View>
     );
   }
