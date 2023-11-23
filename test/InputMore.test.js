@@ -16,7 +16,7 @@ const routeParamsMock = {
 }
 
 const navigationRef = (props) => ({
-    navigate: ()=>{console.log("sup")},
+    navigate: ()=>{console.log("navigate")},
     ...props
   });
 
@@ -60,11 +60,11 @@ describe("Test using the inputMore page", () => {
     try {
       const {getTestById} = render(<InputMore navigation={ navigationRef } route={routeParamsMock}/>)
       
-      const testNameField = getTestById("notesOrCommentsTextField");
+      const noteOrCommentsTextField = getTestById("notesOrCommentsTextField");
 
-      fireEvent.change(testNameField, { target: { value: 'this is a test' } });
+      fireEvent.change(noteOrCommentsTextField, { target: { value: 'this is a test' } });
 
-      expect(testNameField.value).toBe("this is a test");
+      expect(noteOrCommentsTextField.value).toBe("this is a test");
     } catch (err) {
       console.log(err);
     }
