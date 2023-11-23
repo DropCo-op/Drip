@@ -23,7 +23,7 @@ const InputFountain = ({ navigation, route }) => {
   useEffect(() => {
     setLat(route.params["Latitude"]);
     setLong(route.params["Longitude"]);
-  }, []); // The empty dependency array [] means it runs only once on mount
+  }, [route.params]); // The empty dependency array [] means it runs only once on mount
 
   const handleBack = () => {
     navigation.navigate("Map");
@@ -172,17 +172,19 @@ const styles = StyleSheet.create({
 InputFountain.propTypes = {
   route: PropTypes.shape({
     params: PropTypes.shape({
+      Latitude: PropTypes.number.isRequired,
+      Longitude: PropTypes.number.isRequired,
       Marker: PropTypes.shape({
         name: PropTypes.string.isRequired,
         temperature: PropTypes.number.isRequired,
         pressure: PropTypes.number.isRequired,
         taste: PropTypes.number.isRequired,
         busyness: PropTypes.number.isRequired,
-	lat: PropTypes.number.isRequired,
-	long: PropTypes.number.isRequired,
-      }).isRequired,
+        lat: PropTypes.number.isRequired,
+        long: PropTypes.number.isRequired,
+      }),
       List: PropTypes.array.isRequired,
-    }),
+    }).isRequired,
   }),
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
