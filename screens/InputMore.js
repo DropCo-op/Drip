@@ -42,7 +42,7 @@ const InputMore = ({ navigation, route }) => {
   };
 
   const handleSubmit = () => {
-    var allRatings = [...route.params["List"]];
+    let allRatings = [...route.params["List"]];
     const ratings = {};
     ratings["name"] = name;
     ratings["latitude"] = lat;
@@ -101,19 +101,11 @@ const InputMore = ({ navigation, route }) => {
   };
 
   const validateSpoutCount = (input) => {
-    if (!isNaN(input)) {
-      return true;
-    } else {
-      return false;
-    }
+    return !isNaN(input);
   };
 
   const validateAdjustable = (input) => {
-    if (typeof input == "boolean") {
-      return true;
-    } else {
-      return false;
-    }
+    return (typeof input == "boolean");
   };
 
   return (
