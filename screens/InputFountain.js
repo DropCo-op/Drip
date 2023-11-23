@@ -10,7 +10,6 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Header from "../utils/Header";
 import RatingMetric from "../utils/RatingMetric";
-import { uploadObjectToS3 } from "../utils/S3Storage";
 
 const InputFountain = ({ navigation, route }) => {
   const [name, setName] = useState("");
@@ -171,6 +170,26 @@ const styles = StyleSheet.create({
 });
 
 InputFountain.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+InputFountain.propTypes = {
+  route: PropTypes.shape({
+    params: PropTypes.shape({
+      Marker: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        temperature: PropTypes.number.isRequired,
+        pressure: PropTypes.number.isRequired,
+        taste: PropTypes.number.isRequired,
+        busyness: PropTypes.number.isRequired,
+	lat: PropTypes.number.isRequired,
+	long: PropTypes.number.isRequired,
+      }),
+      List: PropTypes.array.isRequired,
+    }),
+  }),
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
   }).isRequired,
