@@ -38,12 +38,12 @@ const InputMore = ({ navigation, route }) => {
   }, []);
 
   const handleBack = () => {
-    navigation.navigate("InputFountain", route);
+    navigation.navigate("InputFountain", {Latitude: route.params.Latitude, Longitude: route.params.Longitude, List: route.params.List});
   };
 
   const handleSubmit = () => {
-    var allRatings = [...route.params["List"]];
-    const ratings = { ...route.params["Marker"] };
+    let allRatings = [...route.params["List"]];
+    const ratings = {};
     ratings["name"] = name;
     ratings["latitude"] = lat;
     ratings["longitude"] = long;
@@ -101,19 +101,11 @@ const InputMore = ({ navigation, route }) => {
   };
 
   const validateSpoutCount = (input) => {
-    if (!isNaN(input)) {
-      return true;
-    } else {
-      return false;
-    }
+    return !isNaN(input);
   };
 
   const validateAdjustable = (input) => {
-    if (typeof input == "boolean") {
-      return true;
-    } else {
-      return false;
-    }
+    return (typeof input == "boolean");
   };
 
   return (
@@ -290,7 +282,19 @@ const styles = StyleSheet.create({
 InputMore.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
-  }).isRequired,
+  }).isRequired,  
+  route: PropTypes.shape({
+    params: PropTypes.shape({
+        Name: PropTypes.string.isRequired,
+        Latitude: PropTypes.number.isRequired,
+        Longitude: PropTypes.number.isRequired,
+        Temperature: PropTypes.number.isRequired,
+        Pressure: PropTypes.number.isRequired,
+        Busyness: PropTypes.number.isRequired,
+        Taste: PropTypes.number.isRequired,
+        List: PropTypes.array.isRequired,
+    }),
+  })
 };
 
 export default InputMore;
