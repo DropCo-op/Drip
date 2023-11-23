@@ -174,15 +174,6 @@ InputFountain.propTypes = {
     params: PropTypes.shape({
       Latitude: PropTypes.number.isRequired,
       Longitude: PropTypes.number.isRequired,
-      Marker: PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        temperature: PropTypes.number.isRequired,
-        pressure: PropTypes.number.isRequired,
-        taste: PropTypes.number.isRequired,
-        busyness: PropTypes.number.isRequired,
-        lat: PropTypes.number.isRequired,
-        long: PropTypes.number.isRequired,
-      }),
       List: PropTypes.array.isRequired,
     }).isRequired,
   }),
