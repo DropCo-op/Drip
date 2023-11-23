@@ -4,7 +4,7 @@ import CreateAccountScreen from "../screens/CreateAccount.js";
 
 describe("CreateAccountScreen", () => {
   test("displays error message for empty email field", () => {
-    const { queryByText, getByText, getByTestId } = render(<CreateAccountScreen />);
+    const { queryByText, getByText } = render(<CreateAccountScreen />);
     fireEvent.press(getByText("Create Account"));
     expect(queryByText("Please enter an email.")).toBeTruthy();
   });
