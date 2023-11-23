@@ -1,5 +1,5 @@
-import CreateAccount from "../screens/CreateAccount"
-import react from "@testing-library/react-native"
+import CreateAccount from "../screens/CreateAccount";
+import react from "@testing-library/react-native";
 
 describe("test creating an account", () => {
   it("valid email address", async () => {
