@@ -170,12 +170,6 @@ const styles = StyleSheet.create({
 });
 
 InputFountain.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
-};
-
-InputFountain.propTypes = {
   route: PropTypes.shape({
     params: PropTypes.shape({
       Marker: PropTypes.shape({
@@ -186,7 +180,7 @@ InputFountain.propTypes = {
         busyness: PropTypes.number.isRequired,
 	lat: PropTypes.number.isRequired,
 	long: PropTypes.number.isRequired,
-      }),
+      }).isRequired,
       List: PropTypes.array.isRequired,
     }),
   }),
