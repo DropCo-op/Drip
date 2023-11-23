@@ -16,16 +16,20 @@ import InputFountainScreen from "./screens/InputFountain.js";
 import InputMoreScreen from "./screens/InputMore.js";
 import InputMapScreen from "./screens/InputMap.js";
 import { getAuthenticationStatus } from "./utils/LocalAuth";
+import { useState } from "react";
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
+  const [initialRouteName, setInitialRouteName] = useState("Login");
+  
   // check if authenticated
-  let isAuthenticated = getAuthenticationStatus();
-  let initialRouteName = "Login";
-  if (isAuthenticated) {
-    initialRouteName = "Map";
-  }
+  getAuthenticationStatus().then((isAuthenticated) => { 
+    if (isAuthenticated) {
+      setInitialRouteName("Map");
+    }
+  });
+
   return (
     <SafeAreaProvider>
       <NavigationContainer>
