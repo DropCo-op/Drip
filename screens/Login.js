@@ -8,7 +8,7 @@ import {
   Image,
   ActivityIndicator,
 } from "react-native";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import ErrorMessage from "../utils/ErrorMessage";
 import { s3 } from "../utils/S3Storage";
@@ -29,38 +29,44 @@ const LoginScreen = ({ navigation }) => {
       (err, data) => {
         if (err) {
           setLoading(false);
-          // check username
-          if (err.code == "NoSuchKey") {
-            setErrorMessage("Invalid username");
-          } else {
-            setErrorMessage("Cannot connect to server right now");
-          }
-          if (!showErrorMessage) {
-            setShowErrorMessage(true);
-            setTimeout(() => {
-              setShowErrorMessage(false);
-            }, 2200);
-          }
+          checkLoginUsernameError(err.code);
+          enableErrorMessage();
         } else {
           // check password match
           let user = JSON.parse(data.Body.toString());
           setLoading(false);
-          if (sha256(password) == user.password) {
-            saveAuthenticationStatus(true);
-            navigation.navigate("Map");
-          } else {
-            setErrorMessage("Incorrect password");
-            if (!showErrorMessage) {
-              setShowErrorMessage(true);
-              setTimeout(() => {
-                setShowErrorMessage(false);
-              }, 2200);
-            }
-          }
+          checkPasswordMatch(user);
         }
       },
     );
   };
+
+  const checkLoginUsernameError = (errorCode) => {
+    if (errorCode == "NoSuchKey") {
+      setErrorMessage("Invalid username");
+    } else {
+      setErrorMessage("Cannot connect to server right now");
+    }
+  }
+
+  const checkPasswordMatch = (user) => {
+    if (sha256(password) == user.password) {
+      saveAuthenticationStatus(true);
+        navigation.navigate("Map");
+    } else {
+      setErrorMessage("Incorrect password");
+      enableErrorMessage();
+    }
+  }
+
+  const enableErrorMessage = () => {
+    if (!showErrorMessage) {
+      setShowErrorMessage(true);
+      setTimeout(() => {
+        setShowErrorMessage(false);
+      }, 2200);
+    }
+  }
 
   const handleCreateAccount = () => {
     navigation.navigate("CreateAccount");
