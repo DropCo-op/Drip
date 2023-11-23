@@ -1,6 +1,5 @@
 import InputMore from "../screens/InputMore";
 import render from "@testing-library/react-native";
-//import { navigationRef } from "../__mocks__/mockNavigation";
 
 const routeParamsMock = {
     "params":{
