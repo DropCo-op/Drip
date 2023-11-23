@@ -67,7 +67,7 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
     const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${long}`;
 
     Linking.openURL(url).catch((err) =>
-      console.error("Error Opening Google Maps:", err),
+      console.error("Error Opening Google Maps:", err)
     );
   };
 
@@ -95,14 +95,12 @@ const SubmitRatingsScreen = ({ navigation, route }) => {
   };
 
   return (
-    <SafeAreaView style={{backgroundColor: "#00C2FF", height: "100%"}}>
-
+    <SafeAreaView style={{ backgroundColor: "#00C2FF", height: "100%" }}>
       <Header handler={handleBack} />
 
       <View style={styles.container}>
-
         {/* title */}
-        <View style={styles.title_box} testID='title'>
+        <View style={styles.title_box} testID="title">
           <Text style={styles.title}>{name}</Text>
         </View>
 
@@ -259,9 +257,9 @@ SubmitRatingsScreen.propTypes = {
         history: PropTypes.string.isRequired,
         notes: PropTypes.string.isRequired,
         adjustableValve: PropTypes.bool.isRequired,
-	ratingCount: PropTypes.number.isRequired,
-	longitude: PropTypes.number.isRequired,
-	latitude: PropTypes.number.isRequired,
+        ratingCount: PropTypes.number.isRequired,
+        longitude: PropTypes.number.isRequired,
+        latitude: PropTypes.number.isRequired,
       }),
       List: PropTypes.array.isRequired,
     }),
